@@ -1,0 +1,6 @@
+#performance-stats-container canvas {
+  /* Force all of the stats canvasses to be displayed at the same time in a row */
+  display: inline !important;
+  width: 120px !important;
+  height: auto !important;
+}

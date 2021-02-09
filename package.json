@@ -1,0 +1,49 @@
+{
+  "name": "integration-sandbox",
+  "version": "0.1.0",
+  "private": false,
+  "dependencies": {
+    "@waymark/waymark-sdk": "^1.2.4",
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.0",
+    "jsoneditor": "^9.1.7",
+    "jsoneditor-react": "^3.1.0",
+    "jsrsasign": "^10.1.5",
+    "penpal": "^5.3.0",
+    "pixi.js": "^5.3.7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "stats.js": "^0.17.0",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "BROWSER_ARGS=--enable-precise-memory-info react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "test:ci": "react-scripts test --env=jsdom -- --ci --reporters=default --reporters=jest-junit"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:react-hooks/recommended"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "canvas": "^2.6.1",
+    "jest-junit": "^12.0.0"
+  }
+}
