@@ -5,6 +5,7 @@ import PerformanceStats from './PerformanceStats';
 import PerformanceTestingForm from './PerformanceTestingForm';
 import WaymarkInstanceInitializationControls from './WaymarkInstanceInitializationControls';
 import WaymarkInstanceManagerControls from './WaymarkInstanceManagerControls';
+import WebhookTestingForm from './WebhookTestingForm';
 import './App.css';
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
       </div>
       <div className="embed-controls-grid">
         {waymarkInstance && <WaymarkInstanceManagerControls waymarkInstance={waymarkInstance} />}
+      </div>
+      <div className="webhook-testing">
+        <WebhookTestingForm />
       </div>
     </main>
   );
