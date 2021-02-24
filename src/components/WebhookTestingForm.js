@@ -8,33 +8,12 @@ import classnames from "classnames";
 import KJUR from "jsrsasign";
 import faker from "faker";
 
+import CopyIcon from "./CopyIcon";
+import { THE_BLUE } from "./constants";
 import "./WebhookTestingForm.css";
 
-const THE_BLUE = "#337AB7";
 const CORS_EXAMPLE =
   "Access-Control-Allow-Origin: *\nAccess-Control-Allow-Methods: *";
-
-const CopyIcon = ({ color, isCopied, ...props }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="32"
-    height="32"
-    viewBox="0 0 32 32"
-    {...props}
-  >
-    <g
-      fill="none"
-      fillRule="evenodd"
-      stroke={isCopied ? "limegreen" : THE_BLUE}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="3"
-    >
-      <path d="M24 5.5v17a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 4 22.5v-17A1.5 1.5 0 0 1 5.5 4h17A1.5 1.5 0 0 1 24 5.5z" />
-      <path d="M28 9.5v17a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 8 26.5v-17A1.5 1.5 0 0 1 9.5 8h17A1.5 1.5 0 0 1 28 9.5z" />
-    </g>
-  </svg>
-);
 
 /**
  * Form for sending test webhook events.
@@ -51,6 +30,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
+    // Enable the tooltip for dynamic elements that won't exist when it scans the page.
     ReactTooltip.rebuild();
   }, [webhookRequest]);
 
@@ -64,6 +44,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
   });
 
   const shouldSignEvent = watch("shouldSignEvent", true);
+  const eventSource = watch("eventSource", "local");
 
   const copyWebhookRequest = () => {
     setIsRawEventCopied(false);
@@ -78,26 +59,12 @@ export default function WebhookTestingForm({ waymarkInstance }) {
   };
 
   const scrollToResponse = () => {
-    window.scrollTo({ top: window.outerHeight, behavior: "smooth" });
+    window.scrollTo({ top: document.body.clientHeight, behavior: "smooth" });
   };
 
-  const onSubmit = (formData) => {
-    const eventID = faker.random.uuid();
-
-    const event = {
-      header: {
-        eventID: eventID,
-        eventType: "video.rendered",
-        eventTimestamp: new Date().toJSON(),
-        accountID: faker.random.uuid(),
-        externalID: faker.finance.account(),
-      },
-    };
-
-    let eventBody;
-
-    if (formData.eventType === "video.rendered") {
-      eventBody = {
+  const createEventBody = (eventID, eventType) => {
+    if (eventType === "video.rendered") {
+      return {
         id: eventID,
         createdAt: faker.date.past().toJSON(),
         updatedAt: faker.date.recent().toJSON(),
@@ -118,8 +85,10 @@ export default function WebhookTestingForm({ waymarkInstance }) {
           },
         ],
       };
-    } else if (formData.eventType === "video.purchased") {
-      eventBody = {
+    }
+
+    if (eventType === "video.purchased") {
+      return {
         id: eventID,
         createdAt: faker.date.past().toJSON(),
         updatedAt: faker.date.recent().toJSON(),
@@ -127,8 +96,10 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         templateID: faker.random.uuid(),
         renders: [],
       };
-    } else if (formData.eventType === "account.created") {
-      eventBody = {
+    }
+
+    if (eventType === "account.created") {
+      return {
         id: eventID,
         createdAt: faker.date.past().toJSON(),
         updatedAt: faker.date.recent().toJSON(),
@@ -142,41 +113,88 @@ export default function WebhookTestingForm({ waymarkInstance }) {
       };
     }
 
+    return null;
+  };
+
+  const createJWTEvent = (eventID, event, signaturePrivateKey) => {
+    const jwt_header = { alg: "HS256", typ: "JWT" };
+    const jwt_payload = {
+      jti: eventID,
+      iss: "waymark.com",
+      iat: KJUR.jws.IntDate.get("now"),
+      exp: KJUR.jws.IntDate.get("now + 1hour"),
+      "https://waymark.com/webhook/event": event,
+    };
+
+    return KJUR.jws.JWS.sign(
+      "HS256",
+      JSON.stringify(jwt_header),
+      JSON.stringify(jwt_payload),
+      signaturePrivateKey
+    );
+  };
+
+  const onSubmit = (formData) => {
+    const eventID = faker.random.uuid();
+    const {eventType, shouldSignEvent, signaturePrivateKey, webhookEndpointURL} = formData;
+
+    const event = {
+      header: {
+        eventID: eventID,
+        eventType: eventType,
+        eventTimestamp: new Date().toJSON(),
+        accountID: faker.random.uuid(),
+        externalID: faker.finance.account(),
+      },
+    };
+
+    const eventBody = createEventBody(eventID, eventType);
+
     event.data = eventBody;
     setRawEvent(event);
     setIsRawEventCopied(false);
 
-    let serializedEvent;
-
-    if (formData.shouldSignEvent) {
-      const header = { alg: "HS256", typ: "JWT" };
-      const payload = {
-        jti: eventID,
-        iss: "waymark.com",
-        iat: KJUR.jws.IntDate.get("now"),
-        exp: KJUR.jws.IntDate.get("now + 1hour"),
-        "https://waymark.com/webhook/event": event,
-      };
-
-      serializedEvent = KJUR.jws.JWS.sign(
-        "HS256",
-        JSON.stringify(header),
-        JSON.stringify(payload),
-        formData.signaturePrivateKey
-      );
-    } else {
-      serializedEvent = JSON.stringify(event);
+    const postOptions = {
+      timeout: 5000,
     }
 
-    setWebhookRequest(serializedEvent);
+    let requestEvent, requestURL, displayEvent;
+
+    if (eventSource === "local") {
+      // Local events need to be formatted as the webhook service would send them.
+      if (shouldSignEvent) {
+        requestEvent = createJWTEvent(eventID, event, signaturePrivateKey);
+        postOptions.headers = { "content-type": "application/jwt" };
+
+      } else {
+        requestEvent = event;
+      }
+      requestURL = webhookEndpointURL;
+      displayEvent = requestEvent;
+
+    } else {
+      // Remote events have a different format because they're being sent to the
+      // test harness webhook event endpoint in Demo.
+      requestEvent = {
+        "endpoint_url": webhookEndpointURL,
+        "event": event,
+        "should_sign": shouldSignEvent,
+        "override_secret": signaturePrivateKey,
+      };
+      requestURL = "https://demo.waymark.com/api/v3/test-harness/webhook-dispatch";
+      displayEvent = shouldSignEvent ? createJWTEvent(eventID, event, signaturePrivateKey) : event;
+    }
+
+    setWebhookRequest(shouldSignEvent ? displayEvent : JSON.stringify(displayEvent));
     setIsWebhookRequestCopied(false);
 
     setIsSending(true);
     axios
-      .post(formData.webhookEndpointURL, {
-        data: serializedEvent,
-        timeout: 5000,
-      })
+      .post(
+        requestURL,
+        requestEvent,
+        postOptions,
+      )
       .then((response) => {
         console.log("RESPONSE", response);
         setResponseStatus(response.status);
@@ -214,12 +232,36 @@ export default function WebhookTestingForm({ waymarkInstance }) {
           endpoint implementation directly.
         </p>
 
+        <label className="form-label" labelfor="localDirect">
+      <input id="localDirect" name="eventSource" type="radio" value="local" ref={register({ required: true })} defaultChecked={true}/>
+          Local - Routes directly from the browser to your webhook endpoint
+        </label>
+        <label className="form-label" labelfor="remoteDemo">
+          <input id="remoteDemo" name="eventSource" type="radio" value="remote" ref={register({ required: true })}/>
+          Remote - Routes through the Waymark demo servers to your webhook endpoint
+        </label>
+
+    {eventSource === "local" ?
+     <>
         <p>
-          <b>Note:</b> The local webhook testing will not work unless the
+          <b>Note:</b> Local webhook testing will not work unless the
           webhook endpoint sets the following CORS headers. These are not
           required for live testing in the demo environment.
         </p>
-        <pre className="code-quote">{CORS_EXAMPLE}</pre>
+     <pre className="code-quote">{CORS_EXAMPLE}</pre>
+     </>
+     :
+     <>
+        <p>
+          <b>Note:</b> Remote webhook testing will not work unless the
+          webhook endpoint is available to the public internet. If you are
+     testing an internal, private endpoint, please use Local testing or
+     a remote proxy tool like <a href="https://ngrok.com/docs">ngrok</a> (which
+    is a very useful testing tool indeed).
+        </p>
+
+     </>
+    }
 
         <label className="form-label" htmlFor="partnerID">
           Partner ID
@@ -243,7 +285,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
           type="text"
           name="webhookEndpointURL"
           ref={register({ required: true })}
-          defaultValue="https://www.example.com/webhook"
+          defaultValue="http://XXXXXXXXX.ngrok.io/api/my-webhook-endpoint"
           className="form-input"
         />
 
@@ -333,6 +375,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
                 </dd>
               </dl>
             </div>
+
             <div className={responseClasses}>
               <dl>
                 <dt>Response:</dt>
@@ -341,9 +384,11 @@ export default function WebhookTestingForm({ waymarkInstance }) {
                 </dd>
               </dl>
             </div>
+
           </>
         )}
       </form>
+
       <ReactTooltip
         id="tooltip"
         backgrounColor={THE_BLUE}
@@ -351,6 +396,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         type="info"
         effect="solid"
       />
+
     </>
   );
 }

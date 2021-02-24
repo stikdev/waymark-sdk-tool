@@ -26,6 +26,11 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
+.webhook-testing-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .test-form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

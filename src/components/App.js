@@ -38,7 +38,7 @@ function App() {
           <WaymarkInstanceManagerControls waymarkInstance={waymarkInstance} />
         )}
       </div>
-      <div className="webhook-testing">
+      <div className="webhook-testing-container">
         <WebhookTestingForm />
       </div>
     </main>
