@@ -2,6 +2,42 @@
   "name": "integration-sandbox",
   "version": "0.1.0",
   "private": false,
+  "scripts": {
+    "start": "BROWSER_ARGS=--enable-precise-memory-info react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "test:ci": "react-scripts test --env=jsdom -- --ci --reporters=default --reporters=jest-junit"
+  },
+  "eslintIgnore": [],
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:react-hooks/recommended"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": "auto",
+          "shippedProposals": true
+        }
+      ]
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
@@ -25,32 +61,35 @@
     "stats.js": "^0.17.0",
     "uuid": "^8.3.2"
   },
-  "scripts": {
-    "start": "BROWSER_ARGS=--enable-precise-memory-info react-scripts start",
-    "test": "react-scripts test --env=jsdom",
-    "test:ci": "react-scripts test --env=jsdom -- --ci --reporters=default --reporters=jest-junit"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:react-hooks/recommended"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
+    "@babel/core": "^7.12.7",
+    "@babel/node": "7.10.5",
+    "@babel/preset-env": "^7.12.7",
+    "babel-eslint": "^10.1.0",
     "canvas": "^2.6.1",
-    "jest-junit": "^12.0.0"
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-waymark": "github:stikdev/eslint-config-waymark#v0.1.2",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.3",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.7",
+    "jest-junit": "^12.0.0",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js}": [
+      "npx eslint --cache --fix",
+      "npx prettier --write"
+    ]
   }
 }

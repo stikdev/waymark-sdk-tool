@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import './PerformanceTestingForm.css';
-import GPUIntensiveTask from './GPUIntensiveTask';
+import "./PerformanceTestingForm.css";
+import GPUIntensiveTask from "./GPUIntensiveTask";
 
 /**
  * Form for fiddling with stuff for performance testing
@@ -22,7 +22,9 @@ export default function PerformanceTestingForm({
 
     for (let i = 0; i < imageCount; i += 1) {
       randomImagePromises[i] = fetch(
-        `https://source.unsplash.com/random?sig=${Math.round(Math.random() * 10000)}`,
+        `https://source.unsplash.com/random?sig=${Math.round(
+          Math.random() * 10000
+        )}`
       ).then((apiResponse) => apiResponse.url);
     }
 
@@ -50,7 +52,12 @@ export default function PerformanceTestingForm({
         >
           Number of random images to load*
         </label>
-        <input type="number" defaultValue="0" name="numImagesToLoad" className="form-input" />
+        <input
+          type="number"
+          defaultValue="0"
+          name="numImagesToLoad"
+          className="form-input"
+        />
         <div className="performance-image-grid">
           {loadedImages.map((imageURL, index) => (
             <img alt="" src={imageURL} key={`${imageURL}-${index}`} />
@@ -59,10 +66,14 @@ export default function PerformanceTestingForm({
         <GPUIntensiveTask />
         <button className="submit-button">Update</button>
         <button
-          onClick={() => setShouldShowPerformanceStats(!shouldShowPerformanceStats)}
+          onClick={() =>
+            setShouldShowPerformanceStats(!shouldShowPerformanceStats)
+          }
           className="operation-button"
         >
-          {shouldShowPerformanceStats ? 'Hide Performance Stats' : 'Show Performance Stats'}
+          {shouldShowPerformanceStats
+            ? "Hide Performance Stats"
+            : "Show Performance Stats"}
         </button>
       </form>
     </>

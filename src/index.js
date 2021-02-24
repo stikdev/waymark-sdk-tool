@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import SnackbarProvider from 'react-simple-snackbar';
+import SnackbarProvider from "react-simple-snackbar";
 
 import App from "./components/App";
 

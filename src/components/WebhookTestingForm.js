@@ -1,21 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useSnackbar } from 'react-simple-snackbar';
-import ReactTooltip from 'react-tooltip';
-import axios from 'axios';
-import classnames from 'classnames';
-import KJUR from 'jsrsasign';
-import faker from 'faker';
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useSnackbar } from "react-simple-snackbar";
+import ReactTooltip from "react-tooltip";
+import axios from "axios";
+import classnames from "classnames";
+import KJUR from "jsrsasign";
+import faker from "faker";
 
-import './WebhookTestingForm.css';
+import "./WebhookTestingForm.css";
 
 const THE_BLUE = "#337AB7";
-const CORS_EXAMPLE = "Access-Control-Allow-Origin: *\nAccess-Control-Allow-Methods: *";
+const CORS_EXAMPLE =
+  "Access-Control-Allow-Origin: *\nAccess-Control-Allow-Methods: *";
 
 const CopyIcon = ({ color, isCopied, ...props }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" {...props}>
-    <g fill="none" fillRule="evenodd" stroke={isCopied ? 'limegreen' : THE_BLUE} strokeLinecap="round" strokeLinejoin="round" strokeWidth="3">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    {...props}
+  >
+    <g
+      fill="none"
+      fillRule="evenodd"
+      stroke={isCopied ? "limegreen" : THE_BLUE}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="3"
+    >
       <path d="M24 5.5v17a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 4 22.5v-17A1.5 1.5 0 0 1 5.5 4h17A1.5 1.5 0 0 1 24 5.5z" />
       <path d="M28 9.5v17a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 8 26.5v-17A1.5 1.5 0 0 1 9.5 8h17A1.5 1.5 0 0 1 28 9.5z" />
     </g>
@@ -25,7 +39,7 @@ const CopyIcon = ({ color, isCopied, ...props }) => (
 /**
  * Form for sending test webhook events.
  */
-export default function WebhookTestingForm({waymarkInstance}) {
+export default function WebhookTestingForm({ waymarkInstance }) {
   const { register, watch, handleSubmit } = useForm();
   const [rawEvent, setRawEvent] = useState({});
   const [isRawEventCopied, setIsRawEventCopied] = useState(false);
@@ -45,8 +59,8 @@ export default function WebhookTestingForm({waymarkInstance}) {
       backgroundColor: THE_BLUE,
       textColor: "white",
       fontWeight: "bold",
-      fontSize: "16px"
-    }
+      fontSize: "16px",
+    },
   });
 
   const shouldSignEvent = watch("shouldSignEvent", true);
@@ -54,17 +68,17 @@ export default function WebhookTestingForm({waymarkInstance}) {
   const copyWebhookRequest = () => {
     setIsRawEventCopied(false);
     setIsWebhookRequestCopied(true);
-    openSnackbar('Copied webhook request!');
+    openSnackbar("Copied webhook request!");
   };
 
   const copyRawEvent = () => {
     setIsRawEventCopied(true);
     setIsWebhookRequestCopied(false);
-    openSnackbar('Copied raw event!');
+    openSnackbar("Copied raw event!");
   };
 
   const scrollToResponse = () => {
-    window.scrollTo({top: window.outerHeight, behavior: 'smooth'});
+    window.scrollTo({ top: window.outerHeight, behavior: "smooth" });
   };
 
   const onSubmit = (formData) => {
@@ -72,12 +86,12 @@ export default function WebhookTestingForm({waymarkInstance}) {
 
     const event = {
       header: {
-        "eventID": eventID,
-        "eventType": "video.rendered",
-        "eventTimestamp": new Date().toJSON(),
-        "accountID": faker.random.uuid(),
-        "externalID": faker.finance.account(),
-      }
+        eventID: eventID,
+        eventType: "video.rendered",
+        eventTimestamp: new Date().toJSON(),
+        accountID: faker.random.uuid(),
+        externalID: faker.finance.account(),
+      },
     };
 
     let eventBody;
@@ -94,15 +108,15 @@ export default function WebhookTestingForm({waymarkInstance}) {
             renderedAt: null,
             format: "broadcast",
             url: `${faker.image.imageUrl()}/movie.mov`,
-            status: "in_progress"
+            status: "in_progress",
           },
           {
             renderedAt: faker.date.recent().toJSON(),
             format: "email",
             url: `${faker.image.imageUrl()}/movie.mp4`,
-            status: "succeeded"
+            status: "succeeded",
           },
-        ]
+        ],
       };
     } else if (formData.eventType === "video.purchased") {
       eventBody = {
@@ -111,7 +125,7 @@ export default function WebhookTestingForm({waymarkInstance}) {
         updatedAt: faker.date.recent().toJSON(),
         name: faker.commerce.productName(),
         templateID: faker.random.uuid(),
-        renders: []
+        renders: [],
       };
     } else if (formData.eventType === "account.created") {
       eventBody = {
@@ -135,20 +149,20 @@ export default function WebhookTestingForm({waymarkInstance}) {
     let serializedEvent;
 
     if (formData.shouldSignEvent) {
-      const header = { alg: 'HS256', typ: 'JWT' };
+      const header = { alg: "HS256", typ: "JWT" };
       const payload = {
         jti: eventID,
-        iss: 'waymark.com',
-        iat: KJUR.jws.IntDate.get('now'),
-        exp: KJUR.jws.IntDate.get('now + 1hour'),
-        'https://waymark.com/webhook/event': event,
+        iss: "waymark.com",
+        iat: KJUR.jws.IntDate.get("now"),
+        exp: KJUR.jws.IntDate.get("now + 1hour"),
+        "https://waymark.com/webhook/event": event,
       };
 
       serializedEvent = KJUR.jws.JWS.sign(
-        'HS256',
+        "HS256",
         JSON.stringify(header),
         JSON.stringify(payload),
-        formData.signaturePrivateKey,
+        formData.signaturePrivateKey
       );
     } else {
       serializedEvent = JSON.stringify(event);
@@ -158,20 +172,21 @@ export default function WebhookTestingForm({waymarkInstance}) {
     setIsWebhookRequestCopied(false);
 
     setIsSending(true);
-    axios.post(formData.webhookEndpointURL, {
-      data: serializedEvent,
-      timeout: 5000,
-    })
-      .then( (response) => {
-        console.log('RESPONSE', response);
+    axios
+      .post(formData.webhookEndpointURL, {
+        data: serializedEvent,
+        timeout: 5000,
+      })
+      .then((response) => {
+        console.log("RESPONSE", response);
         setResponseStatus(response.status);
         setResponseStatusText(response.statusText);
         setIsResponseGood(response.status === 200);
         setIsSending(false);
         scrollToResponse();
       })
-      .catch( (error) => {
-        console.error('ERROR', error);
+      .catch((error) => {
+        console.error("ERROR", error);
         setResponseStatus(error.name);
         setResponseStatusText(error.message);
         setIsResponseGood(false);
@@ -182,28 +197,27 @@ export default function WebhookTestingForm({waymarkInstance}) {
 
   const responseClasses = classnames({
     "webhook-response": true,
-    "failure": (!isResponseGood) && (isResponseGood !== null),
-    "start": isResponseGood === null,
+    failure: !isResponseGood && isResponseGood !== null,
+    start: isResponseGood === null,
   });
 
   const prettyRawEvent = JSON.stringify(rawEvent, null, 2);
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}
-        className="webhook-testing-form"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="webhook-testing-form">
         <h2>Webhook Endpoint Testing</h2>
         <p>
-        This form can send a webhook event of your choosing to a local webhook endpoint
-        for testing the event format and signature encoding. The generated serialized events
-        can also be copied and used to test your endpoint implementation directly.
+          This form can send a webhook event of your choosing to a local webhook
+          endpoint for testing the event format and signature encoding. The
+          generated serialized events can also be copied and used to test your
+          endpoint implementation directly.
         </p>
 
         <p>
-          <b>Note:</b> The local webhook testing will not work unless the webhook endpoint
-          sets the following CORS headers. These are not required for live testing in
-          the demo environment.
+          <b>Note:</b> The local webhook testing will not work unless the
+          webhook endpoint sets the following CORS headers. These are not
+          required for live testing in the demo environment.
         </p>
         <pre className="code-quote">{CORS_EXAMPLE}</pre>
 
@@ -215,7 +229,7 @@ export default function WebhookTestingForm({waymarkInstance}) {
           className="form-input"
           name="partnerID"
           defaultValue="fake-partner-id"
-          ref={register({required: true})}
+          ref={register({ required: true })}
         />
 
         <label
@@ -228,7 +242,7 @@ export default function WebhookTestingForm({waymarkInstance}) {
         <input
           type="text"
           name="webhookEndpointURL"
-          ref={register({required: true})}
+          ref={register({ required: true })}
           defaultValue="https://www.example.com/webhook"
           className="form-input"
         />
@@ -240,7 +254,7 @@ export default function WebhookTestingForm({waymarkInstance}) {
         >
           Type of event to send.
         </label>
-        <select name="eventType" ref={register({required: true})}>
+        <select name="eventType" ref={register({ required: true })}>
           <option value="video.rendered">video.rendered</option>
           <option value="video.purchased">video.purchased</option>
           <option value="account.created">account.created</option>
@@ -249,13 +263,19 @@ export default function WebhookTestingForm({waymarkInstance}) {
         <label className="form-label" htmlFor="shouldSignEvent">
           Sign the event?
         </label>
-        <input name="shouldSignEvent" type="checkbox" defaultChecked={shouldSignEvent} ref={register}/>
+        <input
+          name="shouldSignEvent"
+          type="checkbox"
+          defaultChecked={shouldSignEvent}
+          ref={register}
+        />
 
-        { shouldSignEvent &&
+        {shouldSignEvent && (
           <>
             <label className="form-label" htmlFor="signaturePrivateKey">
-              JWT Signature Key -- Change this to the secret your webhook endpoint uses. If
-              the two don't match then your endpoint should reject the event.
+              JWT Signature Key -- Change this to the secret your webhook
+              endpoint uses. If the two don't match then your endpoint should
+              reject the event.
             </label>
             <input
               type="text"
@@ -265,19 +285,30 @@ export default function WebhookTestingForm({waymarkInstance}) {
               ref={register}
             />
           </>
-        }
+        )}
 
-        <button className="submit-button" disabled={isSending}>Send Webhook Event</button>
+        <button className="submit-button" disabled={isSending}>
+          Send Webhook Event
+        </button>
 
-        { webhookRequest &&
+        {webhookRequest && (
           <>
             <div className="webhook-request">
               <dl>
-
-                <CopyToClipboard text={webhookRequest} onCopy={copyWebhookRequest}>
+                <CopyToClipboard
+                  text={webhookRequest}
+                  onCopy={copyWebhookRequest}
+                >
                   <CopyIcon
                     data-for="tooltip"
-                    data-tip={isWebhookRequestCopied ? "Copied!" : "Copy webhook request to clipboard"} className="copy-icon" isCopied={isWebhookRequestCopied}/>
+                    data-tip={
+                      isWebhookRequestCopied
+                        ? "Copied!"
+                        : "Copy webhook request to clipboard"
+                    }
+                    className="copy-icon"
+                    isCopied={isWebhookRequestCopied}
+                  />
                 </CopyToClipboard>
                 <dt>Serialized request body:</dt>
                 <dd>
@@ -285,28 +316,40 @@ export default function WebhookTestingForm({waymarkInstance}) {
                 </dd>
 
                 <CopyToClipboard text={prettyRawEvent} onCopy={copyRawEvent}>
-                  <CopyIcon data-for="tooltip" data-tip={isRawEventCopied ? "Copied!" : "Copy raw event to clipboard"} className="copy-icon" isCopied={isRawEventCopied}/>
+                  <CopyIcon
+                    data-for="tooltip"
+                    data-tip={
+                      isRawEventCopied
+                        ? "Copied!"
+                        : "Copy raw event to clipboard"
+                    }
+                    className="copy-icon"
+                    isCopied={isRawEventCopied}
+                  />
                 </CopyToClipboard>
                 <dt>Raw event:</dt>
-                <dd><pre>{prettyRawEvent.trim()}</pre></dd>
-
+                <dd>
+                  <pre>{prettyRawEvent.trim()}</pre>
+                </dd>
               </dl>
             </div>
             <div className={responseClasses}>
               <dl>
-              <dt>Response:</dt><dd>{responseStatus} - {responseStatusText}</dd>
+                <dt>Response:</dt>
+                <dd>
+                  {responseStatus} - {responseStatusText}
+                </dd>
               </dl>
             </div>
           </>
-        }
-
+        )}
       </form>
       <ReactTooltip
-         id="tooltip"
-         backgrounColor={THE_BLUE}
-         place="right"
-         type="info"
-         effect="solid"
+        id="tooltip"
+        backgrounColor={THE_BLUE}
+        place="right"
+        type="info"
+        effect="solid"
       />
     </>
   );
