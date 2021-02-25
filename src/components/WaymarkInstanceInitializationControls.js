@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { JsonEditor } from 'jsoneditor-react';
+import { useState } from "react";
+import { JsonEditor } from "jsoneditor-react";
 
-import { TestModeWaymark } from '@waymark/waymark-sdk';
+import { TestModeWaymark } from "@waymark/waymark-sdk";
 
 const DEFAULT_OPTIONS = {
-  domElement: '#waymark-embed-container',
+  domElement: "#waymark-embed-container",
   editor: {
-    orientation: 'left',
+    orientation: "left",
     labels: {
-      completeVideo: 'Complete your video',
-      exitEditor: 'Exit the editor',
-      videoName: 'Custom Video Name',
+      completeVideo: "Complete your video",
+      exitEditor: "Exit the editor",
+      videoName: "Custom Video Name",
     },
   },
-  testJWTSecret: 'test-secret',
+  testJWTSecret: "test-secret",
   timeout: 5000,
 };
 
@@ -53,7 +53,7 @@ export default function WaymarkInstanceInitializationControls({
           await waymarkObject.connectionPromise;
           setWaymarkInstance(waymarkObject);
         } catch (error) {
-          console.error('Failed to connect to Waymark');
+          console.error("Failed to connect to Waymark");
           waymarkObject.cleanup();
         }
       }}
@@ -70,9 +70,12 @@ export default function WaymarkInstanceInitializationControls({
         defaultValue="fake-partner-id"
       />
       <label className="form-label">Waymark Options</label>
-      <JsonEditor value={options} onChange={(newOptions) => setOptions(newOptions)} />
+      <JsonEditor
+        value={options}
+        onChange={(newOptions) => setOptions(newOptions)}
+      />
       <button className="submit-button" data-test="initialize-sdk-button">
-        {!waymarkInstance ? 'Create Waymark Embed' : 'Destroy Waymark Embed'}
+        {!waymarkInstance ? "Create Waymark Embed" : "Destroy Waymark Embed"}
       </button>
     </form>
   );

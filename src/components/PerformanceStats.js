@@ -1,7 +1,7 @@
-import Stats from 'stats.js';
-import { useRef, useEffect } from 'react';
+import Stats from "stats.js";
+import { useRef, useEffect } from "react";
 
-import './PerformanceStats.css';
+import "./PerformanceStats.css";
 
 export default function PerformanceStats() {
   const statsContainerRef = useRef();
@@ -12,8 +12,8 @@ export default function PerformanceStats() {
     const stats = new Stats();
     // Manually fiddling with the stats elements' styling so it will display in the top-right corner rather than
     // the top-left
-    stats.dom.style.left = 'unset';
-    stats.dom.style.right = '0';
+    stats.dom.style.left = "unset";
+    stats.dom.style.right = "0";
 
     statsContainerRef.current.appendChild(stats.dom);
 

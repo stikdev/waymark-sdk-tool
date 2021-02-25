@@ -1,12 +1,14 @@
-import * as PIXI from 'pixi.js';
-import { useRef, useEffect, useState } from 'react';
+import * as PIXI from "pixi.js";
+import { useRef, useEffect, useState } from "react";
 
-import perlinTextureImage from '../public/perlin.jpg';
+import perlinTextureImage from "../public/perlin.jpg";
 
 export default function GPUIntensiveTask() {
   const pixiStarWarpContainerRef = useRef();
 
-  const [shouldRunGPUIntensiveTask, setShouldRunGPUIntensiveTask] = useState(false);
+  const [shouldRunGPUIntensiveTask, setShouldRunGPUIntensiveTask] = useState(
+    false
+  );
 
   useEffect(() => {
     let app;
@@ -19,7 +21,7 @@ export default function GPUIntensiveTask() {
       // Build geometry.
       const geometry = new PIXI.Geometry()
         .addAttribute(
-          'aVertexPosition', // the attribute name
+          "aVertexPosition", // the attribute name
           [
             0,
             0, // x, y
@@ -30,10 +32,10 @@ export default function GPUIntensiveTask() {
             0,
             200,
           ], // x, y
-          2,
+          2
         ) // the size of the attribute
         .addAttribute(
-          'aUvs', // the attribute name
+          "aUvs", // the attribute name
           [
             0,
             0, // u, v
@@ -44,7 +46,7 @@ export default function GPUIntensiveTask() {
             0,
             1,
           ], // u, v
-          2,
+          2
         ) // the size of the attribute
         .addIndex([0, 1, 2, 0, 2, 3]);
 
@@ -93,7 +95,11 @@ export default function GPUIntensiveTask() {
       const gridUniforms = {
         zoom: 10,
       };
-      const gridShader = PIXI.Shader.from(vertexSrc, fragmentGridSrc, gridUniforms);
+      const gridShader = PIXI.Shader.from(
+        vertexSrc,
+        fragmentGridSrc,
+        gridUniforms
+      );
       // Sharing textures and meshes is possible. But for simplicity each pass has it's own output texture and mesh in this example.
       const gridTexture = PIXI.RenderTexture.create(200, 200);
       const gridQuad = new PIXI.Mesh(geometry, gridShader);
@@ -123,7 +129,11 @@ export default function GPUIntensiveTask() {
         phase: 0,
         texIn: gridTexture,
       };
-      const rippleShader = PIXI.Shader.from(vertexSrc, fragmentRippleSrc, rippleUniforms);
+      const rippleShader = PIXI.Shader.from(
+        vertexSrc,
+        fragmentRippleSrc,
+        rippleUniforms
+      );
       const rippleTexture = PIXI.RenderTexture.create(200, 200);
       const rippleQuad = new PIXI.Mesh(geometry, rippleShader);
       const rippleContainer = new PIXI.Container();
@@ -146,7 +156,11 @@ export default function GPUIntensiveTask() {
         limit: 0.5,
         noise: perlinTexture,
       };
-      const noiseShader = PIXI.Shader.from(vertexSrc, fragmentNoiseSrc, noiseUniforms);
+      const noiseShader = PIXI.Shader.from(
+        vertexSrc,
+        fragmentNoiseSrc,
+        noiseUniforms
+      );
       const noiseTexture = PIXI.RenderTexture.create(200, 200);
       const noiseQuad = new PIXI.Mesh(geometry, noiseShader);
       const noiseContainer = new PIXI.Container();
@@ -178,7 +192,11 @@ export default function GPUIntensiveTask() {
         amplitude: 0.75,
         time: 0,
       };
-      const waveShader = PIXI.Shader.from(vertexSrc, fragmentWaveSrc, waveUniforms);
+      const waveShader = PIXI.Shader.from(
+        vertexSrc,
+        fragmentWaveSrc,
+        waveUniforms
+      );
       const waveTexture = PIXI.RenderTexture.create(200, 200);
       const waveQuad = new PIXI.Mesh(geometry, waveShader);
       const waveContainer = new PIXI.Container();
@@ -207,7 +225,11 @@ export default function GPUIntensiveTask() {
         texNoise: noiseTexture,
         texWave: waveTexture,
       };
-      const combineShader = PIXI.Shader.from(vertexSrc, fragmentCombineSrc, combineUniforms);
+      const combineShader = PIXI.Shader.from(
+        vertexSrc,
+        fragmentCombineSrc,
+        combineUniforms
+      );
       const combineQuad = new PIXI.Mesh(geometry, combineShader);
 
       gridContainer.position.set(10, 10);

@@ -1,7 +1,7 @@
 #waymark-embed-container {
   width: 100px;
   min-height: 75px;
-  border: 4px dashed red;
+  border: 4px dashed coral;
   box-sizing: border-box;
   position: relative;
 }
@@ -9,7 +9,7 @@
 #waymark-embed-container.embedded {
   width: 100%;
   min-height: 480px;
-  border-color: green;
+  border-color: yellowgreen;
 }
 
 #waymark-embed-container iframe {
@@ -22,6 +22,11 @@
 }
 
 .initialization-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.webhook-testing-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
