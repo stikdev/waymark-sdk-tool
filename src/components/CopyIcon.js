@@ -1,4 +1,4 @@
-import { THE_BLUE } from "./constants";
+import { theBlue } from "./constants";
 
 export default function CopyIcon({ color, isCopied, ...props }) {
   return (
@@ -12,7 +12,7 @@ export default function CopyIcon({ color, isCopied, ...props }) {
       <g
         fill="none"
         fillRule="evenodd"
-        stroke={isCopied ? "limegreen" : THE_BLUE}
+        stroke={isCopied ? "limegreen" : theBlue}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="3"

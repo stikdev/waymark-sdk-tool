@@ -9,7 +9,7 @@ import KJUR from "jsrsasign";
 import faker from "faker";
 
 import CopyIcon from "./CopyIcon";
-import { THE_BLUE } from "./constants";
+import { theBlue } from "./constants";
 import "./WebhookTestingForm.css";
 
 const CORS_EXAMPLE =
@@ -36,7 +36,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
 
   const [openSnackbar] = useSnackbar({
     style: {
-      backgroundColor: THE_BLUE,
+      backgroundColor: theBlue,
       textColor: "white",
       fontWeight: "bold",
       fontSize: "16px",
@@ -391,7 +391,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
 
       <ReactTooltip
         id="tooltip"
-        backgrounColor={THE_BLUE}
+        backgrounColor={theBlue}
         place="right"
         type="info"
         effect="solid"
