@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { JsonEditor } from "jsoneditor-react";
 
-import { TestModeWaymark } from "@waymark/waymark-sdk";
+import Waymark, { TestModeWaymark } from "@waymark/waymark-sdk";
 
 const DEFAULT_OPTIONS = {
   domElement: "#waymark-embed-container",
@@ -17,6 +17,14 @@ const DEFAULT_OPTIONS = {
   timeout: 5000,
 };
 
+const ENVIRONMENTS = {
+  'harness': 'harness',
+  'local': 'local',
+  'demo': 'demo',
+  'prod': 'prod',
+  'custom': 'custom',
+}
+
 /**
  * Form provides controls to configure and create a new Waymark instance
  */
@@ -26,6 +34,7 @@ export default function WaymarkInstanceInitializationControls({
 }) {
   // Config to pass in for theming the editor. Managed by a JsonEditor component
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
+  const [environment, setEnvironment] = useState(ENVIRONMENTS.harness);
 
   return (
     <form
@@ -40,14 +49,32 @@ export default function WaymarkInstanceInitializationControls({
         }
 
         const formElement = event.target;
-
-        const partnerID = formElement.partnerID.value;
-
-        // Create a new Waymark instance with our config
-        const waymarkObject = new TestModeWaymark(partnerID, {
+        const partnerID = formElement.partnerID.value;          
+        
+        // Construct options with either a preset env slug or a custom environment host object.
+        const waymarkOptions = {
           ...options,
-          domElement: document.querySelector(options.domElement),
-        });
+          environment:
+            environment === ENVIRONMENTS.custom
+              ? { host: formElement.overrideHost.value }
+              : environment,
+        }; 
+
+        const domElement = document.querySelector(waymarkOptions.domElement);
+        
+        let waymarkObject;
+        // Create a new Waymark instance with our config
+        if (environment === ENVIRONMENTS.harness) {
+          waymarkObject = new TestModeWaymark(partnerID, {
+            ...waymarkOptions,
+            domElement,
+          });
+        } else {
+          waymarkObject = new Waymark(partnerID, {
+            ...waymarkOptions,
+            domElement,
+          });
+        }
 
         try {
           await waymarkObject.connectionPromise;
@@ -69,6 +96,32 @@ export default function WaymarkInstanceInitializationControls({
         name="partnerID"
         defaultValue="fake-partner-id"
       />
+      <label className="form-label" htmlFor="env">
+        Environment
+      </label>
+      <select
+        id="env"
+        name="env"
+        defaultValue={ENVIRONMENTS.harness}
+        onChange={(event) => setEnvironment(event.target.value)}
+      >
+        {Object.values(ENVIRONMENTS).map((environment) => (
+          <option key={environment}>{environment}</option>
+        ))}
+      </select>
+      {environment === ENVIRONMENTS.custom ? (
+        <>
+          <label className="form-label" htmlFor="overrideHost">
+            Override host
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            id="overrideHost"
+            name="overrideHost"
+          />
+        </>
+      ) : null}
       <label className="form-label">Waymark Options</label>
       <JsonEditor
         value={options}
