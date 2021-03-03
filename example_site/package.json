@@ -1,0 +1,73 @@
+{
+  "name": "integration-sandbox",
+  "version": "0.1.0",
+  "private": false,
+  "scripts": {
+    "start": "BROWSER_ARGS=--enable-precise-memory-info react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "test:ci": "react-scripts test --env=jsdom -- --ci --reporters=default --reporters=jest-junit"
+  },
+  "eslintIgnore": [],
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:react-hooks/recommended"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": "auto",
+          "shippedProposals": true
+        }
+      ]
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.8.1",
+    "@waymark/waymark-sdk": "^1.7.0",
+    "axios": "^0.21.1",
+    "classnames": "^2.2.6",
+    "faker": "^5.4.0",
+    "jsoneditor": "^9.2.0",
+    "jsoneditor-react": "^3.1.0",
+    "jsrsasign": "^10.1.12",
+    "penpal": "^5.3.0",
+    "pixi.js": "^5.3.8",
+    "react": "^17.0.1",
+    "react-copy-to-clipboard": "^5.0.3",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.15.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "react-simple-snackbar": "^1.1.10",
+    "react-tooltip": "^4.2.15",
+    "stats.js": "^0.17.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/node": "7.10.5",
+    "@babel/preset-env": "^7.13.9",
+    "babel-eslint": "^10.1.0",
+    "canvas": "^2.6.1",
+    "jest-junit": "^12.0.0"
+  }
+}
