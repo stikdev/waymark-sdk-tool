@@ -1,3 +1,7 @@
+.navbar li {
+  display: inline;
+}
+
 #waymark-embed-container {
   width: 100px;
   min-height: 75px;

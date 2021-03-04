@@ -11,78 +11,96 @@ import { theBlue } from "./constants";
 import { useAppContext } from "./AppProvider";
 import "./Collections.css";
 
-function Template({template}) {
-  const {waymarkInstance, openEditor} = useAppContext();
+function Template({ template }) {
+  const { waymarkInstance, openEditor } = useAppContext();
   const history = useHistory();
 
-  console.log('TEMPLA', template);
   return (
-      <li>
-      <a title={template.id} onClick={() => openEditor({template})}>{template.name}</a>
-      <a href={template.previewVideoURL} target="_blank"><img src={template.thumbnailImageURL}/></a>
+      <li className="Template">
+      <a href={template.previewVideoURL} target="_blank">
+        <img src={template.thumbnailImageURL} />
+      </a>
+      <a title={template.id} onClick={() => openEditor({ template })}>
+        {template.name}
+    </a>
     </li>
   );
 }
 
-function Collection({collection, setSelectedCollection, expand}) {
-  const {waymarkInstance} = useAppContext();
+function Collection({ collection, setSelectedCollection, expand }) {
+  const { waymarkInstance } = useAppContext();
   const [templates, setTemplates] = useState([]);
   const [isGettingTemplates, setIsGettingTemplates] = useState(false);
 
   useEffect(() => {
-    if (!waymarkInstance || isGettingTemplates) { return; }
-    if (!expand) { return; }
+    if (!waymarkInstance || isGettingTemplates) {
+      return;
+    }
+    if (!expand) {
+      return;
+    }
 
     setIsGettingTemplates(true);
-    waymarkInstance.getTemplatesForCollection(collection.id)
-      .then( (templates) => {
+    waymarkInstance
+      .getTemplatesForCollection(collection.id)
+      .then((templates) => {
         setTemplates(templates);
       });
-
   }, [waymarkInstance, expand]);
 
-  const onClick = ((collection) => {
+  const onClick = (collection) => {
     setSelectedCollection(collection);
-  });
+  };
 
   return (
-      <li>
-      <a onClick={() => onClick(collection)}>{collection.name} ({collection.id})</a>
+    <li className="Collection">
+      <a className="CollectionName" onClick={() => onClick(collection)}>
+        {collection.name} ({collection.id})
+      </a>
       {expand && (
-        <ul>
-          {templates.map((template) => (<Template key={template.id} template={template}/>))}
+        <ul className="Collection">
+          {templates.map((template) => (
+            <Template key={template.id} template={template} />
+          ))}
         </ul>
       )}
-      </li>
+    </li>
   );
 }
 
-export default function Collections ({ openSnackbar, setAccount }) {
+export default function Collections({ openSnackbar, setAccount }) {
   const [collections, setCollections] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState(null);
   const [isGettingCollections, setIsGettingCollections] = useState(false);
-  const {waymarkInstance} = useAppContext();
+  const { waymarkInstance } = useAppContext();
 
   const history = useHistory();
 
   useEffect(() => {
-    if (!waymarkInstance || isGettingCollections) { return; }
+    if (!waymarkInstance || isGettingCollections) {
+      return;
+    }
     setIsGettingCollections(true);
-    waymarkInstance.getCollections()
-      .then( (collections) => {
-        setCollections(collections);
-      });
-
+    waymarkInstance.getCollections().then((collections) => {
+      setCollections(collections);
+    });
   }, [waymarkInstance, isGettingCollections]);
 
   return (
-    <div>
+    <div className="CollectionsPage">
       <h2>Collections</h2>
-      <ul>
-      {
-        collections.map((collection) => (<Collection key={collection.id} collection={collection} setSelectedCollection={setSelectedCollection} expand={selectedCollection && selectedCollection.id === collection.id}/>))
-      }
-    </ul>
+      <ul className="Collections">
+        {collections.map((collection) => (
+          <Collection
+            key={collection.id}
+            collection={collection}
+            setSelectedCollection={setSelectedCollection}
+            expand={
+              selectedCollection && selectedCollection.id === collection.id
+            }
+          />
+        ))}
+      </ul>
     </div>
   );
 }

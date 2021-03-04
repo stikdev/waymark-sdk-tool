@@ -1,4 +1,49 @@
+.CollectionsPage {
+  margin: 10px;
+}
+
 img {
   width: 50px;
   height: 50px;
+  margin-right: 10px;
+}
+
+ul.Collections {
+  list-style: none;
+}
+
+ul.Collection {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+li.Collection {
+  margin-top: 10px;
+  list-style: "\00BB";
+  font-size: 20px;
+}
+
+a.CollectionName {
+  cursor: pointer;
+}
+a.CollectionName:hover {
+  background-color: coral;
+}
+
+li.Template {
+  cursor: pointer;
+  font-size: 12px;
+}
+li.Template:hover {
+  background-color: coral;
+}
+
+li.Template a {
+  display: block;
+}
+li.Template {
+  max-width: 640px;
+  width: auto;
 }

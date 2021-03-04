@@ -102,7 +102,7 @@ function App() {
         <div id="waymark-embed-container" className={embedClasses} ref={embedRef}></div>
 
         <Route path="/editor"></Route>
-      <Route path="/collections"><Collections waymarkInstance={waymarkInstance}/></Route>
+        <Route path="/collections"><Collections waymarkInstance={waymarkInstance}/></Route>
 
         <Route exact path="/">
           <div className="webhook-testing-container">

@@ -86,6 +86,13 @@ export default function WaymarkInstanceInitializationControls({
       }}
     >
       <h2>Waymark Embed Config</h2>
+
+      <nav className="navbar">
+        <ul>
+          <li><a href="#">Test Site</a></li>
+        </ul>
+      </nav>
+
       <label className="form-label" htmlFor="partnerID">
         Partner ID
       </label>
