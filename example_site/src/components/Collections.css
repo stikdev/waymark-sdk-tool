@@ -8,11 +8,17 @@ img {
   margin-right: 10px;
 }
 
+div.Loading {
+  margin: 10px;
+  font-size: 20px;
+}
+
 ul.Collections {
   list-style: none;
 }
 
 ul.Collection {
+  margin-top: 10px;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
