@@ -2,12 +2,6 @@
   margin: 10px;
 }
 
-img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
-
 div.Loading {
   margin: 10px;
   font-size: 20px;
@@ -40,7 +34,8 @@ a.CollectionName:hover {
 
 li.Template {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 20px;
+  border: 1px solid yellowgreen;
 }
 li.Template:hover {
   background-color: coral;
@@ -48,8 +43,17 @@ li.Template:hover {
 
 li.Template a {
   display: block;
+  text-align: center;
+  margin: 10px;
 }
 li.Template {
   max-width: 640px;
   width: auto;
+  text-align: center;
+  padding-top: 10px;
+}
+
+img.Thumbnail {
+  width: 50px;
+  height: 50px;
 }
