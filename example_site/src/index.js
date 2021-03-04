@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
 
@@ -8,13 +9,17 @@ import { AppProvider } from "./components/AppProvider";
 
 import "./index.css";
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
     <SnackbarProvider>
       <BrowserRouter>
-        <AppProvider>
-          <App />
-        </AppProvider>
+        <QueryClientProvider client={queryClient}>
+          <AppProvider>
+            <App />
+          </AppProvider>
+        </QueryClientProvider>
       </BrowserRouter>
     </SnackbarProvider>
   </React.StrictMode>,
