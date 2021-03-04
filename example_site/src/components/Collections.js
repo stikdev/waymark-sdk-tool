@@ -17,12 +17,10 @@ function Template({ template }) {
   const history = useHistory();
 
   return (
-    <li className="Template">
-      <a href={template.previewVideoURL} target="_blank">
-        <img src={template.thumbnailImageURL} />
-      </a>
+      <li className="Template">
       <a title={template.id} onClick={() => openEditor({ template })}>
-        {template.name}
+      <img className="Thumbnail" src={template.thumbnailImageURL} />
+      <div>{template.name}</div>
       </a>
     </li>
   );
