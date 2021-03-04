@@ -33,7 +33,7 @@ function Collection({ collection, setSelectedCollection, expand }) {
   const [isGettingTemplates, setIsGettingTemplates] = useState(false);
 
   useEffect(() => {
-    if (!waymarkInstance || isGettingTemplates) {
+    if (!waymarkInstance || isGettingTemplates || templates.length) {
       return;
     }
     if (!expand) {
@@ -44,9 +44,10 @@ function Collection({ collection, setSelectedCollection, expand }) {
     waymarkInstance
       .getTemplatesForCollection(collection.id)
       .then((templates) => {
+        setIsGettingTemplates(false);
         setTemplates(templates);
       });
-  }, [waymarkInstance, expand]);
+  }, [waymarkInstance, expand, templates]);
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
@@ -58,11 +59,14 @@ function Collection({ collection, setSelectedCollection, expand }) {
         {collection.name} ({collection.id})
       </a>
       {expand && (
-        <ul className="Collection">
-          {templates.map((template) => (
-            <Template key={template.id} template={template} />
-          ))}
-        </ul>
+        <>
+          {isGettingTemplates && (<div className="Loading">Loading...</div>)}
+          <ul className="Collection">
+            {templates.map((template) => (
+              <Template key={template.id} template={template} />
+            ))}
+          </ul>
+        </>
       )}
     </li>
   );
@@ -77,18 +81,20 @@ export default function Collections({ openSnackbar, setAccount }) {
   const history = useHistory();
 
   useEffect(() => {
-    if (!waymarkInstance || isGettingCollections) {
+    if (!waymarkInstance || isGettingCollections || collections.length) {
       return;
     }
     setIsGettingCollections(true);
     waymarkInstance.getCollections().then((collections) => {
+      setIsGettingCollections(false);
       setCollections(collections);
     });
-  }, [waymarkInstance, isGettingCollections]);
+  }, [waymarkInstance, isGettingCollections, collections]);
 
   return (
     <div className="CollectionsPage">
       <h2>Collections</h2>
+      {isGettingCollections && (<div className="Loading">Loading...</div>)}
       <ul className="Collections">
         {collections.map((collection) => (
           <Collection
