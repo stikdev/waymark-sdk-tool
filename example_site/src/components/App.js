@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "jsoneditor-react/es/editor.min.css";
-import { Link, Route, useHistory } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 
@@ -14,9 +14,7 @@ import "./App.css";
 const PARTNER_ID = "spectrum-reach";
 
 function App() {
-  const {waymarkInstance, setWaymarkInstance, isEditorOpen, setIsEditorOpen} = useAppContext();
-  const [account, setAccount] = useState(null);
-  const history = useHistory();
+  const {waymarkInstance, setWaymarkInstance, account, setAccount, isEditorOpen, setIsEditorOpen} = useAppContext();
   const embedRef = React.createRef();
 
   const [openSnackbar] = useSnackbar({
@@ -28,8 +26,10 @@ function App() {
     },
   });
 
+
   useEffect(() => {
-    console.log(embedRef);
+    if (waymarkInstance) return;
+
     const waymarkOptions = {
       domElement: embedRef.current,
       editor: {
@@ -45,12 +45,12 @@ function App() {
       timeout: 5000,
     };
 
-    const waymarkInstance = new Waymark(PARTNER_ID, waymarkOptions);
-    setWaymarkInstance(waymarkInstance);
-    console.log(waymarkInstance);
+    const newWaymarkInstance = new Waymark(PARTNER_ID, waymarkOptions);
+    setWaymarkInstance(newWaymarkInstance);
+    console.log(newWaymarkInstance);
 
 
-  }, [embedRef.current]);
+  }, [embedRef, setWaymarkInstance, waymarkInstance]);
 
   useEffect(() => {
     if (!waymarkInstance) {
@@ -95,7 +95,10 @@ function App() {
             </li>
             <li>
               <Link to="/purchase">Purchase</Link>
-            </li>
+      </li>
+      <li>
+      {account ? `Account : ${account.firstName} ${account.lastName}` : "<no account>"}
+      </li>
           </ul>
         </nav>
 
@@ -106,7 +109,7 @@ function App() {
 
         <Route exact path="/">
           <div className="webhook-testing-container">
-            <AccountForm openSnackbar={openSnackbar} setAccount={setAccount}/>
+            <AccountForm openSnackbar={openSnackbar}/>
           </div>
         </Route>
 
