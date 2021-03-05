@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
 import { useQuery } from "react-query";
 
-import axios from "axios";
-import classnames from "classnames";
-import KJUR from "jsrsasign";
-import faker from "faker";
-
-import { theBlue } from "./constants";
 import { useAppContext } from "./AppProvider";
 import "./Collections.css";
 
 function Template({ template }) {
-  const { waymarkInstance, openEditor } = useAppContext();
-  const history = useHistory();
+  const { openEditor } = useAppContext();
 
   return (
       <li className="Template">
       <a title={template.id} onClick={() => openEditor({ template })}>
-      <img className="Thumbnail" src={template.thumbnailImageURL} />
+      <img className="Thumbnail" src={template.thumbnailImageURL} alt={`${template.name} thumbnail`} />
       <div>{template.name}</div>
       </a>
     </li>
@@ -47,8 +38,9 @@ function Collection({ collection, setSelectedCollection, expand }) {
       {expand && (
         <>
           {isLoading && <div className="Loading">Loading...</div>}
+        {isError && <div className="Error">Error loading collection. {error}</div>}
           <ul className="Collection">
-            {templates &&
+            {isSuccess && templates &&
               templates.map((template) => (
                 <Template key={template.id} template={template} />
               ))}
@@ -63,8 +55,6 @@ export default function Collections({ openSnackbar, setAccount }) {
   //const [collections, setCollections] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState(null);
   const { waymarkInstance } = useAppContext();
-
-  const history = useHistory();
 
   const {
     isLoading,

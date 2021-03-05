@@ -1,21 +1,17 @@
 import { JsonEditor } from "jsoneditor-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import axios from "axios";
-import classnames from "classnames";
 import KJUR from "jsrsasign";
 import faker from "faker";
 
 import { useAppContext } from "./AppProvider";
-import { theBlue } from "./constants";
 import "./AccountForm.css";
 
-export default function AccountForm ({ openSnackbar, setAccount }) {
-  const {waymarkInstance} = useAppContext();
-  const [status, setStatus] = useState(null);
+export default function AccountForm ({ openSnackbar }) {
+  const {waymarkInstance, setAccount} = useAppContext();
 
+  // Default account JSON data for the editor.
   const [accountData, setAccountData] = useState(() => ({
     firstName: "Mabel",
     lastName: "Tierney",
@@ -61,12 +57,17 @@ export default function AccountForm ({ openSnackbar, setAccount }) {
             privateKey
           );
 
-          const account = await waymarkInstance.createAccount(signedJWT);
+          const accountID = await waymarkInstance.createAccount(signedJWT);
 
           history.push("/collections");
-          setAccount(account || {});
-          console.log("Created account", account);
-          openSnackbar("Created account: ");//, account.id);
+          console.log("Created account ID:", accountID);
+          openSnackbar(`Created account ID: ${accountID}`);
+
+          const account = await waymarkInstance.getAccountInfo();
+          console.log("Account", account);
+          setAccount(account);
+          openSnackbar(`Created account: ${account.firstName} ${account.lastName}`);
+
         } catch (error) {
           console.error('createAccount error', error);
           openSnackbar(error.message);
