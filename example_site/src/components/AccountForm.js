@@ -8,8 +8,8 @@ import faker from "faker";
 import { useAppContext } from "./AppProvider";
 import "./AccountForm.css";
 
-export default function AccountForm ({ openSnackbar }) {
-  const {waymarkInstance, setAccount} = useAppContext();
+export default function AccountForm() {
+  const { waymarkInstance, setAccount, openSnackbar } = useAppContext();
 
   // Default account JSON data for the editor.
   const [accountData, setAccountData] = useState(() => ({
@@ -66,10 +66,11 @@ export default function AccountForm ({ openSnackbar }) {
           const account = await waymarkInstance.getAccountInfo();
           console.log("Account", account);
           setAccount(account);
-          openSnackbar(`Created account: ${account.firstName} ${account.lastName}`);
-
+          openSnackbar(
+            `Created account: ${account.firstName} ${account.lastName}`
+          );
         } catch (error) {
-          console.error('createAccount error', error);
+          console.error("createAccount error", error);
           openSnackbar(error.message);
         }
       }}

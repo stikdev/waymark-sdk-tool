@@ -8,10 +8,14 @@ function Template({ template }) {
   const { openEditor } = useAppContext();
 
   return (
-      <li className="Template">
+    <li className="Template">
       <a title={template.id} onClick={() => openEditor({ template })}>
-      <img className="Thumbnail" src={template.thumbnailImageURL} alt={`${template.name} thumbnail`} />
-      <div>{template.name}</div>
+        <img
+          className="Thumbnail"
+          src={template.thumbnailImageURL}
+          alt={`${template.name} thumbnail`}
+        />
+        <div>{template.name}</div>
       </a>
     </li>
   );
@@ -38,9 +42,12 @@ function Collection({ collection, setSelectedCollection, expand }) {
       {expand && (
         <>
           {isLoading && <div className="Loading">Loading...</div>}
-        {isError && <div className="Error">Error loading collection. {error}</div>}
+          {isError && (
+            <div className="Error">Error loading collection. {error}</div>
+          )}
           <ul className="Collection">
-            {isSuccess && templates &&
+            {isSuccess &&
+              templates &&
               templates.map((template) => (
                 <Template key={template.id} template={template} />
               ))}
@@ -51,20 +58,18 @@ function Collection({ collection, setSelectedCollection, expand }) {
   );
 }
 
-export default function Collections({ openSnackbar, setAccount }) {
+export default function Collections({ setAccount }) {
   //const [collections, setCollections] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState(null);
   const { waymarkInstance } = useAppContext();
 
-  const {
-    isLoading,
-    isError,
-    isSuccess,
-    data: collections,
-    error,
-  } = useQuery("collections", () => waymarkInstance.getCollections(), {
-    enabled: !!waymarkInstance,
-  });
+  const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
+    "collections",
+    () => waymarkInstance.getCollections(),
+    {
+      enabled: !!waymarkInstance,
+    }
+  );
 
   return (
     <div className="CollectionsPage">
