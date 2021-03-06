@@ -8,10 +8,10 @@ function Template({ template }) {
   const { openEditor } = useAppContext();
 
   return (
-    <li className="Template">
+    <li className="template">
       <a title={template.id} onClick={() => openEditor({ template })}>
         <img
-          className="Thumbnail"
+          className="thumbnail"
           src={template.thumbnailImageURL}
           alt={`${template.name} thumbnail`}
         />
@@ -35,17 +35,17 @@ function Collection({ collection, setSelectedCollection, expand }) {
   };
 
   return (
-    <li className="Collection">
-      <a className="CollectionName" onClick={() => onClick(collection)}>
+    <li className="collection">
+      <a className="collection-name" onClick={() => onClick(collection)}>
         {collection.name} ({collection.id})
       </a>
       {expand && (
         <>
-          {isLoading && <div className="Loading">Loading...</div>}
+          {isLoading && <div className="loading">Loading...</div>}
           {isError && (
-            <div className="Error">Error loading collection. {error}</div>
+            <div className="error">Error loading collection. {error}</div>
           )}
-          <ul className="Collection">
+          <ul className="collection">
             {isSuccess &&
               templates &&
               templates.map((template) => (
@@ -72,11 +72,11 @@ export default function Collections({ setAccount }) {
   );
 
   return (
-    <div className="CollectionsPage">
+    <div className="collections-page">
       <h2>Collections</h2>
-      {isLoading && <div className="Loading">Loading...</div>}
-      {isError && <div className="Error">Error: {error}</div>}
-      <ul className="Collections">
+      {isLoading && <div className="loading">Loading...</div>}
+      {isError && <div className="error">Error: {error}</div>}
+      <ul className="collections">
         {isSuccess &&
           collections.map((collection) => (
             <Collection
