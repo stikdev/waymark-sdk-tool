@@ -1,17 +1,17 @@
-.CollectionsPage {
-  margin: 10px;
+.collections-page {
+  margin: 20px;
 }
 
-div.Loading {
+div.loading {
   margin: 10px;
   font-size: 20px;
 }
 
-ul.Collections {
+ul.collections {
   list-style: none;
 }
 
-ul.Collection {
+ul.collection {
   margin-top: 10px;
   list-style: none;
   display: grid;
@@ -19,41 +19,41 @@ ul.Collection {
   gap: 10px;
 }
 
-li.Collection {
+li.collection {
   margin-top: 10px;
   list-style: "\00BB";
   font-size: 20px;
 }
 
-a.CollectionName {
+a.collection-name {
   cursor: pointer;
 }
-a.CollectionName:hover {
+a.collection-name:hover {
   background-color: coral;
 }
 
-li.Template {
+li.template {
   cursor: pointer;
   font-size: 20px;
   border: 1px solid yellowgreen;
 }
-li.Template:hover {
+li.template:hover {
   background-color: coral;
 }
 
-li.Template a {
+li.template a {
   display: block;
   text-align: center;
   margin: 10px;
 }
-li.Template {
+li.template {
   max-width: 640px;
   width: auto;
   text-align: center;
   padding-top: 10px;
 }
 
-img.Thumbnail {
+img.thumbnail {
   width: 50px;
   height: 50px;
 }
