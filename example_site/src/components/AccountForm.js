@@ -27,6 +27,7 @@ export default function AccountForm() {
 
   return (
     <form
+      className="panel"
       data-test="createAccount-form"
       onSubmit={async (event) => {
         event.preventDefault();

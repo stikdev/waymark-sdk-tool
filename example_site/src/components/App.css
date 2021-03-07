@@ -45,7 +45,7 @@ main {
   grid-template-columns: repeat(2, 1fr);
 }
 
-form {
+.panel {
   padding: 24px;
   margin-bottom: 8px;
   border-radius: 4px;
@@ -68,7 +68,7 @@ form {
   background-color: lightcoral;
   color: white;
   padding: 4px 8px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .operation-button {

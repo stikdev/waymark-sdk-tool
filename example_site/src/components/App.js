@@ -5,6 +5,7 @@ import classnames from "classnames";
 
 import Waymark from "@waymark/waymark-sdk";
 import AccountForm from "./AccountForm";
+import AccountPage from "./AccountPage";
 import Collections from "./Collections";
 import PurchaseVideo from "./PurchaseVideo";
 import { useAppContext } from "./AppProvider";
@@ -84,13 +85,7 @@ function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/editor">Editor</Link>
-          </li>
-          <li>
             <Link to="/collections">Collections</Link>
-          </li>
-          <li>
-            <Link to="/purchase">Purchase</Link>
           </li>
           <li>
             {account
@@ -113,7 +108,11 @@ function App() {
 
       <Route exact path="/">
         <div className="webhook-testing-container">
-          <AccountForm openSnackbar={openSnackbar} />
+          {account ? (
+            <AccountPage />
+          ) : (
+            <AccountForm openSnackbar={openSnackbar} />
+          )}
         </div>
       </Route>
 
