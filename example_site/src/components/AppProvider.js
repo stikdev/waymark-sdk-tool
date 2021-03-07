@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import _ from "lodash";
+import React, { useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 
@@ -38,34 +39,43 @@ export const AppProvider = ({ children }) => {
     },
   });
 
-  const openEditor = ({ template, video }) => {
-    if (template) {
-      waymarkInstance.openEditorForTemplate(template.id);
-      setIsEditorOpen(true);
-      history.push("/editor");
-    }
-  };
+  const openEditor = useCallback(
+    ({ template, video }) => {
+      if (template) {
+        waymarkInstance.openEditorForTemplate(template.id);
+        setIsEditorOpen(true);
+        history.push("/editor");
+      }
+    },
+    [waymarkInstance, setIsEditorOpen, history]
+  );
 
-  const closeEditor = () => {
+  const closeEditor = useCallback(() => {
     setIsEditorOpen(false);
     history.push("/collections");
-  };
+  }, [setIsEditorOpen, history]);
 
-  const purchaseVideo = (video) => {
-    setIsEditorOpen(false);
-    setPurchasedVideo(video);
-    history.push("/purchase");
-  };
+  const purchaseVideo = useCallback(
+    (video) => {
+      setIsEditorOpen(false);
+      setPurchasedVideo(video);
+      history.push("/purchase");
+    },
+    [setIsEditorOpen, setPurchasedVideo, history]
+  );
 
-  const addTemplates = (newTemplates) => {
-    if (!newTemplates || !newTemplates.length) return;
+  const addTemplates = useCallback(
+    (newTemplates) => {
+      if (_.isEmpty(newTemplates)) return;
 
-    const allTemplates = {...templates};
-    newTemplates.forEach((template) => {
-      allTemplates[template.id] = template;
-    });
-    setTemplates(allTemplates);
-  };
+      const allTemplates = { ...templates };
+      newTemplates.forEach((template) => {
+        allTemplates[template.id] = template;
+      });
+      setTemplates(allTemplates);
+    },
+    [setTemplates]
+  );
 
   const getTemplateByID = (templateID) => {
     return templates[templateID];
