@@ -77,7 +77,7 @@ export default function Collections() {
   );
 
   return (
-    <div className="collections-page">
+    <div className="collections-page panel">
       <h2>Collections</h2>
       {isLoading && <div className="loading">Loading...</div>}
       {isError && <div className="error">Error: {error}</div>}

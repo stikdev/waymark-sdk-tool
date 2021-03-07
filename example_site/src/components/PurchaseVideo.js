@@ -2,9 +2,16 @@ import { useAppContext } from "./AppProvider";
 import "./PurchaseVideo.css";
 
 export default function PurchaseVideo() {
-  const { purchasedVideo, goHome, getTemplateByID, openSnackbar } = useAppContext();
+  const {
+    purchasedVideo,
+    goHome,
+    getTemplateByID,
+    openSnackbar,
+  } = useAppContext();
 
-  const template = purchasedVideo ? getTemplateByID(purchasedVideo.templateID) : {};
+  const template = purchasedVideo
+    ? getTemplateByID(purchasedVideo.templateID)
+    : {};
 
   const completePurchase = () => {
     openSnackbar("Purchased!");
@@ -12,10 +19,10 @@ export default function PurchaseVideo() {
   };
 
   return (
-    <div className="purchase-form">
+    <div className="purchase-form panel">
       <h2>Purchase Video</h2>
-      {purchasedVideo ?
-       (<>
+      {purchasedVideo ? (
+        <>
           <div className="description video-name">
             <label>Name:</label>
             <span>{purchasedVideo ? purchasedVideo.name : "<none>"}</span>
@@ -36,7 +43,9 @@ export default function PurchaseVideo() {
             <label>Size:</label>
             <span>{`${template.width}x${template.height}` || ""}</span>
           </div>
-          <div className="licensing">{template.licensing === "tv" && "Licensed For Television"}</div>
+          <div className="licensing">
+            {template.licensing === "tv" && "Licensed For Television"}
+          </div>
           <button
             className="submit-button"
             onClick={completePurchase}
@@ -45,9 +54,9 @@ export default function PurchaseVideo() {
             Purchase
           </button>
         </>
-       ) : (
-           <div>Visit the collections to purchase a video!</div>
-       )}
+      ) : (
+        <div>Visit the collections to purchase a video!</div>
+      )}
     </div>
   );
 }
