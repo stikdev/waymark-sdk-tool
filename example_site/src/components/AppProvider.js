@@ -14,6 +14,8 @@ const AppContext = React.createContext({
   closeEditor: () => {},
   purchaseVideo: () => {},
   purchasedVideo: null,
+  templates: {},
+  addTemplates: () => {},
   useSnackbar: () => {},
 });
 
@@ -23,6 +25,7 @@ export const AppProvider = ({ children }) => {
   const [waymarkInstance, setWaymarkInstance] = useState(null);
   const [account, setAccount] = useState(null);
   const [purchasedVideo, setPurchasedVideo] = useState(null);
+  const [templates, setTemplates] = useState({});
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const history = useHistory();
 
@@ -54,6 +57,20 @@ export const AppProvider = ({ children }) => {
     history.push("/purchase");
   };
 
+  const addTemplates = (newTemplates) => {
+    if (!newTemplates || !newTemplates.length) return;
+
+    const allTemplates = {...templates};
+    newTemplates.forEach((template) => {
+      allTemplates[template.id] = template;
+    });
+    setTemplates(allTemplates);
+  };
+
+  const getTemplateByID = (templateID) => {
+    return templates[templateID];
+  };
+
   const goHome = () => {
     console.log("HOME");
     history.push("/");
@@ -69,6 +86,8 @@ export const AppProvider = ({ children }) => {
     closeEditor,
     purchaseVideo,
     purchasedVideo,
+    getTemplateByID,
+    addTemplates,
     goHome,
     openSnackbar,
   };
