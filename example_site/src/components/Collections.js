@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
@@ -31,7 +32,7 @@ function Collection({ collection, setSelectedCollection, expand }) {
   );
 
   useEffect(() => {
-    if (templates && templates.length) {
+    if (!_.isEmpty(templates)) {
       addTemplates(templates);
     }
   }, [templates, addTemplates]);

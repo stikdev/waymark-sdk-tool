@@ -49,6 +49,7 @@
     "jsoneditor": "^9.2.0",
     "jsoneditor-react": "^3.1.0",
     "jsrsasign": "^10.1.12",
+    "lodash": "^4.17.21",
     "penpal": "^5.3.0",
     "pixi.js": "^5.3.8",
     "react": "^17.0.1",
