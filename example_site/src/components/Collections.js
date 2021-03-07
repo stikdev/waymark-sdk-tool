@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import { useAppContext } from "./AppProvider";
@@ -22,13 +22,19 @@ function Template({ template }) {
 }
 
 function Collection({ collection, setSelectedCollection, expand }) {
-  const { waymarkInstance } = useAppContext();
+  const { waymarkInstance, addTemplates } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: templates, error } = useQuery(
     ["templates", collection.id],
     () => waymarkInstance.getTemplatesForCollection(collection.id),
     { enabled: !!waymarkInstance && expand }
   );
+
+  const saveTemplates = useEffect(() => {
+    if (templates && templates.length) {
+      addTemplates(templates);
+    }
+  }, [templates]);
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
