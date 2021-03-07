@@ -2,11 +2,6 @@
   margin: 20px;
 }
 
-div.loading {
-  margin: 10px;
-  font-size: 20px;
-}
-
 ul.collections {
   list-style: none;
 }
@@ -25,35 +20,35 @@ li.collection {
   font-size: 20px;
 }
 
-a.collection-name {
+button.collection-name {
   cursor: pointer;
+  background-color: white;
+  border: none;
+  font-size: 20px;
 }
-a.collection-name:hover {
+button.collection-name:hover {
   background-color: coral;
 }
 
 li.template {
   cursor: pointer;
   font-size: 20px;
-  border: 1px solid yellowgreen;
-}
-li.template:hover {
-  background-color: coral;
-}
-
-li.template a {
-  display: block;
-  text-align: center;
-  margin: 10px;
-}
-li.template {
-  max-width: 640px;
+  border: 2px solid yellowgreen;
   width: auto;
   text-align: center;
-  padding-top: 10px;
+}
+li.template button:hover {
+  background-color: coral;
+}
+li.template button {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  border: none;
 }
 
 img.thumbnail {
-  width: 50px;
   height: 50px;
 }
