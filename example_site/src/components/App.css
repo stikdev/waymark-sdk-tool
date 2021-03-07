@@ -92,3 +92,8 @@ form {
 .form-input {
   width: 20em;
 }
+
+div.loading {
+  margin: 10px;
+  font-size: 20px;
+}

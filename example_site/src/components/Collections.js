@@ -9,14 +9,14 @@ function Template({ template }) {
 
   return (
     <li className="template">
-      <a title={template.id} onClick={() => openEditor({ template })}>
+      <button title={template.id} onClick={() => openEditor({ template })}>
         <img
           className="thumbnail"
           src={template.thumbnailImageURL}
           alt={`${template.name} thumbnail`}
         />
         <div>{template.name}</div>
-      </a>
+      </button>
     </li>
   );
 }
@@ -30,11 +30,11 @@ function Collection({ collection, setSelectedCollection, expand }) {
     { enabled: !!waymarkInstance && expand }
   );
 
-  const saveTemplates = useEffect(() => {
+  useEffect(() => {
     if (templates && templates.length) {
       addTemplates(templates);
     }
-  }, [templates]);
+  }, [templates, addTemplates]);
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
@@ -42,9 +42,9 @@ function Collection({ collection, setSelectedCollection, expand }) {
 
   return (
     <li className="collection">
-      <a className="collection-name" onClick={() => onClick(collection)}>
+      <button className="collection-name" onClick={() => onClick(collection)}>
         {collection.name} ({collection.id})
-      </a>
+      </button>
       {expand && (
         <>
           {isLoading && <div className="loading">Loading...</div>}
@@ -64,8 +64,7 @@ function Collection({ collection, setSelectedCollection, expand }) {
   );
 }
 
-export default function Collections({ setAccount }) {
-  //const [collections, setCollections] = useState([]);
+export default function Collections() {
   const [selectedCollection, setSelectedCollection] = useState(null);
   const { waymarkInstance } = useAppContext();
 
