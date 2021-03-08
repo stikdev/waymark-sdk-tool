@@ -11,7 +11,7 @@ export default function AccountPage() {
   const { waymarkInstance, account } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: videos, error } = useQuery(
-    "collections",
+    "videos",
     () => waymarkInstance.getVideos(),
     {
       enabled: !!waymarkInstance,
