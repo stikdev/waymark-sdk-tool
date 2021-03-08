@@ -1,0 +1,8 @@
+.configuration-controls-form {
+  height: 400px;
+}
+
+.configuration-controls-form.closed {
+  height: 0;
+  display: none;
+}

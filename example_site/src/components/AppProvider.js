@@ -6,18 +6,22 @@ import { useSnackbar } from "react-simple-snackbar";
 import { theBlue } from "./constants";
 
 const AppContext = React.createContext({
-  waymarkInstance: null,
-  setWaymarkInstance: () => {},
   account: false,
-  setaccount: () => {},
+  setAccount: () => {},
+  addTemplates: () => {},
+  closeEditor: () => {},
+  embedRef: null,
   isEditorOpen: false,
   openEditor: () => {},
-  closeEditor: () => {},
+  openSnackbar: () => {},
+  partnerID: "test-partner",
+  setPartnerID: () => {},
   purchaseVideo: () => {},
   purchasedVideo: null,
   templates: {},
-  addTemplates: () => {},
   useSnackbar: () => {},
+  waymarkInstance: null,
+  setWaymarkInstance: () => {},
 });
 
 export const useAppContext = () => useContext(AppContext);
@@ -28,7 +32,9 @@ export const AppProvider = ({ children }) => {
   const [purchasedVideo, setPurchasedVideo] = useState(null);
   const [templates, setTemplates] = useState({});
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [partnerID, setPartnerID] = useState("spectrum-reach");
   const history = useHistory();
+  const embedRef = React.createRef();
 
   const [openSnackbar] = useSnackbar({
     style: {
@@ -83,23 +89,27 @@ export const AppProvider = ({ children }) => {
 
   const goHome = () => {
     console.log("HOME");
+    setIsEditorOpen(false);
     history.push("/");
   };
 
   const value = {
-    waymarkInstance,
-    setWaymarkInstance,
     account,
     setAccount,
+    addTemplates,
+    closeEditor,
+    embedRef,
+    getTemplateByID,
+    goHome,
     isEditorOpen,
     openEditor,
-    closeEditor,
+    openSnackbar,
+    partnerID,
+    setPartnerID,
     purchaseVideo,
     purchasedVideo,
-    getTemplateByID,
-    addTemplates,
-    goHome,
-    openSnackbar,
+    waymarkInstance,
+    setWaymarkInstance,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

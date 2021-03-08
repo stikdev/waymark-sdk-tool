@@ -1,57 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "jsoneditor-react/es/editor.min.css";
 import { Link, Route } from "react-router-dom";
 import classnames from "classnames";
 
-import Waymark from "@waymark/waymark-sdk";
 import AccountForm from "./AccountForm";
 import AccountPage from "./AccountPage";
 import Collections from "./Collections";
+import ConfigurationControls from "./ConfigurationControls";
 import PurchaseVideo from "./PurchaseVideo";
 import { useAppContext } from "./AppProvider";
 import "./App.css";
 
-const PARTNER_ID = "spectrum-reach";
-
 function App() {
   const {
-    waymarkInstance,
-    setWaymarkInstance,
     account,
-    isEditorOpen,
     closeEditor,
-    purchaseVideo,
+    embedRef,
+    isEditorOpen,
     openSnackbar,
+    purchaseVideo,
+    waymarkInstance,
   } = useAppContext();
-  const embedRef = React.createRef();
 
-  useEffect(() => {
-    if (waymarkInstance) return;
-
-    const waymarkOptions = {
-      domElement: embedRef.current,
-      editor: {
-        orientation: "left",
-        labels: {
-          completeVideo: "Complete your video",
-          exitEditor: "Exit the editor",
-          videoName: "Custom Video Name",
-        },
-      },
-      testJWTSecret: "test-partner-secret",
-      environment: "local",
-      timeout: 5000,
-    };
-
-    const newWaymarkInstance = new Waymark(PARTNER_ID, waymarkOptions);
-    setWaymarkInstance(newWaymarkInstance);
-    console.log(newWaymarkInstance);
-  }, [embedRef, setWaymarkInstance, waymarkInstance]);
+  const [isConfigurationOpen, setIsConfigurationOpen] = useState(true);
 
   useEffect(() => {
     if (!waymarkInstance) {
       return;
     }
+
+    setIsConfigurationOpen(false);
 
     waymarkInstance.on("editorOpened", (event) => {
       console.log("editorOpened", event);
@@ -92,8 +70,21 @@ function App() {
               ? `Account : ${account.firstName} ${account.lastName}`
               : "<no account>"}
           </li>
+          <li>
+            {" "}
+            <button
+              className="hide-configuration"
+              onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}
+            >
+              {isConfigurationOpen
+                ? "Hide Configuration"
+                : "Show Configuration"}
+            </button>
+          </li>
         </ul>
       </nav>
+
+      <ConfigurationControls isOpen={isConfigurationOpen} />
 
       <div
         id="waymark-embed-container"
