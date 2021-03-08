@@ -32,7 +32,7 @@ export const AppProvider = ({ children }) => {
   const [purchasedVideo, setPurchasedVideo] = useState(null);
   const [templates, setTemplates] = useState({});
   const [isEditorOpen, setIsEditorOpen] = useState(false);
-  const [partnerID, setPartnerID] = useState("spectrum-reach");
+  const [partnerID, setPartnerID] = useState("fake-partner-id");
   const history = useHistory();
   const embedRef = React.createRef();
 

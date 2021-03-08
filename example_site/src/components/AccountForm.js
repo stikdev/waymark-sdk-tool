@@ -9,7 +9,12 @@ import { useAppContext } from "./AppProvider";
 import "./AccountForm.css";
 
 function LoginAccountForm() {
-  const { waymarkInstance, setAccount, openSnackbar } = useAppContext();
+  const {
+    waymarkInstance,
+    setAccount,
+    openSnackbar,
+    partnerID,
+  } = useAppContext();
 
   const [accountData, setAccountData] = useState(() => ({
     accountID: "existing-account-id",
@@ -27,7 +32,6 @@ function LoginAccountForm() {
 
         try {
           const privateKey = formElement.privateKey.value;
-          const partnerID = formElement.partnerID.value;
 
           // Header
           const header = { alg: "HS256", typ: "JWT" };
@@ -82,7 +86,7 @@ function LoginAccountForm() {
         className="form-input"
         id="loginAccountPartnerID"
         name="partnerID"
-        defaultValue="spectrum-reach"
+        defaultValue="fake-partner-id"
       />
       <label className="form-label">
         Account data -- will successfully log the user in if the `accountID` is
@@ -100,7 +104,12 @@ function LoginAccountForm() {
 }
 
 function CreateAccountForm() {
-  const { waymarkInstance, setAccount, openSnackbar } = useAppContext();
+  const {
+    waymarkInstance,
+    setAccount,
+    openSnackbar,
+    partnerID,
+  } = useAppContext();
 
   // Default account JSON data for the editor.
   const [accountData, setAccountData] = useState(() => ({
@@ -127,7 +136,6 @@ function CreateAccountForm() {
 
         try {
           const privateKey = formElement.privateKey.value;
-          const partnerID = formElement.partnerID.value;
 
           // Header
           const header = { alg: "HS256", typ: "JWT" };
@@ -188,7 +196,7 @@ function CreateAccountForm() {
         className="form-input"
         id="createAccountPartnerID"
         name="partnerID"
-        defaultValue="spectrum-reach"
+        defaultValue="fake-partner-id"
       />
       <label className="form-label">
         Account data -- the call will be rejected if `emailAddress` is set to

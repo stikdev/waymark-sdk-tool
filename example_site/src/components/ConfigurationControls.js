@@ -52,7 +52,7 @@ export default function ConfigurationControls({ isOpen }) {
           videoName: customVideoName,
         },
       },
-      environment: "local",
+      environment: "demo",
       timeout: 5000,
     };
 
@@ -112,7 +112,7 @@ export default function ConfigurationControls({ isOpen }) {
         type="text"
         className="form-input"
         name="partnerID"
-        defaultValue="spectrum-reach"
+        defaultValue="fake-partner-id"
         ref={register({ required: true })}
       />
 
