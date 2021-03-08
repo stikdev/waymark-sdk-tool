@@ -108,11 +108,7 @@ function App() {
 
       <Route exact path="/">
         <div className="webhook-testing-container">
-          {account ? (
-            <AccountPage />
-          ) : (
-            <AccountForm openSnackbar={openSnackbar} />
-          )}
+          {account ? <AccountPage /> : waymarkInstance && <AccountForm />}
         </div>
       </Route>
 
