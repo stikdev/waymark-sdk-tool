@@ -97,3 +97,8 @@ div.loading {
   margin: 10px;
   font-size: 20px;
 }
+
+.hide-configuration {
+  width: 150px;
+  margin-left: 20px;
+}
