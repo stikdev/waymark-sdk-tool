@@ -1,8 +1,15 @@
 .configuration-controls-form {
-  height: 400px;
+  display: grid;
+  place-items: start start;
+  height: 250px;
+  grid-auto-flow: column;
 }
 
 .configuration-controls-form.closed {
   height: 0;
   display: none;
+}
+
+button.configuration-submit-button {
+  margin-top: 60px;
 }

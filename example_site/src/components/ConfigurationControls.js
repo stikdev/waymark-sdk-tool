@@ -14,6 +14,7 @@ export default function ConfigurationControls({ isOpen }) {
   const { register, watch, handleSubmit } = useForm();
   const {
     embedRef,
+    setAccount,
     setPartnerID,
     waymarkInstance,
     setWaymarkInstance,
@@ -23,6 +24,7 @@ export default function ConfigurationControls({ isOpen }) {
 
   const onSubmit = async (formData) => {
     const {
+      environment,
       orientation,
       partnerID,
       shouldDefaultPersonalize,
@@ -38,6 +40,7 @@ export default function ConfigurationControls({ isOpen }) {
     }
 
     setPartnerID(partnerID);
+    setAccount(null);
 
     const waymarkOptions = {
       domElement: embedRef.current,
@@ -52,7 +55,7 @@ export default function ConfigurationControls({ isOpen }) {
           videoName: customVideoName,
         },
       },
-      environment: "demo",
+      environment,
       timeout: 5000,
     };
 
@@ -71,87 +74,111 @@ export default function ConfigurationControls({ isOpen }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formClasses}>
-      <h2>Configuration</h2>
+      <div>
+        <h2>Configuration</h2>
 
-      <label className="form-label" labelfor="leftOrientation">
-        <input
-          id="leftOrientation"
-          name="orientation"
-          type="radio"
-          value="left"
-          ref={register({ required: true })}
-          defaultChecked={true}
-        />
-        Editor Form On Left
-      </label>
-      <label className="form-label" labelfor="rightOrientation">
-        <input
-          id="rightOrientation"
-          name="orientation"
-          type="radio"
-          value="right"
-          ref={register({ required: true })}
-        />
-        Editor Form On Right
-      </label>
+        <label title="Environment" className="form-label" htmlFor="environment">
+          Environment Connection
+        </label>
+        <select name="environment" ref={register({ required: true })}>
+          <option value="demo">Demo</option>
+          <option value="prod">Production</option>
+          <option value="local">Local</option>
+        </select>
 
-      <label className="form-label" htmlFor="shouldDefaultPersonalize">
+        <label className="form-label" htmlFor="partnerID">
+          Partner ID
+        </label>
         <input
-          name="shouldDefaultPersonalize"
-          type="checkbox"
-          defaultChecked={shouldDefaultPersonalize}
+          type="text"
+          className="form-input"
+          name="partnerID"
+          defaultValue="fake-partner-id"
+          ref={register({ required: true })}
+        />
+
+        <button className="submit-button configuration-submit-button">
+          {waymarkInstance ? "Reset SDK" : "Initialize SDK"}
+        </button>
+      </div>
+      <div>
+        <h2>Editor</h2>
+        <label className="form-label" labelfor="leftOrientation">
+          <input
+            id="leftOrientation"
+            name="orientation"
+            type="radio"
+            value="left"
+            ref={register({ required: true })}
+            defaultChecked={true}
+          />
+          Editor Form On Left
+        </label>
+        <label className="form-label" labelfor="rightOrientation">
+          <input
+            id="rightOrientation"
+            name="orientation"
+            type="radio"
+            value="right"
+            ref={register({ required: true })}
+          />
+          Editor Form On Right
+        </label>
+
+        <label className="form-label" htmlFor="shouldDefaultPersonalize">
+          <input
+            name="shouldDefaultPersonalize"
+            type="checkbox"
+            defaultChecked={shouldDefaultPersonalize}
+            ref={register}
+          />
+          Start the editor in personalization?
+        </label>
+      </div>
+      <div>
+        <h2>Labels</h2>
+        <label
+          className="form-label configuration-column-3"
+          htmlFor="exitEditorLabel"
+        >
+          Exit Editor Label
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          name="exitEditorLabel"
+          defaultValue="Exit"
           ref={register}
         />
-        Start the editor in personalization?
-      </label>
 
-      <label className="form-label" htmlFor="partnerID">
-        Partner ID
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        name="partnerID"
-        defaultValue="fake-partner-id"
-        ref={register({ required: true })}
-      />
+        <label
+          className="form-label configuration-column-3"
+          htmlFor="completeVideoLabel"
+        >
+          Purchase Video Label
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          name="completeVideoLabel"
+          defaultValue="Purchase"
+          ref={register}
+        />
 
-      <label className="form-label" htmlFor="exitEditorLabel">
-        Exit Editor Label
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        name="exitEditorLabel"
-        defaultValue="Exit"
-        ref={register}
-      />
-
-      <label className="form-label" htmlFor="completeVideoLabel">
-        Purchase Video Label
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        name="completeVideoLabel"
-        defaultValue="Purchase"
-        ref={register}
-      />
-
-      <label className="form-label" htmlFor="customVideoName">
-        Custom Video Name
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        name="customVideoName"
-        defaultValue="My Summer Vacation"
-        ref={register}
-      />
-
-      <button className="submit-button">
-        {waymarkInstance ? "Reset SDK" : "Initialize SDK"}
-      </button>
+        <label
+          className="form-label configuration-column-3"
+          htmlFor="customVideoName"
+        >
+          Custom Video Name
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          name="customVideoName"
+          defaultValue="My Summer Vacation"
+          ref={register}
+        />
+      </div>
     </form>
   );
 }

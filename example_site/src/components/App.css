@@ -51,6 +51,7 @@ main {
   border-radius: 4px;
   background-color: lightgoldenrodyellow;
   margin: 12px;
+  overflow: auto;
 }
 
 .form-label {
