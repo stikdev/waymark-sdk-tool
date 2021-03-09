@@ -22,84 +22,73 @@ function LoginAccountForm() {
   }));
 
   return (
-    <form
-      className="panel"
-      data-test="loginAccount-form"
-      onSubmit={async (event) => {
-        event.preventDefault();
+    <div className="panel">
+      <form
+        data-test="loginAccount-form"
+        onSubmit={async (event) => {
+          event.preventDefault();
 
-        const formElement = event.target;
+          const formElement = event.target;
 
-        try {
-          const privateKey = formElement.privateKey.value;
+          try {
+            const privateKey = formElement.privateKey.value;
 
-          // Header
-          const header = { alg: "HS256", typ: "JWT" };
-          // Payload
-          const payload = {
-            jti: faker.random.uuid(),
-            iss: partnerID,
-            aud: "waymark.com",
-            iat: KJUR.jws.IntDate.get("now"),
-            exp: KJUR.jws.IntDate.get("now + 1hour"),
-            "https://waymark.com/sdk/account": accountData,
-          };
+            // Header
+            const header = { alg: "HS256", typ: "JWT" };
+            // Payload
+            const payload = {
+              jti: faker.random.uuid(),
+              iss: partnerID,
+              aud: "waymark.com",
+              iat: KJUR.jws.IntDate.get("now"),
+              exp: KJUR.jws.IntDate.get("now + 1hour"),
+              "https://waymark.com/sdk/account": accountData,
+            };
 
-          // Sign JWT with our secret
-          const signedJWT = KJUR.jws.JWS.sign(
-            "HS256",
-            JSON.stringify(header),
-            JSON.stringify(payload),
-            privateKey
-          );
+            // Sign JWT with our secret
+            const signedJWT = KJUR.jws.JWS.sign(
+              "HS256",
+              JSON.stringify(header),
+              JSON.stringify(payload),
+              privateKey
+            );
 
-          await waymarkInstance.loginAccount(signedJWT);
-          const account = await waymarkInstance.getAccountInfo();
-          setAccount(account);
+            await waymarkInstance.loginAccount(signedJWT);
+            const account = await waymarkInstance.getAccountInfo();
+            setAccount(account);
 
-          console.log("Logged in account");
-          openSnackbar("Logged in account");
-        } catch (error) {
-          console.error(error);
-          openSnackbar(error.message);
-        }
-      }}
-    >
-      <h2>waymark.loginAccount()</h2>
-      <label className="form-label" htmlFor="loginAccountPrivateKey">
-        JWT Private Key -- the accepted test harness secret is "test-secret";
-        changing it to anything else will cause the call to fail
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="loginAccountPrivateKey"
-        name="privateKey"
-        defaultValue="test-secret"
-      />
-      <label className="form-label" htmlFor="loginAccountPartnerID">
-        JWT Partner ID -- if this does not match the Partner ID used to
-        initialize the Waymark instance, the call will be rejected
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="loginAccountPartnerID"
-        name="partnerID"
-        defaultValue="fake-partner-id"
-      />
-      <label className="form-label">
-        Account data -- will successfully log the user in if the `accountID` is
-        "existing-account-id" or the `externalID` is "existing-external-id"
-      </label>
-      <JsonEditor
-        value={accountData}
-        onChange={(newAccountData) => setAccountData(newAccountData)}
-      />
-      <button className="submit-button" data-test="loginAccount-button">
-        Login
-      </button>
-    </form>
+            console.log("Logged in account");
+            openSnackbar("Logged in account");
+          } catch (error) {
+            console.error(error);
+            openSnackbar(error.message);
+          }
+        }}
+      >
+        <h2>waymark.loginAccount()</h2>
+
+        <label className="form-label" htmlFor="loginAccountPrivateKey">
+          Partner secret
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="loginAccountPrivateKey"
+          name="privateKey"
+          defaultValue="test-secret"
+        />
+
+        <label className="form-label">Account data</label>
+        <JsonEditor
+          value={accountData}
+          onChange={(newAccountData) => setAccountData(newAccountData)}
+        />
+
+        <button className="submit-button" data-test="loginAccount-button">
+          Login
+        </button>
+      </form>
+    </div>
   );
 }
 
@@ -176,9 +165,9 @@ function CreateAccountForm() {
       }}
     >
       <h2>waymark.createAccount()</h2>
+
       <label className="form-label" htmlFor="createAccountPrivateKey">
-        JWT Private Key -- the accepted test harness secret is "test-secret";
-        changing it to anything else will cause the call will be rejected
+        Partner secret
       </label>
       <input
         type="text"
@@ -187,26 +176,13 @@ function CreateAccountForm() {
         name="privateKey"
         defaultValue="test-secret"
       />
-      <label className="form-label" htmlFor="createAccountPartnerID">
-        JWT Partner ID -- if this does not match the Partner ID used to
-        initialize the Waymark instance, the call will be rejected
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="createAccountPartnerID"
-        name="partnerID"
-        defaultValue="fake-partner-id"
-      />
-      <label className="form-label">
-        Account data -- the call will be rejected if `emailAddress` is set to
-        "existing-account@test.com" or `externalID` is set to
-        "existing-external-id"
-      </label>
+
+      <label className="form-label">Account data</label>
       <JsonEditor
         value={accountData}
         onChange={(newAccountData) => setAccountData(newAccountData)}
       />
+
       <button className="submit-button" data-test="createAccount-button">
         Create Account
       </button>
