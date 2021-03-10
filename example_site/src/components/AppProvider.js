@@ -34,7 +34,7 @@ export const AppProvider = ({ children }) => {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [partnerID, setPartnerID] = useState("fake-partner-id");
   const history = useHistory();
-  const embedRef = React.createRef();
+  const embedRef = React.useRef(null);
 
   const [openSnackbar] = useSnackbar({
     style: {
