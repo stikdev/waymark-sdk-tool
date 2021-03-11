@@ -59,13 +59,13 @@ function App() {
     <main>
       <nav className="navbar">
         <ul>
-          <li>
+          <li data-test-id="navbar-home">
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li data-test-id="navbar-collections">
             <Link to="/collections">Collections</Link>
           </li>
-          <li>
+          <li data-test-id="navbar-account">
             {account
               ? `Account : ${account.firstName} ${account.lastName}`
               : "<no account>"}
