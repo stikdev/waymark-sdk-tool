@@ -67,10 +67,10 @@ function Collection({ collection, setSelectedCollection, expand }) {
 
 export default function Collections() {
   const [selectedCollection, setSelectedCollection] = useState(null);
-  const { waymarkInstance } = useAppContext();
+  const { waymarkInstance, account } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
-    "collections",
+    ["collections", account],
     () => waymarkInstance.getCollections(),
     {
       enabled: !!waymarkInstance,
