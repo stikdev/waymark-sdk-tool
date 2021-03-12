@@ -17,7 +17,6 @@ function App() {
     closeEditor,
     embedRef,
     isEditorOpen,
-    openSnackbar,
     purchaseVideo,
     waymarkInstance,
   } = useAppContext();
