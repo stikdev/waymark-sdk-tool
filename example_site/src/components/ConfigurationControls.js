@@ -15,6 +15,7 @@ export default function ConfigurationControls({ isOpen }) {
   const {
     embedRef,
     setAccount,
+    partnerID: defaultPartnerID,
     setPartnerID,
     waymarkInstance,
     setWaymarkInstance,
@@ -80,7 +81,11 @@ export default function ConfigurationControls({ isOpen }) {
         <label title="Environment" className="form-label" htmlFor="environment">
           Environment Connection
         </label>
-        <select name="environment" ref={register({ required: true })}>
+        <select
+          name="environment"
+          ref={register({ required: true })}
+          defaultValue="local"
+        >
           <option value="demo">Demo</option>
           <option value="prod">Production</option>
           <option value="local">Local</option>
@@ -93,7 +98,7 @@ export default function ConfigurationControls({ isOpen }) {
           type="text"
           className="form-input"
           name="partnerID"
-          defaultValue="fake-partner-id"
+          defaultValue={defaultPartnerID}
           ref={register({ required: true })}
         />
 

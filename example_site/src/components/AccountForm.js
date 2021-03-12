@@ -10,7 +10,7 @@ import { useAppContext } from "./AppProvider";
 import "./AccountForm.css";
 
 function LoginAccountForm() {
-  const { register, watch, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   const {
     waymarkInstance,
     setAccount,
