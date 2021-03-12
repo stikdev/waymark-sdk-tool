@@ -1,5 +1,3 @@
-import { JsonEditor } from "jsoneditor-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
@@ -8,6 +6,28 @@ import faker from "faker";
 
 import { useAppContext } from "./AppProvider";
 import "./AccountForm.css";
+
+const getSignedJWT = (accountData, partnerID, privateKey) => {
+  // Header
+  const header = { alg: "HS256", typ: "JWT" };
+  // Payload
+  const payload = {
+    jti: faker.random.uuid(),
+    iss: partnerID,
+    aud: "waymark.com",
+    iat: KJUR.jws.IntDate.get("now"),
+    exp: KJUR.jws.IntDate.get("now + 1hour"),
+    "https://waymark.com/sdk/account": accountData,
+  };
+
+  // Sign JWT with our secret
+  return KJUR.jws.JWS.sign(
+    "HS256",
+    JSON.stringify(header),
+    JSON.stringify(payload),
+    privateKey
+  );
+};
 
 function LoginAccountForm() {
   const { register, handleSubmit } = useForm();
@@ -37,26 +57,7 @@ function LoginAccountForm() {
     }
 
     try {
-      // Header
-      const header = { alg: "HS256", typ: "JWT" };
-      // Payload
-      const payload = {
-        jti: faker.random.uuid(),
-        iss: partnerID,
-        aud: "waymark.com",
-        iat: KJUR.jws.IntDate.get("now"),
-        exp: KJUR.jws.IntDate.get("now + 1hour"),
-        "https://waymark.com/sdk/account": accountData,
-      };
-
-      // Sign JWT with our secret
-      const signedJWT = KJUR.jws.JWS.sign(
-        "HS256",
-        JSON.stringify(header),
-        JSON.stringify(payload),
-        privateKey
-      );
-
+      const signedJWT = getSignedJWT(accountData, partnerID, privateKey);
       await waymarkInstance.loginAccount(signedJWT);
       const account = await waymarkInstance.getAccountInfo();
       setAccount(account);
@@ -122,6 +123,7 @@ function LoginAccountForm() {
 }
 
 function CreateAccountForm() {
+  const { register, handleSubmit } = useForm();
   const {
     waymarkInstance,
     setAccount,
@@ -129,93 +131,148 @@ function CreateAccountForm() {
     partnerID,
   } = useAppContext();
 
-  // Default account JSON data for the editor.
-  const [accountData, setAccountData] = useState(() => ({
-    firstName: "Mabel",
-    lastName: "Tierney",
-    emailAddress: "mtierney@example.com",
-    companyName: "Tierney Auto, Inc.",
-    phone: "248-555-1212",
-    city: "Dearborn",
-    state: "MI",
-    externalID: "ABC123",
-  }));
-
   const history = useHistory();
 
+  const onSubmit = async (formData) => {
+    if (!(formData.emailAddress || formData.externalID)) {
+      openSnackbar("Please provide an email address and external ID.");
+      return;
+    }
+
+    try {
+      const { privateKey } = formData;
+      // Remove private key from form data since it's not used in the account creation payload
+      delete formData.privateKey;
+
+      const signedJWT = getSignedJWT(formData, partnerID, privateKey);
+
+      const accountID = await waymarkInstance.createAccount(signedJWT);
+
+      history.push("/collections");
+      console.log("Created account ID:", accountID);
+      openSnackbar(`Created account ID: ${accountID}`);
+
+      const account = await waymarkInstance.getAccountInfo();
+      console.log("Account", account);
+      setAccount(account);
+      openSnackbar(`Created account: ${account.firstName} ${account.lastName}`);
+    } catch (error) {
+      console.error("createAccount error", error);
+      openSnackbar(error.message);
+    }
+  };
+
   return (
-    <form
-      className="panel"
-      data-test="createAccount-form"
-      onSubmit={async (event) => {
-        event.preventDefault();
+    <div className="panel">
+      <form data-test="createAccount-form" onSubmit={handleSubmit(onSubmit)}>
+        <h2>waymark.createAccount()</h2>
 
-        const formElement = event.target;
+        <label className="form-label" htmlFor="createAccountPrivateKey">
+          Partner secret
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountPrivateKey"
+          name="privateKey"
+          defaultValue="test-secret"
+          ref={register({ required: true })}
+        />
 
-        try {
-          const privateKey = formElement.privateKey.value;
+        <label className="form-label" htmlFor="createAccountFirstName">
+          First Name
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountFirstName"
+          name="firstName"
+          ref={register}
+        />
 
-          // Header
-          const header = { alg: "HS256", typ: "JWT" };
-          // Payload
-          const payload = {
-            jti: faker.random.uuid(),
-            iss: partnerID,
-            aud: "waymark.com",
-            iat: KJUR.jws.IntDate.get("now"),
-            exp: KJUR.jws.IntDate.get("now + 1hour"),
-            "https://waymark.com/sdk/account": accountData,
-          };
+        <label className="form-label" htmlFor="createAccountLastName">
+          Last Name
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountLastName"
+          name="lastName"
+          ref={register}
+        />
 
-          // Sign JWT with our secret
-          const signedJWT = KJUR.jws.JWS.sign(
-            "HS256",
-            JSON.stringify(header),
-            JSON.stringify(payload),
-            privateKey
-          );
+        <label className="form-label" htmlFor="createAccountEmailAddress">
+          Email Address*
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountEmailAddress"
+          name="emailAddress"
+          ref={register}
+        />
 
-          const accountID = await waymarkInstance.createAccount(signedJWT);
+        <label className="form-label" htmlFor="createAccountCompanyName">
+          Company Name
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountCompanyName"
+          name="companyName"
+          ref={register}
+        />
 
-          history.push("/collections");
-          console.log("Created account ID:", accountID);
-          openSnackbar(`Created account ID: ${accountID}`);
+        <label className="form-label" htmlFor="createAccountPhone">
+          Phone Number
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountPhone"
+          name="phone"
+          ref={register}
+        />
 
-          const account = await waymarkInstance.getAccountInfo();
-          console.log("Account", account);
-          setAccount(account);
-          openSnackbar(
-            `Created account: ${account.firstName} ${account.lastName}`
-          );
-        } catch (error) {
-          console.error("createAccount error", error);
-          openSnackbar(error.message);
-        }
-      }}
-    >
-      <h2>waymark.createAccount()</h2>
+        <label className="form-label" htmlFor="createAccountCity">
+          City
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountCity"
+          name="city"
+          ref={register}
+        />
 
-      <label className="form-label" htmlFor="createAccountPrivateKey">
-        Partner secret
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="createAccountPrivateKey"
-        name="privateKey"
-        defaultValue="test-secret"
-      />
+        <label className="form-label" htmlFor="createAccountState">
+          State
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountState"
+          name="state"
+          placeholder="State abbreviation, e.g. MI or FL"
+          ref={register({ maxLength: 2 })}
+        />
 
-      <label className="form-label">Account data</label>
-      <JsonEditor
-        value={accountData}
-        onChange={(newAccountData) => setAccountData(newAccountData)}
-      />
+        <label className="form-label" htmlFor="createAccountExternalID">
+          External ID*
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="createAccountExternalID"
+          name="externalID"
+          ref={register}
+        />
 
-      <button className="submit-button" data-test="createAccount-button">
-        Create Account
-      </button>
-    </form>
+        <button className="submit-button" data-test="createAccount-button">
+          Create Account
+        </button>
+      </form>
+    </div>
   );
 }
 
