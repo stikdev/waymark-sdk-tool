@@ -70,7 +70,7 @@ export default function Collections() {
   const { waymarkInstance, account } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
-    ["collections", account],
+    ["collections"],
     () => waymarkInstance.getCollections(),
     {
       enabled: !!waymarkInstance,
