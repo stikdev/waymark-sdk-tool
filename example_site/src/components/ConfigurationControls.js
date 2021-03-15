@@ -21,7 +21,14 @@ export default function ConfigurationControls({ isOpen }) {
     setWaymarkInstance,
   } = useAppContext();
 
-  const shouldDefaultPersonalize = watch("shouldDefaultPersonalize", false);
+  const watchFields = watch(
+    ["shouldDefaultPersonalize", "shouldHideSaveButton"],
+    {
+      shouldDefaultPersonalize: false,
+      shouldHideSaveButton: false,
+    }
+  );
+  const { shouldDefaultPersonalize, shouldHideSaveButton } = watchFields;
 
   const onSubmit = async (formData) => {
     const {
@@ -29,6 +36,7 @@ export default function ConfigurationControls({ isOpen }) {
       orientation,
       partnerID,
       shouldDefaultPersonalize,
+      shouldHideSaveButton,
       completeVideoLabel,
       exitEditorLabel,
       customVideoName,
@@ -55,6 +63,7 @@ export default function ConfigurationControls({ isOpen }) {
           exitEditor: exitEditorLabel,
           videoName: customVideoName,
         },
+        hideSaveButton: shouldHideSaveButton,
       },
       environment,
       timeout: 5000,
@@ -138,6 +147,16 @@ export default function ConfigurationControls({ isOpen }) {
             ref={register}
           />
           Start the editor in personalization?
+        </label>
+
+        <label className="form-label" htmlFor="shouldHideSaveButton">
+          <input
+            name="shouldHideSaveButton"
+            type="checkbox"
+            defaultChecked={shouldHideSaveButton}
+            ref={register}
+          />
+          Hide the save button?
         </label>
       </div>
       <div>
