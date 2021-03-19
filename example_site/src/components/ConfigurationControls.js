@@ -22,13 +22,25 @@ export default function ConfigurationControls({ isOpen }) {
   } = useAppContext();
 
   const watchFields = watch(
-    ["shouldDefaultPersonalize", "shouldHideSaveButton"],
+    [
+      "shouldDefaultPersonalize",
+      "shouldHideSaveButton",
+      "shouldUseAdvancedDropdown",
+      "shouldShowUnsavedChangesModal",
+    ],
     {
       shouldDefaultPersonalize: false,
       shouldHideSaveButton: false,
+      shouldUseAdvancedDropdown: false,
+      shouldShowUnsavedChangesModal: true,
     }
   );
-  const { shouldDefaultPersonalize, shouldHideSaveButton } = watchFields;
+  const {
+    shouldDefaultPersonalize,
+    shouldHideSaveButton,
+    shouldUseAdvancedDropdown,
+    shouldShowUnsavedChangesModal,
+  } = watchFields;
 
   const onSubmit = async (formData) => {
     const {
@@ -39,7 +51,12 @@ export default function ConfigurationControls({ isOpen }) {
       shouldHideSaveButton,
       completeVideoLabel,
       exitEditorLabel,
-      customVideoName,
+      shouldUseAdvancedDropdown,
+      shouldShowUnsavedChangesModal,
+      unsavedChangesModalTitle,
+      unsavedChangesModalBody,
+      unsavedChangesModalConfirmButton,
+      unsavedChangesModalCancelButton,
     } = formData;
 
     console.log(formData);
@@ -61,7 +78,16 @@ export default function ConfigurationControls({ isOpen }) {
         labels: {
           completeVideo: completeVideoLabel,
           exitEditor: exitEditorLabel,
-          videoName: customVideoName,
+          unsavedChangesConfirmation: {
+            shouldShow: shouldShowUnsavedChangesModal,
+            title: unsavedChangesModalTitle,
+            body: unsavedChangesModalBody,
+            confirmButton: unsavedChangesModalConfirmButton,
+            cancelButton: unsavedChangesModalCancelButton,
+          },
+        },
+        panelButtons: {
+          shouldUseAdvancedDropdown: shouldUseAdvancedDropdown,
         },
         hideSaveButton: shouldHideSaveButton,
       },
@@ -158,6 +184,16 @@ export default function ConfigurationControls({ isOpen }) {
           />
           Hide the save button?
         </label>
+
+        <label className="form-label" htmlFor="shouldUseAdvancedDropdown">
+          <input
+            name="shouldUseAdvancedDropdown"
+            type="checkbox"
+            defaultChecked={shouldUseAdvancedDropdown}
+            ref={register}
+          />
+          Show use advanced dropdown?
+        </label>
       </div>
       <div>
         <h2>Labels</h2>
@@ -189,19 +225,75 @@ export default function ConfigurationControls({ isOpen }) {
           ref={register}
         />
 
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="customVideoName"
-        >
-          Custom Video Name
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="customVideoName"
-          defaultValue="My Summer Vacation"
-          ref={register}
-        />
+        <div className="configuration-controls-subsection">
+          <h3>Unsaved Changes Confirmation Modal</h3>
+
+          <label className="form-label" htmlFor="shouldHideSaveButton">
+            <input
+              name="shouldShowUnsavedChangesModal"
+              type="checkbox"
+              defaultChecked={shouldShowUnsavedChangesModal}
+              ref={register}
+            />
+            Show the unsaved changes modal?
+          </label>
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalTitle"
+          >
+            Modal Title
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalTitle"
+            defaultValue="Exit Editor"
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalBody"
+          >
+            Modal Body Text
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalBody"
+            defaultValue="Your video has unsaved edits. Are you sure you want to leave?"
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalConfirmButton"
+          >
+            Modal Confirmation Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalConfirmButton"
+            defaultValue="Exit Editor"
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalCancelButton"
+          >
+            Modal Cancel Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalCancelButton"
+            defaultValue="Cancel"
+            ref={register}
+          />
+        </div>
       </div>
     </form>
   );
