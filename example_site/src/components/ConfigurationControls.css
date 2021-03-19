@@ -1,7 +1,7 @@
 .configuration-controls-form {
   display: grid;
   place-items: start start;
-  height: 250px;
+  height: 600px;
   grid-auto-flow: column;
 }
 
@@ -12,4 +12,10 @@
 
 button.configuration-submit-button {
   margin-top: 60px;
+}
+
+.configuration-controls-subsection > label,
+.configuration-controls-subsection > input {
+  /* Indent contents of subsection to visually separate them */
+  margin-left: 16px;
 }
