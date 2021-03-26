@@ -2,6 +2,10 @@
   margin: 20px;
 }
 
+.account-page svg {
+  cursor: pointer;
+}
+
 ul.videos {
   list-style: none;
 }
@@ -20,6 +24,3 @@ li.video {
   font-size: 20px;
 }
 
-.account-name {
-  font-weight: bold;
-}
