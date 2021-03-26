@@ -27,12 +27,14 @@ export default function ConfigurationControls({ isOpen }) {
       "shouldHideSaveButton",
       "shouldUseAdvancedDropdown",
       "shouldShowUnsavedChangesModal",
+      "shouldShowConfirmCompleteVideoModal",
     ],
     {
       shouldDefaultPersonalize: false,
       shouldHideSaveButton: false,
       shouldUseAdvancedDropdown: false,
       shouldShowUnsavedChangesModal: true,
+      shouldShowConfirmCompleteVideoModal: false,
     }
   );
   const {
@@ -40,6 +42,7 @@ export default function ConfigurationControls({ isOpen }) {
     shouldHideSaveButton,
     shouldUseAdvancedDropdown,
     shouldShowUnsavedChangesModal,
+    shouldShowConfirmCompleteVideoModal,
   } = watchFields;
 
   const onSubmit = async (formData) => {
@@ -57,6 +60,11 @@ export default function ConfigurationControls({ isOpen }) {
       unsavedChangesModalBody,
       unsavedChangesModalConfirmButton,
       unsavedChangesModalCancelButton,
+      shouldShowConfirmCompleteVideoModal,
+      confirmCompleteVideoModalTitle,
+      confirmCompleteVideoModalBody,
+      confirmCompleteVideoModalConfirmButton,
+      confirmCompleteVideoModalCancelButton,
     } = formData;
 
     console.log(formData);
@@ -84,6 +92,13 @@ export default function ConfigurationControls({ isOpen }) {
             body: unsavedChangesModalBody,
             confirmButton: unsavedChangesModalConfirmButton,
             cancelButton: unsavedChangesModalCancelButton,
+          },
+          completeVideoConfirmation: {
+            shouldShow: shouldShowConfirmCompleteVideoModal,
+            title: confirmCompleteVideoModalTitle,
+            body: confirmCompleteVideoModalBody,
+            confirmButton: confirmCompleteVideoModalConfirmButton,
+            cancelButton: confirmCompleteVideoModalCancelButton,
           },
         },
         panelButtons: {
@@ -192,7 +207,7 @@ export default function ConfigurationControls({ isOpen }) {
             defaultChecked={shouldUseAdvancedDropdown}
             ref={register}
           />
-          Show use advanced dropdown?
+          Use advanced dropdown?
         </label>
       </div>
       <div>
@@ -228,7 +243,7 @@ export default function ConfigurationControls({ isOpen }) {
         <div className="configuration-controls-subsection">
           <h3>Unsaved Changes Confirmation Modal</h3>
 
-          <label className="form-label" htmlFor="shouldHideSaveButton">
+          <label className="form-label" htmlFor="shouldShowUnsavedChangesModal">
             <input
               name="shouldShowUnsavedChangesModal"
               type="checkbox"
@@ -290,6 +305,79 @@ export default function ConfigurationControls({ isOpen }) {
             type="text"
             className="form-input"
             name="unsavedChangesModalCancelButton"
+            defaultValue="Cancel"
+            ref={register}
+          />
+        </div>
+
+        <div className="configuration-controls-subsection">
+          <h3>Complete Video Confirmation Modal</h3>
+
+          <label
+            className="form-label"
+            htmlFor="shouldShowConfirmCompleteVideoModal"
+          >
+            <input
+              name="shouldShowConfirmCompleteVideoModal"
+              type="checkbox"
+              defaultChecked={shouldShowConfirmCompleteVideoModal}
+              ref={register}
+            />
+            Show the complete video confirmation modal?
+          </label>
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalTitle"
+          >
+            Modal Title
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalTitle"
+            defaultValue="Finalize Video"
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalBody"
+          >
+            Modal Body Text
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalBody"
+            defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalConfirmButton"
+          >
+            Modal Confirmation Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalConfirmButton"
+            defaultValue="Confirm"
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalCancelButton"
+          >
+            Modal Cancel Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalCancelButton"
             defaultValue="Cancel"
             ref={register}
           />
