@@ -83,6 +83,16 @@ main {
   padding: 4px 8px;
 }
 
+.cancel-button {
+  margin-top: 5px;
+  font-weight: bold;
+  border-radius: 4px;
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 4px 8px;
+}
+
 .submit-button:disabled,
 .submit-button[disabled] {
   border: #999999;

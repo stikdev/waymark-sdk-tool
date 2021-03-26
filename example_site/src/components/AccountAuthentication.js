@@ -5,7 +5,8 @@ import KJUR from "jsrsasign";
 import faker from "faker";
 
 import { useAppContext } from "./AppProvider";
-import "./AccountForm.css";
+import AccountInfoForm from "./AccountInfoForm.js";
+import "./AccountAuthentication.css";
 
 const getSignedJWT = (accountData, partnerID, privateKey) => {
   // Header
@@ -123,7 +124,6 @@ function LoginAccountForm() {
 }
 
 function CreateAccountForm() {
-  const { register, handleSubmit } = useForm();
   const {
     waymarkInstance,
     setAccount,
@@ -164,119 +164,17 @@ function CreateAccountForm() {
 
   return (
     <div className="panel">
-      <form data-test="createAccount-form" onSubmit={handleSubmit(onSubmit)}>
-        <h2>waymark.createAccount()</h2>
-
-        <label className="form-label" htmlFor="createAccountPrivateKey">
-          Partner secret
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountPrivateKey"
-          name="privateKey"
-          defaultValue="test-secret"
-          ref={register({ required: true })}
-        />
-
-        <label className="form-label" htmlFor="createAccountFirstName">
-          First Name
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountFirstName"
-          name="firstName"
-          ref={register}
-        />
-
-        <label className="form-label" htmlFor="createAccountLastName">
-          Last Name
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountLastName"
-          name="lastName"
-          ref={register}
-        />
-
-        <label className="form-label" htmlFor="createAccountEmailAddress">
-          Email Address*
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountEmailAddress"
-          name="emailAddress"
-          ref={register}
-        />
-
-        <label className="form-label" htmlFor="createAccountCompanyName">
-          Company Name
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountCompanyName"
-          name="companyName"
-          ref={register}
-        />
-
-        <label className="form-label" htmlFor="createAccountPhone">
-          Phone Number
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountPhone"
-          name="phone"
-          ref={register}
-        />
-
-        <label className="form-label" htmlFor="createAccountCity">
-          City
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountCity"
-          name="city"
-          ref={register}
-        />
-
-        <label className="form-label" htmlFor="createAccountState">
-          State
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountState"
-          name="state"
-          placeholder="State abbreviation, e.g. MI or FL"
-          ref={register({ maxLength: 2 })}
-        />
-
-        <label className="form-label" htmlFor="createAccountExternalID">
-          External ID*
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="createAccountExternalID"
-          name="externalID"
-          ref={register}
-        />
-
-        <button className="submit-button" data-test="createAccount-button">
-          Create Account
-        </button>
-      </form>
+      <AccountInfoForm
+        formTitle="waymark.createAccount()"
+        onSubmit={onSubmit}
+        shouldRequirePrivateKey={true}
+        submitButtonText="Create Account"
+      />
     </div>
   );
 }
 
-export default function AccountForm() {
+export default function AccountAuthentication() {
   return (
     <>
       <CreateAccountForm />
