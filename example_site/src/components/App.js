@@ -3,7 +3,7 @@ import "jsoneditor-react/es/editor.min.css";
 import { Link, Route } from "react-router-dom";
 import classnames from "classnames";
 
-import AccountForm from "./AccountForm";
+import AccountAuthentication from "./AccountAuthentication";
 import AccountPage from "./AccountPage";
 import Collections from "./Collections";
 import ConfigurationControls from "./ConfigurationControls";
@@ -98,7 +98,11 @@ function App() {
 
       <Route exact path="/">
         <div className="webhook-testing-container">
-          {account ? <AccountPage /> : waymarkInstance && <AccountForm />}
+          {account ? (
+            <AccountPage />
+          ) : (
+            waymarkInstance && <AccountAuthentication />
+          )}
         </div>
       </Route>
 
