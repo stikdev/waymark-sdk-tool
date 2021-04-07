@@ -29,7 +29,7 @@ export default function AccountPage() {
   const [isUpdatingAccount, setIsUpdatingAccount] = useState(false);
 
   const onSubmitUpdateAccountForm = async (formData) => {
-    if (!(formData.emailAddress || formData.externalID)) {
+    if (!(formData.emailAddress && formData.externalID)) {
       openSnackbar("Please provide an email address and external ID.");
       return;
     }
