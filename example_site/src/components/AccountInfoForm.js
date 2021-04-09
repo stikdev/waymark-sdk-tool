@@ -1,4 +1,7 @@
+import _ from "lodash";
 import { useForm } from "react-hook-form";
+
+import { useAppContext } from "./AppProvider";
 
 export default function AccountInfoForm({
   account,
@@ -7,10 +10,24 @@ export default function AccountInfoForm({
   shouldRequirePrivateKey,
   submitButtonText,
 }) {
+  const { openSnackbar } = useAppContext();
   const { register, handleSubmit } = useForm();
 
+  const onFormSubmitError = (errors) => {
+    console.log("Error submitting form: ", errors);
+
+    openSnackbar(
+      `Please fix the following errors:\n${Object.values(errors)
+        .map((error) => error.message)
+        .join("\n")}`
+    );
+  };
+
   return (
-    <form data-test="createAccount-form" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      data-test="createAccount-form"
+      onSubmit={handleSubmit(onSubmit, onFormSubmitError)}
+    >
       <h2>{formTitle}</h2>
 
       {shouldRequirePrivateKey ? (
@@ -111,7 +128,12 @@ export default function AccountInfoForm({
         name="state"
         placeholder="State abbreviation, e.g. MI or FL"
         defaultValue={account ? account.state : null}
-        ref={register({ maxLength: 2 })}
+        ref={register({
+          maxLength: {
+            value: 2,
+            message: "State should be a two-letter abreviation.",
+          },
+        })}
       />
 
       <label className="form-label" htmlFor="createAccountExternalID">

@@ -42,6 +42,7 @@ export const AppProvider = ({ children }) => {
       textColor: "white",
       fontWeight: "bold",
       fontSize: "16px",
+      whiteSpace: "pre-wrap",
     },
   });
 
