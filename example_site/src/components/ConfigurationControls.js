@@ -19,6 +19,7 @@ export default function ConfigurationControls({ isOpen }) {
     setPartnerID,
     waymarkInstance,
     setWaymarkInstance,
+    openSnackbar,
   } = useAppContext();
 
   const watchFields = watch(
@@ -65,6 +66,7 @@ export default function ConfigurationControls({ isOpen }) {
       confirmCompleteVideoModalBody,
       confirmCompleteVideoModalConfirmButton,
       confirmCompleteVideoModalCancelButton,
+      editorBackgroundColor,
     } = formData;
 
     console.log(formData);
@@ -105,15 +107,20 @@ export default function ConfigurationControls({ isOpen }) {
           shouldUseAdvancedDropdown: shouldUseAdvancedDropdown,
         },
         hideSaveButton: shouldHideSaveButton,
+        backgroundColor: editorBackgroundColor,
       },
       environment,
       timeout: 5000,
     };
 
     console.log("options", waymarkOptions);
-    const newWaymarkInstance = new Waymark(partnerID, waymarkOptions);
-    setWaymarkInstance(newWaymarkInstance);
-    console.log(newWaymarkInstance);
+    try {
+      const newWaymarkInstance = new Waymark(partnerID, waymarkOptions);
+      setWaymarkInstance(newWaymarkInstance);
+      console.log(newWaymarkInstance);
+    } catch (error) {
+      openSnackbar(`Problem initializing SDK: ${error}`);
+    }
   };
 
   const formClasses = classnames({
@@ -209,6 +216,17 @@ export default function ConfigurationControls({ isOpen }) {
           />
           Use advanced dropdown?
         </label>
+
+        <label className="form-label" htmlFor="editorBackgroundColor">
+          Custom background color
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          name="editorBackgroundColor"
+          defaultValue=""
+          ref={register}
+        />
       </div>
       <div>
         <h2>Labels</h2>
