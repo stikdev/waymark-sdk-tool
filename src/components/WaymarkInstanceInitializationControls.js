@@ -18,12 +18,12 @@ const DEFAULT_OPTIONS = {
 };
 
 const ENVIRONMENTS = {
-  'harness': 'harness',
-  'local': 'local',
-  'demo': 'demo',
-  'prod': 'prod',
-  'custom': 'custom',
-}
+  harness: "harness",
+  local: "local",
+  demo: "demo",
+  prod: "prod",
+  custom: "custom",
+};
 
 /**
  * Form provides controls to configure and create a new Waymark instance
@@ -49,8 +49,8 @@ export default function WaymarkInstanceInitializationControls({
         }
 
         const formElement = event.target;
-        const partnerID = formElement.partnerID.value;          
-        
+        const partnerID = formElement.partnerID.value;
+
         // Construct options with either a preset env slug or a custom environment host object.
         const waymarkOptions = {
           ...options,
@@ -58,10 +58,11 @@ export default function WaymarkInstanceInitializationControls({
             environment === ENVIRONMENTS.custom
               ? { host: formElement.overrideHost.value }
               : environment,
+          isDebug: true,
         };
 
         const domElement = document.querySelector(waymarkOptions.domElement);
-        
+
         let waymarkObject;
         // Create a new Waymark instance with our config
         if (environment === ENVIRONMENTS.harness) {
@@ -91,7 +92,9 @@ export default function WaymarkInstanceInitializationControls({
 
       <nav className="navbar">
         <ul>
-          <li><a href="#">Test Site</a></li>
+          <li>
+            <a href="#">Test Site</a>
+          </li>
         </ul>
       </nav>
 

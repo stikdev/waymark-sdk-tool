@@ -111,6 +111,7 @@ export default function ConfigurationControls({ isOpen }) {
       },
       environment,
       timeout: 5000,
+      isDebug: true,
     };
 
     console.log("options", waymarkOptions);
