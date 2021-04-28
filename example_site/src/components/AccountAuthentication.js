@@ -134,11 +134,6 @@ function CreateAccountForm() {
   const history = useHistory();
 
   const onSubmit = async (formData) => {
-    if (!(formData.emailAddress || formData.externalID)) {
-      openSnackbar("Please provide an email address and external ID.");
-      return;
-    }
-
     try {
       const { privateKey } = formData;
       // Remove private key from form data since it's not used in the account creation payload
