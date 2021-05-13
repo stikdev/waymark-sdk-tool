@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { useForm } from "react-hook-form";
 
 import { useAppContext } from "./AppProvider";
@@ -71,7 +70,7 @@ export default function AccountInfoForm({
       />
 
       <label className="form-label" htmlFor="createAccountEmailAddress">
-        Email Address*
+        Email Address
       </label>
       <input
         type="text"
@@ -137,7 +136,7 @@ export default function AccountInfoForm({
       />
 
       <label className="form-label" htmlFor="createAccountExternalID">
-        External ID*
+        External ID
       </label>
       <input
         type="text"
