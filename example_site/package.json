@@ -42,7 +42,7 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.8.1",
-    "@waymark/waymark-sdk": "^2.4.0",
+    "@waymark/waymark-sdk": "^2.5.0",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "faker": "^5.4.0",
