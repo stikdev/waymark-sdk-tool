@@ -85,28 +85,23 @@ input:checked + .slider:before {
 
 /* Alternate "Right" and "Left" text 
 depending on switch toggle */
-.on
-{
+.switchOn {
   display: none;
 }
 
-.on, .off
-{
+.switchOn, 
+.switchOff {
   color: rgb(0, 0, 0);
   position: absolute;
   transform: translate(40px, -35px);
   top: 50%;
   left: 50%;
-  font-size: 16px;
-  font-family: Verdana, sans-serif;
 }
 
-input:checked+ .slider .on
-{
+input:checked+ .slider .switchOn {
   display: block;
 }
 
-input:checked + .slider .off
-{
+input:checked + .slider .switchOff {
   display: none;
 }
