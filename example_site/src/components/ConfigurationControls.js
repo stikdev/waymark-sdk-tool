@@ -142,7 +142,7 @@ export default function ConfigurationControls({ isOpen }) {
         <select
           name="environment"
           ref={register({ required: true })}
-          defaultValue="local"
+          defaultValue="demo"
         >
           <option value="demo">Demo</option>
           <option value="prod">Production</option>
@@ -255,7 +255,7 @@ export default function ConfigurationControls({ isOpen }) {
           type="text"
           className="form-input"
           name="completeVideoLabel"
-          defaultValue="Purchase"
+          defaultValue="Buy"
           ref={register}
         />
 
