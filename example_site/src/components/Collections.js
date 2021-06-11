@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { JsonEditor } from "jsoneditor-react";
+import "jsoneditor-react/es/editor.min.css";
 
 import { useAppContext } from "./AppProvider";
 import "./Collections.css";
@@ -22,12 +24,25 @@ function Template({ template }) {
   );
 }
 
-function Collection({ collection, setSelectedCollection, expand }) {
+function Collection({
+  collection,
+  setSelectedCollection,
+  expand,
+  templateFilter,
+}) {
   const { waymarkInstance, addTemplates } = useAppContext();
 
+  const [currentTemplateFilter, setCurrentTemplateFilter] = useState(
+    templateFilter
+  );
+
   const { isLoading, isError, isSuccess, data: templates, error } = useQuery(
-    ["templates", collection.id],
-    () => waymarkInstance.getTemplatesForCollection(collection.id),
+    ["templates", collection.id, currentTemplateFilter],
+    () =>
+      waymarkInstance.getTemplatesForCollection(
+        collection.id,
+        currentTemplateFilter
+      ),
     { enabled: !!waymarkInstance && expand }
   );
 
@@ -41,11 +56,24 @@ function Collection({ collection, setSelectedCollection, expand }) {
     setSelectedCollection(collection);
   };
 
+  const shouldShowRefetchWithFilterButton = !_.isEqual(
+    templateFilter,
+    currentTemplateFilter
+  );
+
   return (
     <li className="collection">
       <button className="collection-name" onClick={() => onClick(collection)}>
         {collection.name} ({collection.id})
       </button>
+      {shouldShowRefetchWithFilterButton && (
+        <button
+          onClick={() => setCurrentTemplateFilter(templateFilter)}
+          className="collection-filter-refetch"
+        >
+          Refetch with new filters
+        </button>
+      )}
       {expand && (
         <>
           {isLoading && <div className="loading">Loading...</div>}
@@ -67,7 +95,10 @@ function Collection({ collection, setSelectedCollection, expand }) {
 
 export default function Collections() {
   const [selectedCollection, setSelectedCollection] = useState(null);
-  const { waymarkInstance, account } = useAppContext();
+  const [templateFilter, setTemplateFilter] = useState(() => ({
+    aspectRatio: "16:9",
+  }));
+  const { waymarkInstance } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
     ["collections"],
@@ -82,19 +113,25 @@ export default function Collections() {
       <h2>Collections</h2>
       {isLoading && <div className="loading">Loading...</div>}
       {isError && <div className="error">Error: {error}</div>}
-      <ul className="collections">
-        {isSuccess &&
-          collections.map((collection) => (
-            <Collection
-              key={collection.id}
-              collection={collection}
-              setSelectedCollection={setSelectedCollection}
-              expand={Boolean(
-                selectedCollection && selectedCollection.id === collection.id
-              )}
-            />
-          ))}
-      </ul>
+      {isSuccess && (
+        <>
+          <h3>Template Filters</h3>
+          <JsonEditor value={templateFilter} onChange={setTemplateFilter} />
+          <ul className="collections">
+            {collections.map((collection) => (
+              <Collection
+                key={collection.id}
+                collection={collection}
+                setSelectedCollection={setSelectedCollection}
+                expand={Boolean(
+                  selectedCollection && selectedCollection.id === collection.id
+                )}
+                templateFilter={templateFilter}
+              />
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }
