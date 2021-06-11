@@ -30,6 +30,16 @@ button.collection-name:hover {
   background-color: coral;
 }
 
+button.collection-filter-refetch {
+  cursor: pointer;
+  background-color: coral;
+  border: 2px solid white;
+  margin-left: 4px;
+  color: white;
+  font-size: 16px;
+  padding: 4px 8px;
+}
+
 li.template {
   cursor: pointer;
   font-size: 20px;
