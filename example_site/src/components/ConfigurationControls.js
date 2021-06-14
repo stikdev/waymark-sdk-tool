@@ -38,6 +38,7 @@ export default function ConfigurationControls({ isOpen }) {
       shouldShowConfirmCompleteVideoModal: false,
     }
   );
+
   const {
     shouldDefaultPersonalize,
     shouldHideSaveButton,
@@ -78,10 +79,13 @@ export default function ConfigurationControls({ isOpen }) {
     setPartnerID(partnerID);
     setAccount(null);
 
+    // Correct orientation for editor
+    const finalOrientation = orientation ? "right" : "left";
+
     const waymarkOptions = {
       domElement: embedRef.current,
       editor: {
-        orientation,
+        orientation: finalOrientation,
         personalization: {
           isDefault: shouldDefaultPersonalize,
         },
@@ -166,27 +170,18 @@ export default function ConfigurationControls({ isOpen }) {
       </div>
       <div>
         <h2>Editor</h2>
-        <label className="form-label" labelfor="leftOrientation">
-          <input
-            id="leftOrientation"
+        <h4>Editor Orientation: </h4>
+        <label class="switch">
+          <input 
             name="orientation"
-            type="radio"
-            value="left"
-            ref={register({ required: true })}
-            defaultChecked={true}
-          />
-          Editor Form On Left
-        </label>
-        <label className="form-label" labelfor="rightOrientation">
-          <input
-            id="rightOrientation"
-            name="orientation"
-            type="radio"
-            value="right"
-            ref={register({ required: true })}
-          />
-          Editor Form On Right
-        </label>
+            type="checkbox"
+            ref={register}
+          /> 
+          <div class="slider round">
+            <span class="switchOn"><h4>Right</h4></span>
+            <span class="switchOff"><h4>Left</h4></span>
+          </div>
+        </label> 
 
         <label className="form-label" htmlFor="shouldDefaultPersonalize">
           <input
