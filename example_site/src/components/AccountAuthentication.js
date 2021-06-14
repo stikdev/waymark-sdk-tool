@@ -37,9 +37,13 @@ function LoginAccountForm() {
     setAccount,
     openSnackbar,
     partnerID,
+    partnerSecret,
   } = useAppContext();
 
-  const onSubmit = async ({ privateKey, accountID, externalID }) => {
+  const onSubmit = async ({ accountID, externalID }) => {
+    
+    console.log("LOGIN PRIVATE KEY:", partnerSecret);
+    
     if (accountID && externalID) {
       openSnackbar("Only one of either account ID or external ID may be used.");
       return;
@@ -58,7 +62,7 @@ function LoginAccountForm() {
     }
 
     try {
-      const signedJWT = getSignedJWT(accountData, partnerID, privateKey);
+      const signedJWT = getSignedJWT(accountData, partnerID, partnerSecret); 
       await waymarkInstance.loginAccount(signedJWT);
       const account = await waymarkInstance.getAccountInfo();
       setAccount(account);
@@ -75,19 +79,6 @@ function LoginAccountForm() {
     <div className="panel">
       <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>waymark.loginAccount()</h2>
-
-        <label className="form-label" htmlFor="loginAccountPrivateKey">
-          Partner secret
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="loginAccountPrivateKey"
-          name="privateKey"
-          defaultValue="test-secret"
-          ref={register({ required: true })}
-        />
-
         <p>
           Either account ID or external ID may be used, but only one at a time.
         </p>
@@ -129,17 +120,21 @@ function CreateAccountForm() {
     setAccount,
     openSnackbar,
     partnerID,
+    partnerSecret,
   } = useAppContext();
 
   const history = useHistory();
 
   const onSubmit = async (formData) => {
     try {
+      console.log("Create Account FORM DATA", formData);
+      console.log("Create Account Secret", partnerSecret);
+
       const { privateKey } = formData;
       // Remove private key from form data since it's not used in the account creation payload
       delete formData.privateKey;
 
-      const signedJWT = getSignedJWT(formData, partnerID, privateKey);
+      const signedJWT = getSignedJWT(formData, partnerID, partnerSecret);
 
       const accountID = await waymarkInstance.createAccount(signedJWT);
 

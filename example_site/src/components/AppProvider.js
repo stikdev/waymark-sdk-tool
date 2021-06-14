@@ -16,6 +16,8 @@ const AppContext = React.createContext({
   openSnackbar: () => {},
   partnerID: "test-partner",
   setPartnerID: () => {},
+  partnerSecret: "test-secret",
+  setPartnerSecret: () => {},
   purchaseVideo: () => {},
   purchasedVideo: null,
   templates: {},
@@ -33,6 +35,7 @@ export const AppProvider = ({ children }) => {
   const [templates, setTemplates] = useState({});
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [partnerID, setPartnerID] = useState("fake-partner-id");
+  const [partnerSecret, setPartnerSecret] = useState("test-secret");
   const history = useHistory();
   const embedRef = React.useRef(null);
 
@@ -107,6 +110,8 @@ export const AppProvider = ({ children }) => {
     openSnackbar,
     partnerID,
     setPartnerID,
+    partnerSecret,
+    setPartnerSecret,
     purchaseVideo,
     purchasedVideo,
     waymarkInstance,
