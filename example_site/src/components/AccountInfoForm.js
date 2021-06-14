@@ -6,7 +6,6 @@ export default function AccountInfoForm({
   account,
   formTitle,
   onSubmit,
-  shouldRequirePrivateKey,
   submitButtonText,
 }) {
   const { openSnackbar } = useAppContext();
@@ -28,22 +27,6 @@ export default function AccountInfoForm({
       onSubmit={handleSubmit(onSubmit, onFormSubmitError)}
     >
       <h2>{formTitle}</h2>
-
-      {shouldRequirePrivateKey ? (
-        <>
-          <label className="form-label" htmlFor="createAccountPrivateKey">
-            Partner secret
-          </label>
-          <input
-            type="text"
-            className="form-input"
-            id="createAccountPrivateKey"
-            name="privateKey"
-            defaultValue="test-secret"
-            ref={register({ required: true })}
-          />
-        </>
-      ) : null}
 
       <label className="form-label" htmlFor="createAccountFirstName">
         First Name

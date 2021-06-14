@@ -17,6 +17,8 @@ export default function ConfigurationControls({ isOpen }) {
     setAccount,
     partnerID: defaultPartnerID,
     setPartnerID,
+    partnerSecret: defaultPartnerSecret,
+    setPartnerSecret,
     waymarkInstance,
     setWaymarkInstance,
     openSnackbar,
@@ -52,6 +54,7 @@ export default function ConfigurationControls({ isOpen }) {
       environment,
       orientation,
       partnerID,
+      partnerSecret,
       shouldDefaultPersonalize,
       shouldHideSaveButton,
       completeVideoLabel,
@@ -77,6 +80,7 @@ export default function ConfigurationControls({ isOpen }) {
     }
 
     setPartnerID(partnerID);
+    setPartnerSecret(partnerSecret);
     setAccount(null);
 
     // Correct orientation for editor
@@ -161,6 +165,17 @@ export default function ConfigurationControls({ isOpen }) {
           className="form-input"
           name="partnerID"
           defaultValue={defaultPartnerID}
+          ref={register({ required: true })}
+        />
+
+        <label className="form-label" htmlFor="partnerSecret">
+          Partner Secret
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          name="partnerSecret"
+          defaultValue={defaultPartnerSecret}
           ref={register({ required: true })}
         />
 
