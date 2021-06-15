@@ -8,7 +8,7 @@ import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
 import "./AccountAuthentication.css";
 
-const getSignedJWT = (accountData, partnerID, privateKey) => {
+const getSignedJWT = (accountData, partnerID, partnerSecret) => {
   // Header
   const header = { alg: "HS256", typ: "JWT" };
   // Payload
@@ -26,7 +26,7 @@ const getSignedJWT = (accountData, partnerID, privateKey) => {
     "HS256",
     JSON.stringify(header),
     JSON.stringify(payload),
-    privateKey
+    partnerSecret
   );
 };
 
@@ -37,9 +37,11 @@ function LoginAccountForm() {
     setAccount,
     openSnackbar,
     partnerID,
+    partnerSecret,
   } = useAppContext();
 
-  const onSubmit = async ({ privateKey, accountID, externalID }) => {
+  const onSubmit = async ({ accountID, externalID }) => {
+    
     if (accountID && externalID) {
       openSnackbar("Only one of either account ID or external ID may be used.");
       return;
@@ -58,7 +60,7 @@ function LoginAccountForm() {
     }
 
     try {
-      const signedJWT = getSignedJWT(accountData, partnerID, privateKey);
+      const signedJWT = getSignedJWT(accountData, partnerID, partnerSecret); 
       await waymarkInstance.loginAccount(signedJWT);
       const account = await waymarkInstance.getAccountInfo();
       setAccount(account);
@@ -75,19 +77,6 @@ function LoginAccountForm() {
     <div className="panel">
       <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>waymark.loginAccount()</h2>
-
-        <label className="form-label" htmlFor="loginAccountPrivateKey">
-          Partner secret
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="loginAccountPrivateKey"
-          name="privateKey"
-          defaultValue="test-secret"
-          ref={register({ required: true })}
-        />
-
         <p>
           Either account ID or external ID may be used, but only one at a time.
         </p>
@@ -129,17 +118,14 @@ function CreateAccountForm() {
     setAccount,
     openSnackbar,
     partnerID,
+    partnerSecret,
   } = useAppContext();
 
   const history = useHistory();
 
   const onSubmit = async (formData) => {
     try {
-      const { privateKey } = formData;
-      // Remove private key from form data since it's not used in the account creation payload
-      delete formData.privateKey;
-
-      const signedJWT = getSignedJWT(formData, partnerID, privateKey);
+      const signedJWT = getSignedJWT(formData, partnerID, partnerSecret);
 
       const accountID = await waymarkInstance.createAccount(signedJWT);
 
@@ -162,7 +148,6 @@ function CreateAccountForm() {
       <AccountInfoForm
         formTitle="waymark.createAccount()"
         onSubmit={onSubmit}
-        shouldRequirePrivateKey={true}
         submitButtonText="Create Account"
       />
     </div>
