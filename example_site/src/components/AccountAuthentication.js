@@ -8,7 +8,7 @@ import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
 import "./AccountAuthentication.css";
 
-const getSignedJWT = (accountData, partnerID, privateKey) => {
+const getSignedJWT = (accountData, partnerID, partnerSecret) => {
   // Header
   const header = { alg: "HS256", typ: "JWT" };
   // Payload
@@ -26,7 +26,7 @@ const getSignedJWT = (accountData, partnerID, privateKey) => {
     "HS256",
     JSON.stringify(header),
     JSON.stringify(payload),
-    privateKey
+    partnerSecret
   );
 };
 
@@ -41,8 +41,6 @@ function LoginAccountForm() {
   } = useAppContext();
 
   const onSubmit = async ({ accountID, externalID }) => {
-    
-    console.log("LOGIN PRIVATE KEY:", partnerSecret);
     
     if (accountID && externalID) {
       openSnackbar("Only one of either account ID or external ID may be used.");
@@ -127,13 +125,6 @@ function CreateAccountForm() {
 
   const onSubmit = async (formData) => {
     try {
-      console.log("Create Account FORM DATA", formData);
-      console.log("Create Account Secret", partnerSecret);
-
-      const { privateKey } = formData;
-      // Remove private key from form data since it's not used in the account creation payload
-      delete formData.privateKey;
-
       const signedJWT = getSignedJWT(formData, partnerID, partnerSecret);
 
       const accountID = await waymarkInstance.createAccount(signedJWT);
@@ -157,7 +148,6 @@ function CreateAccountForm() {
       <AccountInfoForm
         formTitle="waymark.createAccount()"
         onSubmit={onSubmit}
-        shouldRequirePrivateKey={true}
         submitButtonText="Create Account"
       />
     </div>

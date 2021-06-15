@@ -84,7 +84,6 @@ export default function AccountPage() {
             account={account}
             formTitle="waymark.updateAccountInfo()"
             onSubmit={onSubmitUpdateAccountForm}
-            shouldRequirePrivateKey={false}
             submitButtonText="Update Account"
           />
           <button
