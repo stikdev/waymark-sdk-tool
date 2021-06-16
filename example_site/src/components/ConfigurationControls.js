@@ -238,8 +238,7 @@ export default function ConfigurationControls({ isOpen }) {
           defaultValue=""
           ref={register}
         />
-      </div>
-      <div>
+
         <h2>Labels</h2>
         <label
           className="form-label configuration-column-3"
@@ -261,6 +260,7 @@ export default function ConfigurationControls({ isOpen }) {
         >
           Purchase Video Label
         </label>
+
         <input
           type="text"
           className="form-input"
@@ -268,7 +268,10 @@ export default function ConfigurationControls({ isOpen }) {
           defaultValue="Buy"
           ref={register}
         />
+      </div>
 
+      <div>
+        <h2>Modals</h2>
         <div className="configuration-controls-subsection">
           <h3>Unsaved Changes Confirmation Modal</h3>
 
@@ -347,7 +350,12 @@ export default function ConfigurationControls({ isOpen }) {
           }
 
         </div>
-
+      </div>
+      
+      <div>
+        <h1></h1>
+        <h2></h2>
+        <br></br>
         <div className="configuration-controls-subsection">
           <h3>Complete Video Confirmation Modal</h3>
 
