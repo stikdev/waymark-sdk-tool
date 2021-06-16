@@ -49,132 +49,6 @@ export default function ConfigurationControls({ isOpen }) {
     shouldShowConfirmCompleteVideoModal,
   } = watchFields;
 
-  function renderUnsavedChanges() {
-    return(
-      <div>
-        <label
-              className="form-label configuration-column-3"
-              htmlFor="unsavedChangesModalTitle"
-            >
-              Modal Title
-        </label>
-        
-        <input
-              type="text"
-              className="form-input"
-              name="unsavedChangesModalTitle"
-              defaultValue="Exit Editor"
-              ref={register}
-        />
-        
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="unsavedChangesModalBody"
-        >
-          Modal Body Text
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="unsavedChangesModalBody"
-          defaultValue="Your video has unsaved edits. Are you sure you want to leave?"
-          ref={register}
-        />
-
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="unsavedChangesModalConfirmButton"
-        >
-          Modal Confirmation Button Label
-        </label>  
-        <input
-          type="text"
-          className="form-input"
-          name="unsavedChangesModalConfirmButton"
-          defaultValue="Exit Editor"
-          ref={register}
-        />
-
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="unsavedChangesModalCancelButton"
-        >
-          Modal Cancel Button Label
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="unsavedChangesModalCancelButton"
-          defaultValue="Cancel"
-          ref={register}
-        />
-      </div>
-    );
-  }
-
-  function renderCompleteVideo() {
-    return(
-      <div class>
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="confirmCompleteVideoModalTitle"
-        >
-          Modal Title
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="confirmCompleteVideoModalTitle"
-          defaultValue="Finalize Video"
-          ref={register}
-        />
-
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="confirmCompleteVideoModalBody"
-        >
-          Modal Body Text
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="confirmCompleteVideoModalBody"
-          defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
-          ref={register}
-        />
-
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="confirmCompleteVideoModalConfirmButton"
-        >
-          Modal Confirmation Button Label
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="confirmCompleteVideoModalConfirmButton"
-          defaultValue="Confirm"
-          ref={register}
-        />
-
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="confirmCompleteVideoModalCancelButton"
-        >
-          Modal Cancel Button Label
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="confirmCompleteVideoModalCancelButton"
-          defaultValue="Cancel"
-          ref={register}
-        />
-      </div>
-    );
-  }
-  //testing area
-
   const onSubmit = async (formData) => {
     const {
       environment,
@@ -410,7 +284,66 @@ export default function ConfigurationControls({ isOpen }) {
 
           { 
             //Collapse Unsaved Changes Confirmation Modal
-            shouldShowUnsavedChangesModal && renderUnsavedChanges() 
+            shouldShowUnsavedChangesModal ? (
+              <div class="fade-in">
+                <label
+                      className="form-label configuration-column-3"
+                      htmlFor="unsavedChangesModalTitle"
+                    >
+                      Modal Title
+                </label>
+                
+                <input
+                      type="text"
+                      className="form-input"
+                      name="unsavedChangesModalTitle"
+                      defaultValue="Exit Editor"
+                      ref={register}
+                />
+                
+                <label
+                  className="form-label configuration-column-3"
+                  htmlFor="unsavedChangesModalBody"
+                >
+                  Modal Body Text
+                </label>
+                <input
+                  type="text"
+                  className="form-input"
+                  name="unsavedChangesModalBody"
+                  defaultValue="Your video has unsaved edits. Are you sure you want to leave?"
+                  ref={register}
+                />
+
+                <label
+                  className="form-label configuration-column-3"
+                  htmlFor="unsavedChangesModalConfirmButton"
+                >
+                  Modal Confirmation Button Label
+                </label>  
+                <input
+                  type="text"
+                  className="form-input"
+                  name="unsavedChangesModalConfirmButton"
+                  defaultValue="Exit Editor"
+                  ref={register}
+                />
+
+                <label
+                  className="form-label configuration-column-3"
+                  htmlFor="unsavedChangesModalCancelButton"
+                >
+                  Modal Cancel Button Label
+                </label>
+                <input
+                  type="text"
+                  className="form-input"
+                  name="unsavedChangesModalCancelButton"
+                  defaultValue="Cancel"
+                  ref={register}
+                />
+              </div>
+            ) : null
           }
 
         </div>
@@ -433,7 +366,65 @@ export default function ConfigurationControls({ isOpen }) {
 
           { 
             //Collapse Complete Video Confirmation Modal
-            shouldShowConfirmCompleteVideoModal && renderCompleteVideo() 
+            shouldShowConfirmCompleteVideoModal ? (
+            <div class="fade-in">
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalTitle"
+              >
+                Modal Title
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalTitle"
+                defaultValue="Finalize Video"
+                ref={register}
+              />
+      
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalBody"
+              >
+                Modal Body Text
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalBody"
+                defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
+                ref={register}
+              />
+      
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalConfirmButton"
+              >
+                Modal Confirmation Button Label
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalConfirmButton"
+                defaultValue="Confirm"
+                ref={register}
+              />
+      
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalCancelButton"
+              >
+                Modal Cancel Button Label
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalCancelButton"
+                defaultValue="Cancel"
+                ref={register}
+              />
+            </div>
+            ) : null
           }
 
         </div>
