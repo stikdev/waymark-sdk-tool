@@ -25,6 +25,10 @@ button.configuration-submit-button {
   transition: opacity 0.3s;
 }
 
+.top-padding {
+  padding-top: 45px;
+}
+
 /* Toggle Switch */
 
 /* The switch - the box around the slider */
