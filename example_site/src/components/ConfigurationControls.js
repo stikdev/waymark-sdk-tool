@@ -355,10 +355,7 @@ export default function ConfigurationControls({ isOpen }) {
       </div>
       
       <div>
-        <h1></h1>
-        <h2></h2>
-        <br></br>
-        <div className="configuration-controls-subsection">
+        <div className="top-padding configuration-controls-subsection">
           <h3>Complete Video Confirmation Modal</h3>
 
           <label
