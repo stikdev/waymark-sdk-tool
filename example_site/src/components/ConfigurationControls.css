@@ -20,11 +20,6 @@ button.configuration-submit-button {
   margin-left: 16px;
 }
 
-/* Fade In/Out */
-.modal-fade{
-  transition: opacity 0.3s;
-}
-
 /* Toggle Switch */
 
 /* The switch - the box around the slider */

@@ -238,7 +238,8 @@ export default function ConfigurationControls({ isOpen }) {
           defaultValue=""
           ref={register}
         />
-
+      </div>
+      <div>
         <h2>Labels</h2>
         <label
           className="form-label configuration-column-3"
@@ -260,7 +261,6 @@ export default function ConfigurationControls({ isOpen }) {
         >
           Purchase Video Label
         </label>
-
         <input
           type="text"
           className="form-input"
@@ -268,10 +268,7 @@ export default function ConfigurationControls({ isOpen }) {
           defaultValue="Buy"
           ref={register}
         />
-      </div>
 
-      <div>
-        <h2>Modals</h2>
         <div className="configuration-controls-subsection">
           <h3>Unsaved Changes Confirmation Modal</h3>
 
@@ -284,80 +281,64 @@ export default function ConfigurationControls({ isOpen }) {
             />
             Show the unsaved changes modal?
           </label>
-           
-          <div 
-            className='modal-fade'
-            style={{
-              opacity: shouldShowUnsavedChangesModal ? 1 : 0
-            }}
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalTitle"
           >
-            <label
-                  className="form-label configuration-column-3"
-                  htmlFor="unsavedChangesModalTitle"
-                >
-                  Modal Title
-            </label>
-            
-            <input
-                  type="text"
-                  className="form-input"
-                  name="unsavedChangesModalTitle"
-                  defaultValue="Exit Editor"
-                  ref={register}
-            />
-            
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="unsavedChangesModalBody"
-            >
-              Modal Body Text
-            </label>
+            Modal Title
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalTitle"
+            defaultValue="Exit Editor"
+            ref={register}
+          />
 
-            <input
-              type="text"
-              className="form-input"
-              name="unsavedChangesModalBody"
-              defaultValue="Your video has unsaved edits. Are you sure you want to leave?"
-              ref={register}
-            />
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalBody"
+          >
+            Modal Body Text
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalBody"
+            defaultValue="Your video has unsaved edits. Are you sure you want to leave?"
+            ref={register}
+          />
 
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="unsavedChangesModalConfirmButton"
-            >
-              Modal Confirmation Button Label
-            </label>  
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalConfirmButton"
+          >
+            Modal Confirmation Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalConfirmButton"
+            defaultValue="Exit Editor"
+            ref={register}
+          />
 
-            <input
-              type="text"
-              className="form-input"
-              name="unsavedChangesModalConfirmButton"
-              defaultValue="Exit Editor"
-              ref={register}
-            />
-
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="unsavedChangesModalCancelButton"
-            >
-              Modal Cancel Button Label
-            </label>
-
-            <input
-              type="text"
-              className="form-input"
-              name="unsavedChangesModalCancelButton"
-              defaultValue="Cancel"
-              ref={register}
-            />
-          </div>
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="unsavedChangesModalCancelButton"
+          >
+            Modal Cancel Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="unsavedChangesModalCancelButton"
+            defaultValue="Cancel"
+            ref={register}
+          />
         </div>
-      </div>
-      
-      <div>
-        <h1></h1>
-        <h2></h2>
-        <br></br>
+
         <div className="configuration-controls-subsection">
           <h3>Complete Video Confirmation Modal</h3>
 
@@ -374,68 +355,61 @@ export default function ConfigurationControls({ isOpen }) {
             Show the complete video confirmation modal?
           </label>
 
-          <div 
-            className='modal-fade'
-            style={{
-              opacity: shouldShowConfirmCompleteVideoModal ? 1 : 0
-            }}
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalTitle"
           >
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalTitle"
-            >
-              Modal Title
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalTitle"
-              defaultValue="Finalize Video"
-              ref={register}
-            />
-    
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalBody"
-            >
-              Modal Body Text
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalBody"
-              defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
-              ref={register}
-            />
-    
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalConfirmButton"
-            >
-              Modal Confirmation Button Label
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalConfirmButton"
-              defaultValue="Confirm"
-              ref={register}
-            />
-    
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalCancelButton"
-            >
-              Modal Cancel Button Label
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalCancelButton"
-              defaultValue="Cancel"
-              ref={register}
-            />
-          </div>
+            Modal Title
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalTitle"
+            defaultValue="Finalize Video"
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalBody"
+          >
+            Modal Body Text
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalBody"
+            defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalConfirmButton"
+          >
+            Modal Confirmation Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalConfirmButton"
+            defaultValue="Confirm"
+            ref={register}
+          />
+
+          <label
+            className="form-label configuration-column-3"
+            htmlFor="confirmCompleteVideoModalCancelButton"
+          >
+            Modal Cancel Button Label
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            name="confirmCompleteVideoModalCancelButton"
+            defaultValue="Cancel"
+            ref={register}
+          />
         </div>
       </div>
     </form>
