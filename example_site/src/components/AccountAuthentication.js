@@ -8,6 +8,8 @@ import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
 import "./AccountAuthentication.css";
 
+import Header from "./Header.js";
+
 const getSignedJWT = (accountData, partnerID, partnerSecret) => {
   // Header
   const header = { alg: "HS256", typ: "JWT" };
@@ -74,23 +76,12 @@ function LoginAccountForm() {
   };
 
   return (
-    <div className="panel">
+    <div className="panel move-up">
       <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
-        <h2>waymark.loginAccount()</h2>
+        <h2>Log in to existing account</h2>
         <p>
-          Either account ID or external ID may be used, but only one at a time.
+          Find an account with your external ID or Waymark account ID
         </p>
-        <label className="form-label" htmlFor="loginAccountAccountID">
-          Account ID
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="loginAccountAccountID"
-          name="accountID"
-          placeholder="eg. 1234-ABCD-1234-ABCD"
-          ref={register}
-        />
 
         <label className="form-label" htmlFor="loginAccountExternalID">
           External ID
@@ -104,8 +95,20 @@ function LoginAccountForm() {
           ref={register}
         />
 
+        <label className="form-label" htmlFor="loginAccountAccountID">
+          Account ID
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          id="loginAccountAccountID"
+          name="accountID"
+          placeholder="eg. 1234-ABCD-1234-ABCD"
+          ref={register}
+        />
+
         <button className="submit-button" data-test="loginAccount-button">
-          Login
+          Log In
         </button>
       </form>
     </div>
@@ -144,21 +147,32 @@ function CreateAccountForm() {
   };
 
   return (
-    <div className="panel">
-      <AccountInfoForm
-        formTitle="waymark.createAccount()"
-        onSubmit={onSubmit}
-        submitButtonText="Create Account"
-      />
-    </div>
+    <AccountInfoForm
+      onSubmit={onSubmit}
+      submitButtonText="Create Account"
+    />
   );
 }
 
 export default function AccountAuthentication() {
   return (
-    <>
-      <CreateAccountForm />
-      <LoginAccountForm />
-    </>
+    <div className='center-content'>
+      <div className='center-title'>
+          <Header 
+            title="Create an Account or Log In"
+            subtitle="To keep track of videos that users have created,
+            you can create a Waymark account with any information you
+            use to identify users on your end."
+          />
+      </div>  
+      <div className='two-columns'>
+        <div className='center-left'>
+          <CreateAccountForm />
+        </div>  
+        <div className='center-right'>
+          <LoginAccountForm />
+        </div>  
+      </div>
+    </div>
   );
 }

@@ -4,7 +4,6 @@ import { useAppContext } from "./AppProvider";
 
 export default function AccountInfoForm({
   account,
-  formTitle,
   onSubmit,
   submitButtonText,
 }) {
@@ -26,7 +25,34 @@ export default function AccountInfoForm({
       data-test="createAccount-form"
       onSubmit={handleSubmit(onSubmit, onFormSubmitError)}
     >
-      <h2>{formTitle}</h2>
+      <h2>Create new account</h2>
+      <p>
+        All fields are optional
+      </p>
+
+      <label className="form-label" htmlFor="createAccountEmailAddress">
+        Email
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="createAccountEmailAddress"
+        name="emailAddress"
+        defaultValue={account ? account.emailAddress : null}
+        ref={register}
+      />
+
+      <label className="form-label" htmlFor="createAccountExternalID">
+        External ID
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="createAccountExternalID"
+        name="externalID"
+        defaultValue={account ? account.externalID : null}
+        ref={register}
+      />
 
       <label className="form-label" htmlFor="createAccountFirstName">
         First Name
@@ -52,18 +78,6 @@ export default function AccountInfoForm({
         ref={register}
       />
 
-      <label className="form-label" htmlFor="createAccountEmailAddress">
-        Email Address
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="createAccountEmailAddress"
-        name="emailAddress"
-        defaultValue={account ? account.emailAddress : null}
-        ref={register}
-      />
-
       <label className="form-label" htmlFor="createAccountCompanyName">
         Company Name
       </label>
@@ -77,7 +91,7 @@ export default function AccountInfoForm({
       />
 
       <label className="form-label" htmlFor="createAccountPhone">
-        Phone Number
+        Phone
       </label>
       <input
         type="text"
@@ -116,18 +130,6 @@ export default function AccountInfoForm({
             message: "State should be a two-letter abreviation.",
           },
         })}
-      />
-
-      <label className="form-label" htmlFor="createAccountExternalID">
-        External ID
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="createAccountExternalID"
-        name="externalID"
-        defaultValue={account ? account.externalID : null}
-        ref={register}
       />
 
       <button className="submit-button" data-test="createAccount-button">
