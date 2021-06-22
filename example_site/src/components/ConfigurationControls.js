@@ -18,8 +18,11 @@ export default function ConfigurationControls({ isOpen }) {
   const [partner, setPartner] = useState('default');
   const {
     embedRef,
+    setAccount,
     partnerID: defaultPartnerID,
+    setPartnerID,
     partnerSecret: defaultPartnerSecret,
+    setPartnerSecret,
     waymarkInstance,
     setWaymarkInstance,
     openSnackbar,
@@ -88,6 +91,10 @@ export default function ConfigurationControls({ isOpen }) {
     if (waymarkInstance) {
       await waymarkInstance.cleanup();
     }
+
+    setPartnerID(partnerID);
+    setPartnerSecret(partnerSecret);
+    setAccount(null);
 
     // Correct orientation for editor
     let finalOrientation;
@@ -185,7 +192,7 @@ export default function ConfigurationControls({ isOpen }) {
         
         <button 
           className="submit-button configuration-submit-button center-button">
-          {waymarkInstance ? "Reset SDK" : "See How It Works"}
+          {"See How It Works"}
         </button>
       </div>
       <div className='center-form'>
