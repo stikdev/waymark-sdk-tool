@@ -1,4 +1,4 @@
-//import { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import classnames from "classnames";
 
@@ -6,24 +6,26 @@ import Waymark from "@waymark/waymark-sdk";
 
 import { useAppContext } from "./AppProvider";
 import "./ConfigurationControls.css";
+import Header from "./Header.js";
 
-/**
- * Configuration fo the entire application.
+import { defaultConfiguration, spectrumConfiguration } from "./constants";
+
+/*
+ * Configuration for the entire application.
  */
 export default function ConfigurationControls({ isOpen }) {
   const { register, watch, handleSubmit } = useForm();
+  const [partner, setPartner] = useState('default');
   const {
     embedRef,
-    setAccount,
     partnerID: defaultPartnerID,
-    setPartnerID,
     partnerSecret: defaultPartnerSecret,
-    setPartnerSecret,
     waymarkInstance,
     setWaymarkInstance,
     openSnackbar,
   } = useAppContext();
 
+  
   const watchFields = watch(
     [
       "shouldDefaultPersonalize",
@@ -50,7 +52,15 @@ export default function ConfigurationControls({ isOpen }) {
   } = watchFields;
 
   const onSubmit = async (formData) => {
+    let configuration = formData;
+
+    if (formData.partner === 'default')
+      configuration = defaultConfiguration;
+    else if (formData.partner === 'spectrum')
+      configuration = spectrumConfiguration;
+
     const {
+      partner,
       environment,
       orientation,
       partnerID,
@@ -71,20 +81,19 @@ export default function ConfigurationControls({ isOpen }) {
       confirmCompleteVideoModalConfirmButton,
       confirmCompleteVideoModalCancelButton,
       editorBackgroundColor,
-    } = formData;
+    } = configuration;
 
-    console.log(formData);
+    console.log("Configuration:", configuration);
 
     if (waymarkInstance) {
       await waymarkInstance.cleanup();
     }
 
-    setPartnerID(partnerID);
-    setPartnerSecret(partnerSecret);
-    setAccount(null);
-
     // Correct orientation for editor
-    const finalOrientation = orientation ? "right" : "left";
+    let finalOrientation;
+    if (orientation===true) finalOrientation = 'right';
+    else if (!orientation) finalOrientation = 'left';
+    else finalOrientation = orientation; 
 
     const waymarkOptions = {
       domElement: embedRef.current,
@@ -117,7 +126,7 @@ export default function ConfigurationControls({ isOpen }) {
         hideSaveButton: shouldHideSaveButton,
         backgroundColor: editorBackgroundColor,
       },
-      environment,
+      environment: environment,
       timeout: 5000,
       isDebug: true,
     };
@@ -134,306 +143,348 @@ export default function ConfigurationControls({ isOpen }) {
 
   const formClasses = classnames({
     "configuration-controls-form": true,
-    panel: true,
-    open: isOpen,
-    closed: !isOpen,
+    'modal-fade': true,
+     panel: true,
+     open: isOpen,
+     closed: !isOpen,
+  });
+
+  const titlePanel = classnames({
+    "title-description": true,
+     panel: true,
+     open: isOpen,
+     closed: !isOpen,
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={formClasses}>
-      <div>
-        <h2>Configuration</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className={titlePanel}>
+      <div className='center-title'>
+        <div className='Header'>
+          <Header 
+            title="Welcome to the Waymark SDK"
+            subtitle="This demo site is intended to give you a sense of 
+            what you can do with Waymark's SDK.
+            The possibilities are limitless, but hopefully 
+            this gets your gears turning about how the
+            Waymark SDK could work for you."
+          />
+        </div>
 
-        <label title="Environment" className="form-label" htmlFor="environment">
-          Environment Connection
-        </label>
+        <h4>To get started, choose an example partner</h4>
+
         <select
-          name="environment"
+          name="partner"
           ref={register({ required: true })}
-          defaultValue="demo"
+          value={partner}
+          onChange={(e) => setPartner(e.target.value)}
         >
-          <option value="demo">Demo</option>
-          <option value="prod">Production</option>
-          <option value="local">Local</option>
+          <option selected value="default">Default Partner</option>
+          <option value="spectrum">Spectrum Reach</option>
+          <option value="custom">Custom</option>
         </select>
-
-        <label className="form-label" htmlFor="partnerID">
-          Partner ID
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="partnerID"
-          defaultValue={defaultPartnerID}
-          ref={register({ required: true })}
-        />
-
-        <label className="form-label" htmlFor="partnerSecret">
-          Partner Secret
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="partnerSecret"
-          defaultValue={defaultPartnerSecret}
-          ref={register({ required: true })}
-        />
-
-        <button className="submit-button configuration-submit-button">
-          {waymarkInstance ? "Reset SDK" : "Initialize SDK"}
+        
+        <button 
+          className="submit-button configuration-submit-button center-button">
+          {waymarkInstance ? "Reset SDK" : "See How It Works"}
         </button>
       </div>
-      <div>
-        <h2>Editor</h2>
-        <h4>Editor Orientation: </h4>
-        <label class="switch">
-          <input 
-            name="orientation"
-            type="checkbox"
-            ref={register}
-          /> 
-          <div class="slider round">
-            <span class="switchOn"><h4>Right</h4></span>
-            <span class="switchOff"><h4>Left</h4></span>
+      <div className='center-form'>
+        <div 
+          className={formClasses}
+          style={{
+            opacity: partner === 'custom' ? 1 : 0
+          }}
+        >
+          <div>
+            <h2>Configuration</h2>
+
+            <label title="Environment" className="form-label" htmlFor="environment">
+              Environment Connection
+            </label>
+            <select
+              name="environment"
+              ref={register({ required: true })}
+              defaultValue="demo"
+            >
+              <option value="demo">Demo</option>
+              <option value="prod">Production</option>
+              <option value="local">Local</option>
+            </select>
+
+            <label className="form-label" htmlFor="partnerID">
+              Partner ID
+            </label>
+            <input
+              type="text"
+              className="form-input"
+              name="partnerID"
+              defaultValue={defaultPartnerID}
+              ref={register({ required: true })}
+            />
+
+            <label className="form-label" htmlFor="partnerSecret">
+              Partner Secret
+            </label>
+            <input
+              type="text"
+              className="form-input"
+              name="partnerSecret"
+              defaultValue={defaultPartnerSecret}
+              ref={register({ required: true })}
+            />
           </div>
-        </label> 
 
-        <label className="form-label" htmlFor="shouldDefaultPersonalize">
-          <input
-            name="shouldDefaultPersonalize"
-            type="checkbox"
-            defaultChecked={shouldDefaultPersonalize}
-            ref={register}
-          />
-          Start the editor in personalization?
-        </label>
+          <div>
+            <h2>Editor</h2>
+            <h4>Editor Orientation: </h4>
+            <label className="switch">
+              <input 
+                name="orientation"
+                type="checkbox"
+                ref={register}
+              /> 
+              <div className="slider round">
+                <span className="switchOn"><h4>Right</h4></span>
+                <span className="switchOff"><h4>Left</h4></span>
+              </div>
+            </label> 
 
-        <label className="form-label" htmlFor="shouldHideSaveButton">
-          <input
-            name="shouldHideSaveButton"
-            type="checkbox"
-            defaultChecked={shouldHideSaveButton}
-            ref={register}
-          />
-          Hide the save button?
-        </label>
-
-        <label className="form-label" htmlFor="shouldUseAdvancedDropdown">
-          <input
-            name="shouldUseAdvancedDropdown"
-            type="checkbox"
-            defaultChecked={shouldUseAdvancedDropdown}
-            ref={register}
-          />
-          Use advanced dropdown?
-        </label>
-
-        <label className="form-label" htmlFor="editorBackgroundColor">
-          Custom background color
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="editorBackgroundColor"
-          defaultValue=""
-          ref={register}
-        />
-
-        <h2>Labels</h2>
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="exitEditorLabel"
-        >
-          Exit Editor Label
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          name="exitEditorLabel"
-          defaultValue="Exit"
-          ref={register}
-        />
-
-        <label
-          className="form-label configuration-column-3"
-          htmlFor="completeVideoLabel"
-        >
-          Purchase Video Label
-        </label>
-
-        <input
-          type="text"
-          className="form-input"
-          name="completeVideoLabel"
-          defaultValue="Buy"
-          ref={register}
-        />
-      </div>
-
-      <div>
-        <h2>Modals</h2>
-        <div className="configuration-controls-subsection">
-          <h3>Unsaved Changes Confirmation Modal</h3>
-
-          <label className="form-label" htmlFor="shouldShowUnsavedChangesModal">
-            <input
-              name="shouldShowUnsavedChangesModal"
-              type="checkbox"
-              defaultChecked={shouldShowUnsavedChangesModal}
-              ref={register}
-            />
-            Show the unsaved changes modal?
-          </label>
-           
-          <div 
-            className='modal-fade'
-            style={{
-              opacity: shouldShowUnsavedChangesModal ? 1 : 0
-            }}
-          >
-            <label
-                  className="form-label configuration-column-3"
-                  htmlFor="unsavedChangesModalTitle"
-                >
-                  Modal Title
-            </label>
-            
-            <input
-                  type="text"
-                  className="form-input"
-                  name="unsavedChangesModalTitle"
-                  defaultValue="Exit Editor"
-                  ref={register}
-            />
-            
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="unsavedChangesModalBody"
-            >
-              Modal Body Text
+            <label className="form-label" htmlFor="shouldDefaultPersonalize">
+              <input
+                name="shouldDefaultPersonalize"
+                type="checkbox"
+                defaultChecked={shouldDefaultPersonalize}
+                ref={register}
+              />
+              Start the editor in personalization?
             </label>
 
+            <label className="form-label" htmlFor="shouldHideSaveButton">
+              <input
+                name="shouldHideSaveButton"
+                type="checkbox"
+                defaultChecked={shouldHideSaveButton}
+                ref={register}
+              />
+              Hide the save button?
+            </label>
+
+            <label className="form-label" htmlFor="shouldUseAdvancedDropdown">
+              <input
+                name="shouldUseAdvancedDropdown"
+                type="checkbox"
+                defaultChecked={shouldUseAdvancedDropdown}
+                ref={register}
+              />
+              Use advanced dropdown?
+            </label>
+
+            <label className="form-label" htmlFor="editorBackgroundColor">
+              Custom background color
+            </label>
             <input
               type="text"
               className="form-input"
-              name="unsavedChangesModalBody"
-              defaultValue="Your video has unsaved edits. Are you sure you want to leave?"
+              name="editorBackgroundColor"
+              defaultValue=""
+              ref={register}
+            />
+
+            <h2>Labels</h2>
+            <label
+              className="form-label configuration-column-3"
+              htmlFor="exitEditorLabel"
+            >
+              Exit Editor Label
+            </label>
+            <input
+              type="text"
+              className="form-input"
+              name="exitEditorLabel"
+              defaultValue="Exit"
               ref={register}
             />
 
             <label
               className="form-label configuration-column-3"
-              htmlFor="unsavedChangesModalConfirmButton"
+              htmlFor="completeVideoLabel"
             >
-              Modal Confirmation Button Label
-            </label>  
-
-            <input
-              type="text"
-              className="form-input"
-              name="unsavedChangesModalConfirmButton"
-              defaultValue="Exit Editor"
-              ref={register}
-            />
-
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="unsavedChangesModalCancelButton"
-            >
-              Modal Cancel Button Label
+              Purchase Video Label
             </label>
 
             <input
               type="text"
               className="form-input"
-              name="unsavedChangesModalCancelButton"
-              defaultValue="Cancel"
+              name="completeVideoLabel"
+              defaultValue="Buy"
               ref={register}
             />
           </div>
-        </div>
-      </div>
+
+          <div className="configuration-controls-subsection">
+            <h2>Modals</h2>
+            <h3>Unsaved Changes Confirmation Modal</h3>
+
+            <label className="form-label" htmlFor="shouldShowUnsavedChangesModal">
+              <input
+                name="shouldShowUnsavedChangesModal"
+                type="checkbox"
+                defaultChecked={shouldShowUnsavedChangesModal}
+                ref={register}
+              />
+              Show the unsaved changes modal?
+            </label>
+
+            <div 
+              className='modal-fade'
+              style={{
+                opacity: shouldShowUnsavedChangesModal ? 1 : 0
+              }}
+            >
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="unsavedChangesModalTitle"
+              >
+                Modal Title
+              </label>
+
+              <input
+                type="text"
+                className="form-input"
+                name="unsavedChangesModalTitle"
+                defaultValue="Exit Editor"
+                ref={register}
+              />
+
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="unsavedChangesModalBody"
+              >
+                Modal Body Text
+              </label>
+
+              <input
+                type="text"
+                className="form-input"
+                name="unsavedChangesModalBody"
+                defaultValue="Your video has unsaved edits. Are you 
+                sure you want to leave?"
+                ref={register}
+              />
+
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="unsavedChangesModalConfirmButton"
+              >
+                Modal Confirmation Button Label
+              </label> 
+
+              <input
+                type="text"
+                className="form-input"
+                name="unsavedChangesModalConfirmButton"
+                defaultValue="Exit Editor"
+                ref={register}
+              />
+
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="unsavedChangesModalCancelButton"
+              >
+                Modal Cancel Button Label
+              </label>
+
+              <input
+                type="text"
+                className="form-input"
+                name="unsavedChangesModalCancelButton"
+                defaultValue="Cancel"
+                ref={register}
+              />
+            </div>
+              
+          </div>
+          
+          <div className="configuration-controls-subsection modal-align">
+            <h3>Complete Video Confirmation Modal</h3>
+
+            <label
+              className="form-label"
+              htmlFor="shouldShowConfirmCompleteVideoModal"
+            >
+              <input
+                name="shouldShowConfirmCompleteVideoModal"
+                type="checkbox"
+                defaultChecked={shouldShowConfirmCompleteVideoModal}
+                ref={register}
+              />
+              Show the complete video confirmation modal?
+            </label>
+
+            <div 
+              className='modal-fade'
+              style={{
+                opacity: shouldShowConfirmCompleteVideoModal ? 1 : 0
+              }}
+            >
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalTitle"
+              >
+                Modal Title
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalTitle"
+                defaultValue="Finalize Video"
+                ref={register}
+              />
       
-      <div>
-        <div className="top-padding configuration-controls-subsection">
-          <h3>Complete Video Confirmation Modal</h3>
-
-          <label
-            className="form-label"
-            htmlFor="shouldShowConfirmCompleteVideoModal"
-          >
-            <input
-              name="shouldShowConfirmCompleteVideoModal"
-              type="checkbox"
-              defaultChecked={shouldShowConfirmCompleteVideoModal}
-              ref={register}
-            />
-            Show the complete video confirmation modal?
-          </label>
-
-          <div 
-            className='modal-fade'
-            style={{
-              opacity: shouldShowConfirmCompleteVideoModal ? 1 : 0
-            }}
-          >
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalTitle"
-            >
-              Modal Title
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalTitle"
-              defaultValue="Finalize Video"
-              ref={register}
-            />
-    
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalBody"
-            >
-              Modal Body Text
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalBody"
-              defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
-              ref={register}
-            />
-    
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalConfirmButton"
-            >
-              Modal Confirmation Button Label
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalConfirmButton"
-              defaultValue="Confirm"
-              ref={register}
-            />
-    
-            <label
-              className="form-label configuration-column-3"
-              htmlFor="confirmCompleteVideoModalCancelButton"
-            >
-              Modal Cancel Button Label
-            </label>
-            <input
-              type="text"
-              className="form-input"
-              name="confirmCompleteVideoModalCancelButton"
-              defaultValue="Cancel"
-              ref={register}
-            />
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalBody"
+              >
+                Modal Body Text
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalBody"
+                defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
+                ref={register}
+              />
+      
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalConfirmButton"
+              >
+                Modal Confirmation Button Label
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalConfirmButton"
+                defaultValue="Confirm"
+                ref={register}
+              />
+      
+              <label
+                className="form-label configuration-column-3"
+                htmlFor="confirmCompleteVideoModalCancelButton"
+              >
+                Modal Cancel Button Label
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                name="confirmCompleteVideoModalCancelButton"
+                defaultValue="Cancel"
+                ref={register}
+              />
+            </div>
           </div>
-        </div>
+        </div>   
       </div>
     </form>
   );

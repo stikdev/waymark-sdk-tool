@@ -1,8 +1,22 @@
+.title-description {
+  display: grid;
+  place-items: start start;
+  height: 600px;
+  grid-auto-flow: row;
+  background-color: white;
+}
+
+.title-description.closed {
+  height: 0;
+  display: none;
+}
+
 .configuration-controls-form {
   display: grid;
   place-items: start start;
   height: 600px;
   grid-auto-flow: column;
+  background-color: white;
 }
 
 .configuration-controls-form.closed {
@@ -11,13 +25,40 @@
 }
 
 button.configuration-submit-button {
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 .configuration-controls-subsection > label,
 .configuration-controls-subsection > input {
   /* Indent contents of subsection to visually separate them */
   margin-left: 16px;
+}
+
+/* Align video confirmation modal with unsaved changes modal */
+.modal-align {
+  margin-top: 49px;
+}
+
+/* Center SDK title & description */
+.center-title {
+  margin: auto;
+  text-align: center;
+  width: 40%;
+  padding: 10px;
+}
+
+/* Center button */
+.center-button {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Center form options */
+.center-form {
+  margin: auto;
+  text-align: left;
+  width: 80%;
+  padding: 10px;
 }
 
 /* Fade In/Out */
