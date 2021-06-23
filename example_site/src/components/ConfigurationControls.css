@@ -1,9 +1,7 @@
 .title-description {
   display: grid;
-  place-items: start start;
-  height: 600px;
+  place-items: start;
   grid-auto-flow: row;
-  background-color: white;
 }
 
 .title-description.closed {
@@ -13,10 +11,8 @@
 
 .configuration-controls-form {
   display: grid;
-  place-items: start start;
-  height: 600px;
+  place-items: start;
   grid-auto-flow: column;
-  background-color: white;
 }
 
 .configuration-controls-form.closed {
@@ -43,7 +39,7 @@ button.configuration-submit-button {
 .center-title {
   margin: auto;
   text-align: center;
-  width: 40%;
+  width: 60%;
   padding: 10px;
 }
 
@@ -62,7 +58,7 @@ button.configuration-submit-button {
 }
 
 /* Fade In/Out */
-.modal-fade{
+.fade-in-out{
   transition: opacity 0.3s;
 }
 

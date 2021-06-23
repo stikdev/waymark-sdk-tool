@@ -1,7 +1,12 @@
 export const theBlue = "#337AB7";
 
+export const partnerPresets = {
+    default: 'default',
+    spectrum: 'spectrum',
+    custom: 'custom',
+};
+
 export const defaultConfiguration = {
-    "partner": 'default',
     "environment": 'demo',
     "orientation": 'left',
     "partnerID": 'fake-partner-id',
@@ -22,10 +27,9 @@ export const defaultConfiguration = {
     "confirmCompleteVideoModalConfirmButton": 'Confirm',
     "confirmCompleteVideoModalCancelButton": 'Cancel',
     "editorBackgroundColor": '',
-}
+};
 
 export const spectrumConfiguration = {
-    "partner": 'spectrum',
     "environment": 'demo',
     "orientation": 'left',
     "partnerID": 'spectrum-reach-4dcQt4',
@@ -46,4 +50,9 @@ export const spectrumConfiguration = {
     "confirmCompleteVideoModalConfirmButton": 'Confirm',
     "confirmCompleteVideoModalCancelButton": 'Cancel',
     "editorBackgroundColor": '#FFFFFF',
-}
+};
+
+export const partnerConfigurations = {
+    [partnerPresets.default]: defaultConfiguration,
+    [partnerPresets.spectrum]: spectrumConfiguration,
+};
