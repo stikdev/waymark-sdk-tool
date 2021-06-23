@@ -8,9 +8,9 @@ import { useAppContext } from "./AppProvider";
 import "./ConfigurationControls.css";
 import Header from "./Header.js";
 
-import { defaultConfiguration, spectrumConfiguration } from "./constants";
+import { partnerPresets, partnerConfigurations } from "./constants";
 
-/*
+/**
  * Configuration for the entire application.
  */
 export default function ConfigurationControls({ isOpen }) {
@@ -28,7 +28,6 @@ export default function ConfigurationControls({ isOpen }) {
     openSnackbar,
   } = useAppContext();
 
-  
   const watchFields = watch(
     [
       "shouldDefaultPersonalize",
@@ -54,16 +53,36 @@ export default function ConfigurationControls({ isOpen }) {
     shouldShowConfirmCompleteVideoModal,
   } = watchFields;
 
-  const onSubmit = async (formData) => {
-    let configuration = formData;
+  /**
+   * Returns proper configuration settings for SDK Demo
+   * Site.
+   */
+  const getConfiguration = (formData) => {
+    let configuration = partnerConfigurations[formData.partner];
+    // custom configuration
+    if (!configuration) {
+      configuration = formData;
+    }
+    return configuration;
+  }
 
-    if (formData.partner === 'default')
-      configuration = defaultConfiguration;
-    else if (formData.partner === 'spectrum')
-      configuration = spectrumConfiguration;
+  /**
+   * Returns proper orientation for editor
+   */
+  const getOrientation = (orientation) => {
+    if (orientation === 'left' || orientation === 'right') {
+      return orientation;
+    }
+    // Custom configuration results in value of false when user
+    // desires left orientation and true when user desires
+    // right orientation due to checkbox implementation
+    return orientation ? 'right' : 'left';
+  }
+
+  const onSubmit = async (formData) => {
+    const configuration = getConfiguration(formData);
 
     const {
-      partner,
       environment,
       orientation,
       partnerID,
@@ -96,11 +115,7 @@ export default function ConfigurationControls({ isOpen }) {
     setPartnerSecret(partnerSecret);
     setAccount(null);
 
-    // Correct orientation for editor
-    let finalOrientation;
-    if (orientation===true) finalOrientation = 'right';
-    else if (!orientation) finalOrientation = 'left';
-    else finalOrientation = orientation; 
+    const finalOrientation = getOrientation(orientation);
 
     const waymarkOptions = {
       domElement: embedRef.current,
@@ -128,12 +143,12 @@ export default function ConfigurationControls({ isOpen }) {
           },
         },
         panelButtons: {
-          shouldUseAdvancedDropdown: shouldUseAdvancedDropdown,
+          shouldUseAdvancedDropdown,
         },
         hideSaveButton: shouldHideSaveButton,
         backgroundColor: editorBackgroundColor,
       },
-      environment: environment,
+      environment,
       timeout: 5000,
       isDebug: true,
     };
@@ -150,7 +165,7 @@ export default function ConfigurationControls({ isOpen }) {
 
   const formClasses = classnames({
     "configuration-controls-form": true,
-    'modal-fade': true,
+    'fade-in-out': true,
      panel: true,
      open: isOpen,
      closed: !isOpen,
@@ -166,16 +181,14 @@ export default function ConfigurationControls({ isOpen }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={titlePanel}>
       <div className='center-title'>
-        <div className='Header'>
-          <Header 
-            title="Welcome to the Waymark SDK"
-            subtitle="This demo site is intended to give you a sense of 
-            what you can do with Waymark's SDK.
-            The possibilities are limitless, but hopefully 
-            this gets your gears turning about how the
-            Waymark SDK could work for you."
-          />
-        </div>
+        <Header 
+          title="Welcome to the Waymark SDK"
+          subtitle="This demo site is intended to give you a sense of 
+          what you can do with Waymark's SDK.
+          The possibilities are limitless, but hopefully 
+          this gets your gears turning about how the
+          Waymark SDK could work for you."
+        />
 
         <h4>To get started, choose an example partner</h4>
 
@@ -185,14 +198,14 @@ export default function ConfigurationControls({ isOpen }) {
           value={partner}
           onChange={(e) => setPartner(e.target.value)}
         >
-          <option selected value="default">Default Partner</option>
-          <option value="spectrum">Spectrum Reach</option>
-          <option value="custom">Custom</option>
+          <option selected value={partnerPresets.default}>Default Partner</option>
+          <option value={partnerPresets.spectrum}>Spectrum Reach</option>
+          <option value={partnerPresets.custom}>Custom</option>
         </select>
         
         <button 
           className="submit-button configuration-submit-button center-button">
-          {"See How It Works"}
+          See How It Works
         </button>
       </div>
       <div className='center-form'>
@@ -343,7 +356,7 @@ export default function ConfigurationControls({ isOpen }) {
             </label>
 
             <div 
-              className='modal-fade'
+              className='fade-in-out'
               style={{
                 opacity: shouldShowUnsavedChangesModal ? 1 : 0
               }}
@@ -429,7 +442,7 @@ export default function ConfigurationControls({ isOpen }) {
             </label>
 
             <div 
-              className='modal-fade'
+              className='fade-in-out'
               style={{
                 opacity: shouldShowConfirmCompleteVideoModal ? 1 : 0
               }}
@@ -491,7 +504,7 @@ export default function ConfigurationControls({ isOpen }) {
               />
             </div>
           </div>
-        </div>   
+        </div>
       </div>
     </form>
   );
