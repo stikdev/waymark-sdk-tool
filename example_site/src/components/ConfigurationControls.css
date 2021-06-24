@@ -1,7 +1,17 @@
+.title-description {
+  display: grid;
+  place-items: start;
+  grid-auto-flow: row;
+}
+
+.title-description.closed {
+  height: 0;
+  display: none;
+}
+
 .configuration-controls-form {
   display: grid;
-  place-items: start start;
-  height: 600px;
+  place-items: start;
   grid-auto-flow: column;
 }
 
@@ -11,7 +21,7 @@
 }
 
 button.configuration-submit-button {
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 .configuration-controls-subsection > label,
@@ -20,8 +30,35 @@ button.configuration-submit-button {
   margin-left: 16px;
 }
 
+/* Align video confirmation modal with unsaved changes modal */
+.modal-align {
+  margin-top: 49px;
+}
+
+/* Center SDK title & description */
+.center-title {
+  margin: auto;
+  text-align: center;
+  width: 60%;
+  padding: 10px;
+}
+
+/* Center button */
+.center-button {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Center form options */
+.center-form {
+  margin: auto;
+  text-align: left;
+  width: 80%;
+  padding: 10px;
+}
+
 /* Fade In/Out */
-.modal-fade{
+.fade-in-out{
   transition: opacity 0.3s;
 }
 
