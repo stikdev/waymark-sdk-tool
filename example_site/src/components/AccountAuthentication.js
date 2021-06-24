@@ -76,7 +76,7 @@ function LoginAccountForm() {
   };
 
   return (
-    <div className="panel move-up">
+    <div>
       <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>Log in to existing account</h2>
         <p>
@@ -107,8 +107,8 @@ function LoginAccountForm() {
           ref={register}
         />
 
-        <button className="submit-button" data-test="loginAccount-button">
-          Log In
+        <button className="submit-button form-input" data-test="loginAccount-button">
+          LOG IN
         </button>
       </form>
     </div>
@@ -149,29 +149,26 @@ function CreateAccountForm() {
   return (
     <AccountInfoForm
       onSubmit={onSubmit}
-      submitButtonText="Create Account"
+      formTitle="Create Account"
+      subtitle="All fields are optional"
+      submitButtonText="CREATE ACCOUNT"
     />
   );
 }
 
 export default function AccountAuthentication() {
   return (
-    <div className='center-content'>
-      <div className='center-title'>
-          <Header 
-            title="Create an Account or Log In"
-            subtitle="To keep track of videos that users have created,
-            you can create a Waymark account with any information you
-            use to identify users on your end."
-          />
-      </div>  
-      <div className='two-columns'>
-        <div className='center-left'>
+    <div>
+      <Header 
+        title="Create an Account or Log In"
+        subtitle="To keep track of videos that users have created,
+        you can create a Waymark account with any information you
+        use to identify users on your end."
+      /> 
+      <p></p>
+      <div className='two-columns left'>
           <CreateAccountForm />
-        </div>  
-        <div className='center-right'>
           <LoginAccountForm />
-        </div>  
       </div>
     </div>
   );

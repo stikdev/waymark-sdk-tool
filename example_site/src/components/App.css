@@ -1,6 +1,7 @@
 main {
   width: 100vw;
   height: 100vh;
+  max-width: 1200px;
   display: grid;
   grid-template-rows: auto 1fr;
 }
@@ -40,19 +41,16 @@ main {
   grid-template-columns: repeat(2, 1fr);
 }
 
-.panel {
-  padding: 24px;
-  margin-bottom: 8px;
-  border-radius: 4px;
-  background-color: white;
-  margin: 12px;
-  overflow: auto;
-}
-
 .form-label {
   display: block;
   font-weight: bold;
   margin: 12px 0 4px;
+}
+
+.center {
+  margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .submit-button {
@@ -61,7 +59,7 @@ main {
   font-weight: bold;
   border-radius: 4px;
   border: none;
-  background-color: #337AB7;
+  background-color: #005AFF;
   color: white;
   padding: 4px 8px;
   cursor: pointer;
@@ -107,8 +105,4 @@ div.loading {
 .hide-configuration {
   width: 150px;
   margin-left: 20px;
-}
-
-.move-up {
-  margin-top: -25px;
 }

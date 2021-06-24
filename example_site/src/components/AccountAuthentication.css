@@ -10,6 +10,7 @@
   background-color: white;
   word-break: break-all;
 }
+
 .webhook-request pre {
   margin-top: 0px;
 }
@@ -53,28 +54,13 @@
   left: -16px;
 }
 
-/* Center header */
-.center-title {
-  margin: auto;
-  text-align: center;
-  width: 40%;
-  padding: 10px;
-}
-
 .two-columns {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-.center-content{
-  margin-left: 200px;
-  margin-right: 200px;
-}
-
-.center-left{
-  margin-left: 400px;
-}
-
-.center-right{
-  margin-right: 350px;
+.left {
+  margin: 0 auto;
+  text-align: left;
+  width: 60%;
 }

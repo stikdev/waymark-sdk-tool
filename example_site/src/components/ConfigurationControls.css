@@ -21,7 +21,8 @@
 }
 
 button.configuration-submit-button {
-  margin-top: 20px;
+  margin-top: 50px;
+  width: 12em;
 }
 
 .configuration-controls-subsection > label,
@@ -35,35 +36,16 @@ button.configuration-submit-button {
   margin-top: 49px;
 }
 
-/* Center SDK title & description */
-.center-title {
-  margin: auto;
-  text-align: center;
-  width: 60%;
-  padding: 10px;
-}
-
-/* Center button */
-.center-button {
-  text-align: center;
-  margin: 0 auto;
-}
-
 /* Center form options */
 .center-form {
   margin: auto;
   text-align: left;
-  width: 80%;
+  width: 90%;
   padding: 10px;
 }
 
-/* Fade In/Out */
 .fade-in-out{
   transition: opacity 0.3s;
-}
-
-.top-padding {
-  padding-top: 45px;
 }
 
 /* Toggle Switch */

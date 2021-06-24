@@ -82,7 +82,7 @@ export default function AccountPage() {
         <>
           <AccountInfoForm
             account={account}
-            formTitle="waymark.updateAccountInfo()"
+            formTitle="Update Account"
             onSubmit={onSubmitUpdateAccountForm}
             submitButtonText="Update Account"
           />
