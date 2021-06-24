@@ -55,7 +55,7 @@ function App() {
   });
 
   return (
-    <main>
+    <main className='center'>
       <nav className="navbar">
         <ul>
           <li data-testid="navbar-home">
@@ -82,7 +82,6 @@ function App() {
           </li>
         </ul>
       </nav>
-
       <ConfigurationControls isOpen={isConfigurationOpen} />
 
       <div

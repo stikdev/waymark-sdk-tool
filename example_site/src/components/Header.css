@@ -1,5 +1,11 @@
+.center {
+    margin: auto;
+    text-align: center;
+    width: 80%;
+}
+
 .title {
-    font-size: 80px;
+    font-size: 65px;
 }
 
 .subtitle {

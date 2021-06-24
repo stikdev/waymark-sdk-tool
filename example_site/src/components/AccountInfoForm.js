@@ -5,6 +5,8 @@ import { useAppContext } from "./AppProvider";
 export default function AccountInfoForm({
   account,
   onSubmit,
+  formTitle,
+  subtitle,
   submitButtonText,
 }) {
   const { openSnackbar } = useAppContext();
@@ -25,10 +27,12 @@ export default function AccountInfoForm({
       data-test="createAccount-form"
       onSubmit={handleSubmit(onSubmit, onFormSubmitError)}
     >
-      <h2>Create new account</h2>
-      <p>
-        All fields are optional
-      </p>
+      <h2>{formTitle}</h2>
+      {subtitle ? (
+        <p>
+          {subtitle}
+        </p>
+      ) : null}
 
       <label className="form-label" htmlFor="createAccountEmailAddress">
         Email
@@ -132,7 +136,7 @@ export default function AccountInfoForm({
         })}
       />
 
-      <button className="submit-button" data-test="createAccount-button">
+      <button className="submit-button form-input" data-test="createAccount-button">
         {submitButtonText}
       </button>
     </form>

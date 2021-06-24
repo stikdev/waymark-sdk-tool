@@ -1,4 +1,4 @@
-export const theBlue = "#337AB7";
+export const theBlue = "#005AFF";
 
 export const partnerPresets = {
     default: 'default',

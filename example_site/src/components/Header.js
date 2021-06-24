@@ -10,10 +10,10 @@ import "./Header.css"
 
 function Header({title, subtitle}) {
     return (
-        <>
+        <div className='center'>
             <div className='title'>{title}</div>
             <div className='subtitle'>{subtitle}</div>
-        </>
+        </div>
     )
 }
 
