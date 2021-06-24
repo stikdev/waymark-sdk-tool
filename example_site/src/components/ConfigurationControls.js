@@ -54,8 +54,13 @@ export default function ConfigurationControls({ isOpen }) {
   } = watchFields;
 
   /**
-   * Returns proper configuration settings for SDK Demo
-   * Site.
+   * Returns proper configuration settings for SDK Demo Site.
+   * If the partner chosen is one of the predefined options,
+   * then the configuration settings will be set to the 
+   * their respective hardcoded settings. 
+   * If the partner chosen is the custom configuration, then
+   * the configuration settings will be set to what the user
+   * has inputted.
    */
   const getConfiguration = (formData) => {
     let configuration = partnerConfigurations[formData.partner];
@@ -115,12 +120,10 @@ export default function ConfigurationControls({ isOpen }) {
     setPartnerSecret(partnerSecret);
     setAccount(null);
 
-    const finalOrientation = getOrientation(orientation);
-
     const waymarkOptions = {
       domElement: embedRef.current,
       editor: {
-        orientation: finalOrientation,
+        orientation: getOrientation(orientation),
         personalization: {
           isDefault: shouldDefaultPersonalize,
         },
@@ -153,7 +156,7 @@ export default function ConfigurationControls({ isOpen }) {
       isDebug: true,
     };
 
-    console.log("options", waymarkOptions);
+    console.log("Waymark Options", waymarkOptions);
     try {
       const newWaymarkInstance = new Waymark(partnerID, waymarkOptions);
       setWaymarkInstance(newWaymarkInstance);
