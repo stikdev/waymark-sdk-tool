@@ -136,7 +136,7 @@ export default function AccountInfoForm({
         })}
       />
 
-      <button className="submit-button form-input" data-test="createAccount-button">
+      <button className="submit-button form-button" data-test="createAccount-button">
         {submitButtonText}
       </button>
     </form>

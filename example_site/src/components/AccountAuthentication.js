@@ -76,42 +76,40 @@ function LoginAccountForm() {
   };
 
   return (
-    <div>
-      <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
-        <h2>Log in to existing account</h2>
-        <p>
-          Find an account with your external ID or Waymark account ID
-        </p>
+    <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
+      <h2>Log in to existing account</h2>
+      <p>
+        Find an account with your external ID or Waymark account ID
+      </p>
 
-        <label className="form-label" htmlFor="loginAccountExternalID">
-          External ID
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="loginAccountExternalID"
-          name="externalID"
-          placeholder="<partner account ID>"
-          ref={register}
-        />
+      <label className="form-label" htmlFor="loginAccountExternalID">
+        External ID
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="loginAccountExternalID"
+        name="externalID"
+        placeholder="<partner account ID>"
+        ref={register}
+      />
 
-        <label className="form-label" htmlFor="loginAccountAccountID">
-          Account ID
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="loginAccountAccountID"
-          name="accountID"
-          placeholder="eg. 1234-ABCD-1234-ABCD"
-          ref={register}
-        />
+      <label className="form-label" htmlFor="loginAccountAccountID">
+        Account ID
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="loginAccountAccountID"
+        name="accountID"
+        placeholder="eg. 1234-ABCD-1234-ABCD"
+        ref={register}
+      />
 
-        <button className="submit-button form-input" data-test="loginAccount-button">
-          LOG IN
-        </button>
-      </form>
-    </div>
+      <button className="submit-button form-button" data-test="loginAccount-button">
+        Log In
+      </button>
+    </form>
   );
 }
 
@@ -151,25 +149,24 @@ function CreateAccountForm() {
       onSubmit={onSubmit}
       formTitle="Create Account"
       subtitle="All fields are optional"
-      submitButtonText="CREATE ACCOUNT"
+      submitButtonText="Create Account"
     />
   );
 }
 
 export default function AccountAuthentication() {
   return (
-    <div>
+    <>
       <Header 
         title="Create an Account or Log In"
         subtitle="To keep track of videos that users have created,
         you can create a Waymark account with any information you
         use to identify users on your end."
       /> 
-      <p></p>
-      <div className='two-columns left'>
+      <div className='form-columns'>
           <CreateAccountForm />
           <LoginAccountForm />
       </div>
-    </div>
+    </>
   );
 }
