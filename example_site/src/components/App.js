@@ -55,7 +55,7 @@ function App() {
   });
 
   return (
-    <main className='center'>
+    <main>
       <nav className="navbar">
         <ul>
           <li data-testid="navbar-home">

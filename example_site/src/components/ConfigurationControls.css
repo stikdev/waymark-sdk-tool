@@ -21,7 +21,9 @@
 }
 
 button.configuration-submit-button {
-  margin-top: 50px;
+  display: block;
+  margin-top: 40px;
+  text-align: center;
   width: 12em;
 }
 
