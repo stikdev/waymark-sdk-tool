@@ -4,8 +4,9 @@ import { useAppContext } from "./AppProvider";
 
 export default function AccountInfoForm({
   account,
-  formTitle,
   onSubmit,
+  formTitle,
+  subtitle,
   submitButtonText,
 }) {
   const { openSnackbar } = useAppContext();
@@ -27,6 +28,35 @@ export default function AccountInfoForm({
       onSubmit={handleSubmit(onSubmit, onFormSubmitError)}
     >
       <h2>{formTitle}</h2>
+      {subtitle ? (
+        <p>
+          {subtitle}
+        </p>
+      ) : null}
+
+      <label className="form-label" htmlFor="createAccountEmailAddress">
+        Email
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="createAccountEmailAddress"
+        name="emailAddress"
+        defaultValue={account ? account.emailAddress : null}
+        ref={register}
+      />
+
+      <label className="form-label" htmlFor="createAccountExternalID">
+        External ID
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="createAccountExternalID"
+        name="externalID"
+        defaultValue={account ? account.externalID : null}
+        ref={register}
+      />
 
       <label className="form-label" htmlFor="createAccountFirstName">
         First Name
@@ -52,18 +82,6 @@ export default function AccountInfoForm({
         ref={register}
       />
 
-      <label className="form-label" htmlFor="createAccountEmailAddress">
-        Email Address
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="createAccountEmailAddress"
-        name="emailAddress"
-        defaultValue={account ? account.emailAddress : null}
-        ref={register}
-      />
-
       <label className="form-label" htmlFor="createAccountCompanyName">
         Company Name
       </label>
@@ -77,7 +95,7 @@ export default function AccountInfoForm({
       />
 
       <label className="form-label" htmlFor="createAccountPhone">
-        Phone Number
+        Phone
       </label>
       <input
         type="text"
@@ -118,19 +136,7 @@ export default function AccountInfoForm({
         })}
       />
 
-      <label className="form-label" htmlFor="createAccountExternalID">
-        External ID
-      </label>
-      <input
-        type="text"
-        className="form-input"
-        id="createAccountExternalID"
-        name="externalID"
-        defaultValue={account ? account.externalID : null}
-        ref={register}
-      />
-
-      <button className="submit-button" data-test="createAccount-button">
+      <button className="submit-button form-button" data-test="createAccount-button">
         {submitButtonText}
       </button>
     </form>

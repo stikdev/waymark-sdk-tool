@@ -82,7 +82,6 @@ function App() {
           </li>
         </ul>
       </nav>
-
       <ConfigurationControls isOpen={isConfigurationOpen} />
 
       <div
@@ -97,7 +96,7 @@ function App() {
       </Route>
 
       <Route exact path="/">
-        <div className="webhook-testing-container">
+        <div>
           {account ? (
             <AccountPage />
           ) : (

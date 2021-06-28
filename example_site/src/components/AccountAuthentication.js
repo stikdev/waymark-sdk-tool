@@ -8,6 +8,8 @@ import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
 import "./AccountAuthentication.css";
 
+import Header from "./Header.js";
+
 const getSignedJWT = (accountData, partnerID, partnerSecret) => {
   // Header
   const header = { alg: "HS256", typ: "JWT" };
@@ -74,41 +76,40 @@ function LoginAccountForm() {
   };
 
   return (
-    <div className="panel">
-      <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
-        <h2>waymark.loginAccount()</h2>
-        <p>
-          Either account ID or external ID may be used, but only one at a time.
-        </p>
-        <label className="form-label" htmlFor="loginAccountAccountID">
-          Account ID
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="loginAccountAccountID"
-          name="accountID"
-          placeholder="eg. 1234-ABCD-1234-ABCD"
-          ref={register}
-        />
+    <form data-test="loginAccount-form" onSubmit={handleSubmit(onSubmit)}>
+      <h2>Log in to existing account</h2>
+      <p>
+        Find an account with your external ID or Waymark account ID
+      </p>
 
-        <label className="form-label" htmlFor="loginAccountExternalID">
-          External ID
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          id="loginAccountExternalID"
-          name="externalID"
-          placeholder="<partner account ID>"
-          ref={register}
-        />
+      <label className="form-label" htmlFor="loginAccountExternalID">
+        External ID
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="loginAccountExternalID"
+        name="externalID"
+        placeholder="<partner account ID>"
+        ref={register}
+      />
 
-        <button className="submit-button" data-test="loginAccount-button">
-          Login
-        </button>
-      </form>
-    </div>
+      <label className="form-label" htmlFor="loginAccountAccountID">
+        Account ID
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="loginAccountAccountID"
+        name="accountID"
+        placeholder="eg. 1234-ABCD-1234-ABCD"
+        ref={register}
+      />
+
+      <button className="submit-button form-button" data-test="loginAccount-button">
+        Log In
+      </button>
+    </form>
   );
 }
 
@@ -144,21 +145,28 @@ function CreateAccountForm() {
   };
 
   return (
-    <div className="panel">
-      <AccountInfoForm
-        formTitle="waymark.createAccount()"
-        onSubmit={onSubmit}
-        submitButtonText="Create Account"
-      />
-    </div>
+    <AccountInfoForm
+      onSubmit={onSubmit}
+      formTitle="Create Account"
+      subtitle="All fields are optional"
+      submitButtonText="Create Account"
+    />
   );
 }
 
 export default function AccountAuthentication() {
   return (
     <>
-      <CreateAccountForm />
-      <LoginAccountForm />
+      <Header 
+        title="Create an Account or Log In"
+        subtitle="To keep track of videos that users have created,
+        you can create a Waymark account with any information you
+        use to identify users on your end."
+      /> 
+      <div className='form-columns'>
+          <CreateAccountForm />
+          <LoginAccountForm />
+      </div>
     </>
   );
 }

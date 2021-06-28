@@ -183,7 +183,7 @@ export default function ConfigurationControls({ isOpen }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={titlePanel}>
-      <div className='center-title'>
+      <div className='center'>
         <Header 
           title="Welcome to the Waymark SDK"
           subtitle="This demo site is intended to give you a sense of 
@@ -207,7 +207,7 @@ export default function ConfigurationControls({ isOpen }) {
         </select>
         
         <button 
-          className="submit-button configuration-submit-button center-button">
+          className="submit-button configuration-submit-button">
           See How It Works
         </button>
       </div>
