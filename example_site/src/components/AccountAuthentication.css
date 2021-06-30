@@ -53,12 +53,3 @@
   top: 40px;
   left: -16px;
 }
-
-.form-columns {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding-top: 10px;
-  margin: 0 auto;
-  text-align: left;
-  width: 60%;
-}

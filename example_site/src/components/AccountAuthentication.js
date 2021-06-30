@@ -42,6 +42,7 @@ function LoginAccountForm() {
     partnerSecret,
   } = useAppContext();
 
+  const history = useHistory();
   const onSubmit = async ({ accountID, externalID }) => {
     
     if (accountID && externalID) {
@@ -65,6 +66,7 @@ function LoginAccountForm() {
       const signedJWT = getSignedJWT(accountData, partnerID, partnerSecret); 
       await waymarkInstance.loginAccount(signedJWT);
       const account = await waymarkInstance.getAccountInfo();
+      history.push("/collections");
       setAccount(account);
 
       console.log("Logged in account");
@@ -163,7 +165,7 @@ export default function AccountAuthentication() {
         you can create a Waymark account with any information you
         use to identify users on your end."
       /> 
-      <div className='form-columns'>
+      <div className='two-columns'>
           <CreateAccountForm />
           <LoginAccountForm />
       </div>
