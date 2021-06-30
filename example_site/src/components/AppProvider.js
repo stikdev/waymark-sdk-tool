@@ -10,6 +10,7 @@ const AppContext = React.createContext({
   setAccount: () => {},
   addTemplates: () => {},
   closeEditor: () => {},
+  purchaseVideo: () => {},
   embedRef: null,
   isEditorOpen: false,
   openEditor: () => {},
@@ -18,8 +19,8 @@ const AppContext = React.createContext({
   setPartnerID: () => {},
   partnerSecret: "test-secret",
   setPartnerSecret: () => {},
-  purchaseVideo: () => {},
   purchasedVideo: null,
+  setPurchasedVideo: () => {},
   templates: {},
   useSnackbar: () => {},
   waymarkInstance: null,
@@ -62,14 +63,18 @@ export const AppProvider = ({ children }) => {
 
   const closeEditor = useCallback(() => {
     setIsEditorOpen(false);
-    history.push("/collections");
-  }, [setIsEditorOpen, history]);
+    if (purchasedVideo) {
+      history.push("/");
+    } else {
+      history.push("/collections");
+    }
+  }, [setIsEditorOpen, history, purchasedVideo]);
 
   const purchaseVideo = useCallback(
     (video) => {
       setIsEditorOpen(false);
       setPurchasedVideo(video);
-      history.push("/purchase");
+      history.push("/");
     },
     [setIsEditorOpen, setPurchasedVideo, history]
   );
@@ -102,6 +107,7 @@ export const AppProvider = ({ children }) => {
     setAccount,
     addTemplates,
     closeEditor,
+    purchaseVideo, 
     embedRef,
     getTemplateByID,
     goHome,
@@ -112,8 +118,8 @@ export const AppProvider = ({ children }) => {
     setPartnerID,
     partnerSecret,
     setPartnerSecret,
-    purchaseVideo,
     purchasedVideo,
+    setPurchasedVideo,
     waymarkInstance,
     setWaymarkInstance,
   };

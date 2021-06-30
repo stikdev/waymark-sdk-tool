@@ -112,3 +112,12 @@ div.loading {
   width: 150px;
   margin-left: 20px;
 }
+
+.two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-top: 10px;
+  margin: 0 auto;
+  text-align: left;
+  width: 60%;
+}
