@@ -152,6 +152,7 @@ function CreateAccountForm() {
       formTitle="Create Account"
       subtitle="All fields are optional"
       submitButtonText="Create Account"
+      canUpdate={false}
     />
   );
 }

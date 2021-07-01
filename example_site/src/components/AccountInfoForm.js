@@ -1,16 +1,30 @@
 import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 
 import { useAppContext } from "./AppProvider";
 
 export default function AccountInfoForm({
   account,
-  onSubmit,
+  updateAccount,
   formTitle,
   subtitle,
   submitButtonText,
+  canUpdate,
 }) {
   const { openSnackbar } = useAppContext();
   const { register, handleSubmit } = useForm();
+  const [buttonStatus, setButtonStatus] = useState(true);
+
+  const handleOnChange = (e) => {
+    setButtonStatus(false);
+    console.log("handleOnChange called");
+  }
+  
+  const handleSave = (e) => {
+    setButtonStatus(true);
+    console.log("handleSave called");
+    updateAccount(e);
+  }  
 
   const onFormSubmitError = (errors) => {
     console.log("Error submitting form: ", errors);
@@ -25,7 +39,7 @@ export default function AccountInfoForm({
   return (
     <form
       data-test="createAccount-form"
-      onSubmit={handleSubmit(onSubmit, onFormSubmitError)}
+      onSubmit={handleSubmit(handleSave, onFormSubmitError)}
     >
       <h2>{formTitle}</h2>
       {subtitle ? (
@@ -44,6 +58,7 @@ export default function AccountInfoForm({
         name="emailAddress"
         defaultValue={account ? account.emailAddress : null}
         ref={register}
+        onChange={handleOnChange}
       />
 
       <label className="form-label" htmlFor="createAccountExternalID">
@@ -56,6 +71,7 @@ export default function AccountInfoForm({
         name="externalID"
         defaultValue={account ? account.externalID : null}
         ref={register}
+        onChange={handleOnChange}
       />
 
       <label className="form-label" htmlFor="createAccountFirstName">
@@ -68,6 +84,7 @@ export default function AccountInfoForm({
         name="firstName"
         defaultValue={account ? account.firstName : null}
         ref={register}
+        onChange={handleOnChange}
       />
 
       <label className="form-label" htmlFor="createAccountLastName">
@@ -80,7 +97,9 @@ export default function AccountInfoForm({
         name="lastName"
         defaultValue={account ? account.lastName : null}
         ref={register}
+        onChange={handleOnChange}
       />
+      {console.log("Last name change status", buttonStatus)}
 
       <label className="form-label" htmlFor="createAccountCompanyName">
         Company Name
@@ -92,6 +111,7 @@ export default function AccountInfoForm({
         name="companyName"
         defaultValue={account ? account.companyName : null}
         ref={register}
+        onChange={handleOnChange}
       />
 
       <label className="form-label" htmlFor="createAccountPhone">
@@ -104,6 +124,7 @@ export default function AccountInfoForm({
         name="phone"
         defaultValue={account ? account.phone : null}
         ref={register}
+        onChange={handleOnChange}
       />
 
       <label className="form-label" htmlFor="createAccountCity">
@@ -116,6 +137,7 @@ export default function AccountInfoForm({
         name="city"
         defaultValue={account ? account.city : null}
         ref={register}
+        onChange={handleOnChange}
       />
 
       <label className="form-label" htmlFor="createAccountState">
@@ -134,11 +156,30 @@ export default function AccountInfoForm({
             message: "State should be a two-letter abreviation.",
           },
         })}
+        onChange={handleOnChange}
       />
 
-      <button className="submit-button form-button" data-test="createAccount-button">
-        {submitButtonText}
-      </button>
+      {console.log("Button status", buttonStatus)}
+
+      {canUpdate ? (
+        <>
+          <button 
+            className="submit-button form-button" 
+            data-test="createAccount-button"
+            disabled={buttonStatus}
+          >
+            {submitButtonText}
+          </button>
+        </>
+      ) : (
+        <>
+          <button className="submit-button form-button" data-test="createAccount-button">
+            {submitButtonText}
+          </button>
+        </>
+        )
+      }
+      
     </form>
   );
 }
