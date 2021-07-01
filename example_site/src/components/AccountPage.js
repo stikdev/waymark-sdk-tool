@@ -79,16 +79,10 @@ export default function AccountPage() {
 
           <AccountInfoForm
             account={account}
-            onSubmit={onSubmitUpdateAccountForm}
+            updateAccount={onSubmitUpdateAccountForm}
             submitButtonText="Save"
+            canUpdate={true}
           />
-
-          {/*<button
-            className="cancel-button"
-            onClick={() => setIsUpdatingAccount(false)}
-          >
-            Cancel
-          </button>*/}
         </div>
         
         <div>
