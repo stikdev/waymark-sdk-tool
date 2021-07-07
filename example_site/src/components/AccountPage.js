@@ -4,11 +4,9 @@ import { useQuery } from "react-query";
 import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
 import Header from "./Header.js";
+import VideoInfo from "./VideoInfo.js";
 import "./AccountPage.css";
-
-const Video = ({ video }) => {
-  return <div className="account-video">Video: {video.name}</div>;
-};
+import { videos } from "./constants";
 
 export default function AccountPage() {
   const {
@@ -20,13 +18,14 @@ export default function AccountPage() {
     setPurchasedVideo,
   } = useAppContext();
 
-  const { isLoading, isError, isSuccess, data: videos, error } = useQuery(
-    "videos",
-    () => waymarkInstance.getVideos(),
-    {
-      enabled: !!waymarkInstance,
-    }
-  );
+  {/* Commented out code because getVideos is not implemented yet
+    const { isLoading, isError, isSuccess, data: videos, error } = useQuery(
+      "videos",
+      () => waymarkInstance.getVideos(),
+      {
+        enabled: !!waymarkInstance,
+      }
+    );*/}
 
   const [isUpdatingAccount, setIsUpdatingAccount] = useState(false);
 
@@ -52,6 +51,13 @@ export default function AccountPage() {
     setAccount(null);
     setPurchasedVideo(null);
   }
+
+  /* Format video dates and sort by most recent date */
+  videos.map((video) => {
+    video.createdAt = new Date(video.createdAt);
+    video.updatedAt = new Date(video.updatedAt);
+  })
+  videos.sort((a, b) => {return b.createdAt - a.createdAt})
 
   return (
     <div className="account-page">
@@ -86,13 +92,18 @@ export default function AccountPage() {
         </div>
         
         <div>
-        <h2>Videos</h2>
-        {isLoading && <div className="loading">Loading...</div>}
-        {isError && <div className="error">Error: {error}</div>}
-        <ul className="videos">
-          {isSuccess &&
-            videos.map((video) => <Video key={video.id} video={video} />)}
-        </ul>
+          {videos.map((video) => (
+            <VideoInfo video={video}/>
+          ))}
+
+          {/* Commented out code because getVideos is not implemented yet
+            {isLoading && <div className="loading">Loading...</div>}
+            {isError && <div className="error">Error: {error}</div>}
+            <ul className="videos">
+              {isSuccess &&
+                videos.map((video) => <Video key={video.id} video={video} />)}
+              </ul> */}
+
         </div>
       </div>
     </div>
