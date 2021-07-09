@@ -8,3 +8,8 @@
     width: 100%;
     object-fit: contain;
 }
+
+.video-column {
+    width: 100% !important;
+    padding-top: 20px !important;
+}

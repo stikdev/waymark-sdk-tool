@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "react-query";
 
 import { useAppContext } from "./AppProvider";
@@ -6,7 +6,7 @@ import AccountInfoForm from "./AccountInfoForm.js";
 import Header from "./Header.js";
 import VideoInfo from "./VideoInfo.js";
 import "./AccountPage.css";
-import { videos } from "./constants";
+import { accountVideos } from "./constants";
 
 export default function AccountPage() {
   const {
@@ -15,17 +15,18 @@ export default function AccountPage() {
     account,
     setAccount,
     openSnackbar,
-    setPurchasedVideo,
+    setEditorNextURL,
   } = useAppContext();
 
-  {/* Commented out code because getVideos is not implemented yet
-    const { isLoading, isError, isSuccess, data: videos, error } = useQuery(
-      "videos",
-      () => waymarkInstance.getVideos(),
-      {
-        enabled: !!waymarkInstance,
-      }
-    );*/}
+  // Commented out code because getVideos is not implemented yet
+  //
+  // const { isLoading, isError, isSuccess, data: videos, error } = useQuery(
+  //   "videos",
+  //   () => waymarkInstance.getVideos(),
+  //   {
+  //     enabled: !!waymarkInstance,
+  //   }
+  // );
 
   const [isUpdatingAccount, setIsUpdatingAccount] = useState(false);
 
@@ -49,16 +50,22 @@ export default function AccountPage() {
     await waymarkInstance.cleanup();
     setWaymarkInstance(null);
     setAccount(null);
-    setPurchasedVideo(null);
+    setEditorNextURL('/collections');
   }
 
-  /* Format video dates and sort by most recent date */
-  videos.map((video) => {
-    video.createdAt = new Date(video.createdAt);
-    video.updatedAt = new Date(video.updatedAt);
-  })
-  videos.sort((a, b) => {return b.createdAt - a.createdAt})
-
+  /**
+   * Format video dates and sort by most recent date
+   */
+  const formattedVideos = useMemo(() => {
+      const intermediateVideos = accountVideos.map((video) => {
+        video.createdAt = new Date(video.createdAt);
+        video.updatedAt = new Date(video.updatedAt);
+        return video;
+      })
+      intermediateVideos.sort((a, b) => {return b.createdAt - a.createdAt});
+      return intermediateVideos;
+  }, [accountVideos]);
+  
   return (
     <div className="account-page">
       <Header 
@@ -85,14 +92,14 @@ export default function AccountPage() {
 
           <AccountInfoForm
             account={account}
-            updateAccount={onSubmitUpdateAccountForm}
+            onFormSubmit={onSubmitUpdateAccountForm}
             submitButtonText="Save"
-            canUpdate={true}
+            requireInputChange={true}
           />
         </div>
         
         <div>
-          {videos.map((video) => (
+          {formattedVideos.map((video) => (
             <VideoInfo video={video}/>
           ))}
 

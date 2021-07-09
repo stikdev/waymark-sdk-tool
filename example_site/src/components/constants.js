@@ -57,7 +57,7 @@ export const partnerConfigurations = {
     [partnerPresets.spectrum]: spectrumConfiguration,
 };
 
-export const videos = [
+export const accountVideos = [
     {
         videoName: "Bold",
         createdAt: "2021-03-09T07:37:55.714759-04:00",

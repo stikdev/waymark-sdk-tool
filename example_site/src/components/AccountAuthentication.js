@@ -66,11 +66,8 @@ function LoginAccountForm() {
       const signedJWT = getSignedJWT(accountData, partnerID, partnerSecret); 
       await waymarkInstance.loginAccount(signedJWT);
       const account = await waymarkInstance.getAccountInfo();
-      history.push("/collections");
       setAccount(account);
-
-      console.log("Logged in account");
-      openSnackbar("Logged in account");
+      history.push("/collections");
     } catch (error) {
       console.error(error);
       openSnackbar(error.message);
@@ -133,15 +130,12 @@ function CreateAccountForm() {
       const accountID = await waymarkInstance.createAccount(signedJWT);
 
       history.push("/collections");
-      console.log("Created account ID:", accountID);
       openSnackbar(`Created account ID: ${accountID}`);
 
       const account = await waymarkInstance.getAccountInfo();
-      console.log("Account", account);
       setAccount(account);
       openSnackbar(`Created account: ${account.firstName} ${account.lastName}`);
     } catch (error) {
-      console.error("createAccount error", error);
       openSnackbar(error.message);
     }
   };
@@ -152,7 +146,7 @@ function CreateAccountForm() {
       formTitle="Create Account"
       subtitle="All fields are optional"
       submitButtonText="Create Account"
-      canUpdate={false}
+      requireInputChange={false}
     />
   );
 }
