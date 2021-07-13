@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "jsoneditor-react/es/editor.min.css";
 import { Link, Route } from "react-router-dom";
-import classnames from "classnames";
 
 import AccountAuthentication from "./AccountAuthentication";
 import AccountPage from "./AccountPage";
@@ -10,12 +9,12 @@ import ConfigurationControls from "./ConfigurationControls";
 import PurchaseVideo from "./PurchaseVideo";
 import { useAppContext } from "./AppProvider";
 import "./App.css";
+import Editor from "./Editor.js";
 
 function App() {
   const {
     account,
     closeEditor,
-    embedRef,
     isEditorOpen,
     purchaseVideo,
     waymarkInstance,
@@ -49,49 +48,14 @@ function App() {
       console.log("videoRendered", event);
     });
   }, [waymarkInstance, closeEditor, purchaseVideo]);
-
-  const embedClasses = classnames({
-    embedded: waymarkInstance,
-    visible: isEditorOpen,
-  });
-
+ 
   return (
     <main>
-      <nav className="navbar">
-        <ul>
-          <li data-testid="navbar-home">
-            <Link to="/">Home</Link>
-          </li>
-          <li data-testid="navbar-collections">
-            <Link to="/collections">Collections</Link>
-          </li>
-          <li data-testid="navbar-account">
-            {account
-              ? `Account : ${account.firstName} ${account.lastName}`
-              : "<no account>"}
-          </li>
-          <li>
-            {" "}
-            <button
-              className="hide-configuration"
-              onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}
-            >
-              {isConfigurationOpen
-                ? "Hide Configuration"
-                : "Show Configuration"}
-            </button>
-          </li>
-        </ul>
-      </nav>
       <ConfigurationControls isOpen={isConfigurationOpen} />
 
-      <div
-        id="waymark-embed-container"
-        className={embedClasses}
-        ref={embedRef}
-      ></div>
+      <Editor />
 
-      <Route path="/editor">{!isEditorOpen && "Editor is closed."}</Route>
+      <Route path="/editor">{ !isEditorOpen && "Editor is closed."}</Route>
       <Route path="/collections">
         <Collections waymarkInstance={waymarkInstance} />
       </Route>

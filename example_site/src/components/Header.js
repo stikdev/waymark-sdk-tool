@@ -7,7 +7,6 @@ import "./Header.css"
  * @param {string} title Title of header
  * @param {string} subtitle Subtitle of header 
  */
-
 function Header({title, subtitle}) {
     return (
         <div className='header-container'>

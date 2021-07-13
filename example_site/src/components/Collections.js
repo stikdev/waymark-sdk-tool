@@ -6,6 +6,7 @@ import "jsoneditor-react/es/editor.min.css";
 
 import { useAppContext } from "./AppProvider";
 import "./Collections.css";
+import Header from "./Header.js";
 
 function Template({ template }) {
   const { openEditor } = useAppContext();
@@ -110,7 +111,12 @@ export default function Collections() {
 
   return (
     <div className="collections-page panel">
-      <h2>Collections</h2>
+      <Header 
+        title="Display Templates"
+        subtitle="Get a list of templates organized by category and
+        filtered by length and/or aspect ratio. Show any or all of
+        them any way that you like."
+      />
       {isLoading && <div className="loading">Loading...</div>}
       {isError && <div className="error">Error: {error}</div>}
       {isSuccess && (

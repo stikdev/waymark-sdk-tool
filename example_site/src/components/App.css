@@ -1,3 +1,9 @@
+@font-face {
+  font-display: swap;
+  font-family: "NeueHaasUnica";
+  src: url('fonts/NeueHaasUnica/NeueHaasUnicaPro-Regular.otf') format('opentype');
+}
+
 main {
   width: 100vw;
   height: 100vh;
@@ -7,6 +13,7 @@ main {
   margin: 0 auto;
   padding-left: 40px;
   padding-right: 40px;
+  font-family: "NeueHaasUnica", Helvetica, Arial, sans-serif;
 }
 
 .center {
@@ -56,14 +63,19 @@ main {
 
 .submit-button {
   margin: 0 auto;
+  font-family: "NeueHaasUnica";
   font-weight: bold;
   border-radius: 4px;
   border: none;
   background-color: #005AFF;
   color: white;
-  padding: 4px 8px;
+  padding: 15px 16px;
   cursor: pointer;
   text-transform: uppercase;
+  left: 2.34%;
+  right: 76.64%;
+  top: 22.73%;
+  bottom: 22.73%;
 }
 
 .submit-button:disabled,
