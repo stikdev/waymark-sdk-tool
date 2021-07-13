@@ -1,0 +1,41 @@
+@font-face {
+  font-display: swap;
+  font-family: "NeueHaasUnica";
+  src: url('NeueHaasUnica/NeueHaasUnicaPro-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "NeueHaasUnica";
+  font-style: italic;
+  src: url('NeueHaasUnica/NeueHaasUnicaPro-Italic.otf') format('opentype');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "NeueHaasUnica";
+  src: url('NeueHaasUnica/NeueHaasUnicaPro-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "NeueHaasUnica";
+  font-style: italic;
+  src: url('NeueHaasUnica/NeueHaasUnicaPro-MediumIt.otf') format('opentype');
+}
+
+
+@font-face {
+  font-display: swap;
+  font-family: "NeueHaasUnica";
+  /* font-weight: fontFamilyHeavy; */
+  src: url('NeueHaasUnica/NeueHaasUnicaPro-Heavy.otf') format('opentype');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "NeueHaasUnica";
+  font-style: italic;
+  /* font-weight: fontFamilyHeavy; */
+  src: url('NeueHaasUnica/NeueHaasUnicaPro-HeavyIt.otf') format('opentype');
+}*/
