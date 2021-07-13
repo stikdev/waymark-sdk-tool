@@ -66,6 +66,12 @@ main {
   text-transform: uppercase;
 }
 
+.submit-button:disabled,
+button[disabled] {
+  background-color: #F5F7F8;
+  color: #B3BFCC;
+}
+
 .operation-button {
   display: block;
   margin-top: 24px;
@@ -111,4 +117,13 @@ div.loading {
 .hide-configuration {
   width: 150px;
   margin-left: 20px;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-top: 10px;
+  margin: 0 auto;
+  text-align: left;
+  width: 60%;
 }

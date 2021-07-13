@@ -1,30 +1,32 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "react-query";
 
 import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
-import { EditPencilIcon } from "./Icons.js";
+import Header from "./Header.js";
+import VideoInfo from "./VideoInfo.js";
 import "./AccountPage.css";
-
-const Video = ({ video }) => {
-  return <div className="account-video">Video: {video.name}</div>;
-};
+import { accountVideos } from "./constants";
 
 export default function AccountPage() {
   const {
     waymarkInstance,
+    setWaymarkInstance,
     account,
     setAccount,
     openSnackbar,
+    setEditorNextURL,
   } = useAppContext();
 
-  const { isLoading, isError, isSuccess, data: videos, error } = useQuery(
-    "videos",
-    () => waymarkInstance.getVideos(),
-    {
-      enabled: !!waymarkInstance,
-    }
-  );
+  // Commented out code because getVideos is not implemented yet
+  //
+  // const { isLoading, isError, isSuccess, data: videos, error } = useQuery(
+  //   "videos",
+  //   () => waymarkInstance.getVideos(),
+  //   {
+  //     enabled: !!waymarkInstance,
+  //   }
+  // );
 
   const [isUpdatingAccount, setIsUpdatingAccount] = useState(false);
 
@@ -44,64 +46,73 @@ export default function AccountPage() {
     setIsUpdatingAccount(false);
   };
 
-  return (
-    <div className="account-page panel">
-      <h2>
-        Your Account
-        <EditPencilIcon
-          onClick={() => setIsUpdatingAccount(true)}
-          style={{ marginBottom: "-7px" }}
-        />
-      </h2>
+  async function onResetWaymarkInstance () {
+    await waymarkInstance.cleanup();
+    setWaymarkInstance(null);
+    setAccount(null);
+    setEditorNextURL('/collections');
+  }
 
-      {!isUpdatingAccount ? (
-        <>
-          <div className="account-id">
-            <strong>ID: </strong>
-            {account.id}
-            <br />
-            <strong>External ID: </strong>
-            {account.externalID}
-          </div>
-          <div className="account-email">
-            <strong>Email address: </strong>
-            {account.emailAddress}
-          </div>
-          <div className="account-name">
-            {account.firstName} {account.lastName}
-          </div>
-          <div className="account-company">{account.companyName}</div>
-          <div className="account-phone">{account.phone}</div>
-          <div className="account-address">
-            {account.city}
-            {account.city && account.state ? ", " : ""}
-            {account.state}
-          </div>
-        </>
-      ) : (
-        <>
+  /**
+   * Format video dates and sort by most recent date
+   */
+  const formattedVideos = useMemo(() => {
+      const intermediateVideos = accountVideos.map((video) => {
+        video.createdAt = new Date(video.createdAt);
+        video.updatedAt = new Date(video.updatedAt);
+        return video;
+      })
+      intermediateVideos.sort((a, b) => {return b.createdAt - a.createdAt});
+      return intermediateVideos;
+  }, [accountVideos]);
+  
+  return (
+    <div className="account-page">
+      <Header 
+        title="You Did It"
+        subtitle="You just created a custom video with the Waymark
+        SDK! Send users to a confirmation page or keep them moving
+        through a larger flow. You can also get a list of all the 
+        user's videos, as shown below."
+      />
+
+      <button 
+        className="submit-button configuration-submit-button"
+        onClick={onResetWaymarkInstance}>
+        Back To Start
+      </button>
+
+      <div className='two-columns' style={{ width: "80%" }}>
+        <div>
+          <h2>
+            {account.firstName ? (
+                account.firstName + "'s Account"
+            ) : 'Your Account'}
+          </h2>
+
           <AccountInfoForm
             account={account}
-            formTitle="Update Account"
-            onSubmit={onSubmitUpdateAccountForm}
-            submitButtonText="Update Account"
+            onFormSubmit={onSubmitUpdateAccountForm}
+            submitButtonText="Save"
+            requireInputChange={true}
           />
-          <button
-            className="cancel-button"
-            onClick={() => setIsUpdatingAccount(false)}
-          >
-            Cancel
-          </button>
-        </>
-      )}
+        </div>
+        
+        <div>
+          {formattedVideos.map((video) => (
+            <VideoInfo video={video}/>
+          ))}
 
-      <h2>Videos</h2>
-      {isLoading && <div className="loading">Loading...</div>}
-      {isError && <div className="error">Error: {error}</div>}
-      <ul className="videos">
-        {isSuccess &&
-          videos.map((video) => <Video key={video.id} video={video} />)}
-      </ul>
+          {/* Commented out code because getVideos is not implemented yet
+            {isLoading && <div className="loading">Loading...</div>}
+            {isError && <div className="error">Error: {error}</div>}
+            <ul className="videos">
+              {isSuccess &&
+                videos.map((video) => <Video key={video.id} video={video} />)}
+              </ul> */}
+
+        </div>
+      </div>
     </div>
   );
 }

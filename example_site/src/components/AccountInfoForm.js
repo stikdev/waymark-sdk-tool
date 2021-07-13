@@ -1,16 +1,37 @@
 import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import _ from 'lodash';
 
 import { useAppContext } from "./AppProvider";
 
 export default function AccountInfoForm({
   account,
-  onSubmit,
+  onFormSubmit,
   formTitle,
   subtitle,
   submitButtonText,
+  requireInputChange,
 }) {
   const { openSnackbar } = useAppContext();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(requireInputChange);
+  const watchFields = watch();
+
+  useEffect(() => {
+    if (!_.isEmpty(watchFields)) {
+      setIsButtonDisabled(false);
+    }
+    else {
+      setIsButtonDisabled(true);
+    }
+  }, [watchFields.city, watchFields.companyName, watchFields.emailAddress,
+    watchFields.externalID, watchFields.firstName, watchFields.lastName,
+    watchFields.phone, watchFields.state])
+ 
+  const handleSave = (e) => {
+    setIsButtonDisabled(true);
+    onFormSubmit(e);
+  }  
 
   const onFormSubmitError = (errors) => {
     console.log("Error submitting form: ", errors);
@@ -25,7 +46,7 @@ export default function AccountInfoForm({
   return (
     <form
       data-test="createAccount-form"
-      onSubmit={handleSubmit(onSubmit, onFormSubmitError)}
+      onSubmit={handleSubmit(handleSave, onFormSubmitError)}
     >
       <h2>{formTitle}</h2>
       {subtitle ? (
@@ -136,9 +157,13 @@ export default function AccountInfoForm({
         })}
       />
 
-      <button className="submit-button form-button" data-test="createAccount-button">
+      <button 
+        className="submit-button form-button" 
+        data-test="createAccount-button"
+        disabled={requireInputChange ? isButtonDisabled : false}
+      >
         {submitButtonText}
-      </button>
+      </button>      
     </form>
   );
 }

@@ -10,6 +10,7 @@ const AppContext = React.createContext({
   setAccount: () => {},
   addTemplates: () => {},
   closeEditor: () => {},
+  purchaseVideo: () => {},
   embedRef: null,
   isEditorOpen: false,
   openEditor: () => {},
@@ -18,8 +19,8 @@ const AppContext = React.createContext({
   setPartnerID: () => {},
   partnerSecret: "test-secret",
   setPartnerSecret: () => {},
-  purchaseVideo: () => {},
-  purchasedVideo: null,
+  editorNextURL: "/collections",
+  setEditorNextURL: () => {},
   templates: {},
   useSnackbar: () => {},
   waymarkInstance: null,
@@ -31,11 +32,11 @@ export const useAppContext = () => useContext(AppContext);
 export const AppProvider = ({ children }) => {
   const [waymarkInstance, setWaymarkInstance] = useState(null);
   const [account, setAccount] = useState(null);
-  const [purchasedVideo, setPurchasedVideo] = useState(null);
   const [templates, setTemplates] = useState({});
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [partnerID, setPartnerID] = useState("fake-partner-id");
   const [partnerSecret, setPartnerSecret] = useState("test-secret");
+  const [editorNextURL, setEditorNextURL] = useState("/collections");
   const history = useHistory();
   const embedRef = React.useRef(null);
 
@@ -50,7 +51,7 @@ export const AppProvider = ({ children }) => {
   });
 
   const openEditor = useCallback(
-    ({ template, video }) => {
+    ({ template }) => {
       if (template) {
         waymarkInstance.openEditorForTemplate(template.id);
         setIsEditorOpen(true);
@@ -62,17 +63,13 @@ export const AppProvider = ({ children }) => {
 
   const closeEditor = useCallback(() => {
     setIsEditorOpen(false);
-    history.push("/collections");
-  }, [setIsEditorOpen, history]);
+    history.push(editorNextURL);
+  }, [setIsEditorOpen, history, editorNextURL]);
 
-  const purchaseVideo = useCallback(
-    (video) => {
+  const purchaseVideo = useCallback(() => {
+      setEditorNextURL("/");
       setIsEditorOpen(false);
-      setPurchasedVideo(video);
-      history.push("/purchase");
-    },
-    [setIsEditorOpen, setPurchasedVideo, history]
-  );
+    }, [setIsEditorOpen, setEditorNextURL]);
 
   const addTemplates = useCallback(
     (newTemplates) => {
@@ -102,6 +99,7 @@ export const AppProvider = ({ children }) => {
     setAccount,
     addTemplates,
     closeEditor,
+    purchaseVideo, 
     embedRef,
     getTemplateByID,
     goHome,
@@ -112,8 +110,8 @@ export const AppProvider = ({ children }) => {
     setPartnerID,
     partnerSecret,
     setPartnerSecret,
-    purchaseVideo,
-    purchasedVideo,
+    editorNextURL,
+    setEditorNextURL,
     waymarkInstance,
     setWaymarkInstance,
   };

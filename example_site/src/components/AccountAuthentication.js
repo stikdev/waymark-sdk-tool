@@ -42,6 +42,7 @@ function LoginAccountForm() {
     partnerSecret,
   } = useAppContext();
 
+  const history = useHistory();
   const onSubmit = async ({ accountID, externalID }) => {
     
     if (accountID && externalID) {
@@ -66,9 +67,7 @@ function LoginAccountForm() {
       await waymarkInstance.loginAccount(signedJWT);
       const account = await waymarkInstance.getAccountInfo();
       setAccount(account);
-
-      console.log("Logged in account");
-      openSnackbar("Logged in account");
+      history.push("/collections");
     } catch (error) {
       console.error(error);
       openSnackbar(error.message);
@@ -131,15 +130,12 @@ function CreateAccountForm() {
       const accountID = await waymarkInstance.createAccount(signedJWT);
 
       history.push("/collections");
-      console.log("Created account ID:", accountID);
       openSnackbar(`Created account ID: ${accountID}`);
 
       const account = await waymarkInstance.getAccountInfo();
-      console.log("Account", account);
       setAccount(account);
       openSnackbar(`Created account: ${account.firstName} ${account.lastName}`);
     } catch (error) {
-      console.error("createAccount error", error);
       openSnackbar(error.message);
     }
   };
@@ -150,6 +146,7 @@ function CreateAccountForm() {
       formTitle="Create Account"
       subtitle="All fields are optional"
       submitButtonText="Create Account"
+      requireInputChange={false}
     />
   );
 }
@@ -163,7 +160,7 @@ export default function AccountAuthentication() {
         you can create a Waymark account with any information you
         use to identify users on your end."
       /> 
-      <div className='form-columns'>
+      <div className='two-columns'>
           <CreateAccountForm />
           <LoginAccountForm />
       </div>

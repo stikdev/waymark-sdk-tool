@@ -20,7 +20,6 @@ export default function PurchaseVideo() {
 
   return (
     <div className="purchase-form panel">
-      <h2>Purchase Video</h2>
       {purchasedVideo ? (
         <>
           <div className="description video-name">
