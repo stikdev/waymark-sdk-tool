@@ -1,5 +1,6 @@
 .account-page {
   margin: 20px;
+  padding-top: 30px;
 }
 
 .account-page svg {
@@ -23,4 +24,3 @@ li.video {
   list-style: "\00BB";
   font-size: 20px;
 }
-
