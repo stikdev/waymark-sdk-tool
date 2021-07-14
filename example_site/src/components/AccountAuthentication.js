@@ -153,7 +153,7 @@ function CreateAccountForm() {
 
 export default function AccountAuthentication() {
   return (
-    <div className = 'center'>
+    <div className='center'>
       <Header 
         title="Create an Account or Log In"
         subtitle="To keep track of videos that users have created,
