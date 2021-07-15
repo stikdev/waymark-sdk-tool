@@ -1,8 +1,4 @@
-@font-face {
-  font-display: swap;
-  font-family: "NeueHaasUnica";
-  src: url('fonts/NeueHaasUnica/NeueHaasUnicaPro-Regular.otf') format('opentype');
-}
+@import "fonts/NeueHaasUnica.css";
 
 main {
   width: 100vw;
@@ -14,6 +10,10 @@ main {
   padding-left: 40px;
   padding-right: 40px;
   font-family: "NeueHaasUnica", Helvetica, Arial, sans-serif;
+}
+
+input, select, textarea, button{
+  font-family: inherit;
 }
 
 .center {
