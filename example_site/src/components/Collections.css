@@ -4,20 +4,19 @@
 
 .browser-columns {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 500px 500px 2fr;
+  column-gap: 100px;
   padding-top: 10px;
-  text-align: left;
 }
 
 .categories {
   position: relative;
   left: 30%;
-  width: 300px;
   padding: 10px; 
 }
 
 .category-name {
-  width: 70%
+  width: 45%
 }
 
 button.collection-name {
@@ -45,13 +44,14 @@ button.collection-filter-refetch {
 
 .templates {
   position: relative;
-  right: 10%;
+  right: 10%;  
 }
 
 .template-grids {
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
+  grid-column-gap: 60px;
 }
 
 .template-grids > div {
@@ -76,4 +76,10 @@ img.thumbnail {
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
