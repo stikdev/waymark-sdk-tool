@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useQuery } from "react-query";
 import { JsonEditor } from "jsoneditor-react";
 import "jsoneditor-react/es/editor.min.css";
@@ -7,6 +7,7 @@ import "jsoneditor-react/es/editor.min.css";
 import { useAppContext } from "./AppProvider";
 import "./Collections.css";
 import Header from "./Header.js";
+import { theBlue, durationFilters, aspectRatioFilters } from "./constants";
 
 function Template({ template }) {
   const { openEditor } = useAppContext();
@@ -15,11 +16,11 @@ function Template({ template }) {
     <>
       <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
         <div className='image-container'>
-            <img
-              className="thumbnail"
-              src={template.thumbnailImageURL}
-              alt={`${template.name} thumbnail`}
-            />
+          <img
+            className="thumbnail"
+            src={template.thumbnailImageURL}
+            alt={`${template.name} thumbnail`}
+          />
         </div>
         <ul>
           <li>Name: {template.name}</li>
@@ -31,20 +32,105 @@ function Template({ template }) {
   );
 }
 
+function DurationFilter({
+  filter,
+  templateFilter,
+  setTemplateFilter,
+}) {
+  const [buttonStatus, setButtonStatus] = useState(true);
+  const buttonColor = templateFilter.duration === filter.value ? theBlue : 'black';
+
+  const onSelectFilter = (newDuration) => {
+    if (buttonStatus) {
+      setTemplateFilter((currentFilter) => (
+        {...currentFilter, duration: newDuration.value}
+      ))  
+    } else {
+      setTemplateFilter((currentFilter) => {
+        const newFilters = {...currentFilter};
+        delete newFilters.duration;
+        return newFilters;
+      })
+    }
+  }
+
+  return (
+    <div className="category-name">
+      <button 
+        className="filter-name"
+        onClick={() => {
+          onSelectFilter(filter)
+          setButtonStatus(!buttonStatus)
+      }}>
+        <div style={{'color': buttonColor}}>
+          {filter.displayName} 
+        </div>
+      </button>
+    </div>
+  );
+}
+
+function AspectRatioFilter({
+  filter,
+  templateFilter,
+  setTemplateFilter,
+}) {
+  const [buttonStatus, setButtonStatus] = useState(true);
+  const buttonColor = templateFilter.aspectRatio === filter.value ? theBlue : 'black';
+
+  const onSelectFilter = (newAspectRatio) => {
+    if (buttonStatus) {
+      setTemplateFilter((currentFilter) => (
+        {...currentFilter, aspectRatio: newAspectRatio.value}
+      ))  
+    } else {
+      setTemplateFilter((currentFilter) => {
+        const newFilters = {...currentFilter};
+        delete newFilters.aspectRatio;
+        return newFilters;
+      })
+    }
+  }
+
+  return (
+    <div className="category-name">
+      <button
+        className="filter-name"
+        onClick={() => {
+          onSelectFilter(filter)
+          setButtonStatus(!buttonStatus)
+        }}>
+        <div style={{'color': buttonColor}}>
+          {filter.displayName} 
+        </div>
+      </button>
+    </div>
+  );
+}
+
 function CollectionNames({
+  collections,
   collection,
+  selectedCollection,
   setSelectedCollection,
 }) {
-  const { waymarkInstance, addTemplates } = useAppContext();
+  const buttonColor = selectedCollection === collection ? theBlue : 'black';
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
   };
 
+  if (!selectedCollection) {
+    setSelectedCollection(collections.find((collection) => (
+      collection.id === "all_videos")));
+  } 
+
   return (
     <div className="category-name">
-      <button className="collection-name" onClick={() => onClick(collection)}>
-        {collection.name}
+      <button className="filter-name" onClick={() => onClick(collection)}>
+        <div style={{'color': buttonColor}}>
+          {collection.name} 
+        </div>
       </button>
     </div>
   );
@@ -52,24 +138,18 @@ function CollectionNames({
 
 function CollectionTemplates({
   collection,
-  expand,
   templateFilter,
 }) {
   const { waymarkInstance, addTemplates } = useAppContext();
 
-  // const [currentTemplateFilter, setCurrentTemplateFilter] = useState(
-  //   templateFilter
-  // );
-
-  // useQuery to get the right templates given the collection name
   const { isLoading, isError, isSuccess, data: templates, error } = useQuery(
-    ["templates", collection, /* currentTemplateFilter*/],
+    ["templates", collection, templateFilter],
     () =>
       waymarkInstance.getTemplatesForCollection(
         collection.id,
-        /*currentTemplateFilter*/
+        templateFilter
       ),
-    { enabled: !!waymarkInstance && expand }
+    { enabled: !!waymarkInstance }
   );
 
   useEffect(() => {
@@ -96,7 +176,7 @@ function CollectionTemplates({
 
 export default function Collections() {
   const [selectedCollection, setSelectedCollection] = useState(null);
-  // const [templateFilter, setTemplateFilter] = useState(() => ({}));
+  const [templateFilter, setTemplateFilter] = useState(() => ({}));
   const { waymarkInstance } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
@@ -106,6 +186,13 @@ export default function Collections() {
       enabled: !!waymarkInstance,
     }
   );
+
+  // sort collection names by alphabetical order
+  useEffect(() => {
+    if (isSuccess) {
+      collections.sort((a, b) => {return a.name.localeCompare(b.name)});
+    }
+  }, [collections]);
 
   return (
     <div className="collections-page panel">
@@ -124,23 +211,42 @@ export default function Collections() {
       ) : null}
 
       {isSuccess ? (
-        <>{/*
-          <h3>Template Filters</h3>
-        <JsonEditor value={templateFilter} onChange={setTemplateFilter} /> */}
+        <>
           <div className="browser-columns">
-            <div className="categories">
+            <div className="filters">
+              <h2>Duration</h2>
+              {durationFilters.map((filter) => (
+                <DurationFilter
+                  filter={filter}
+                  templateFilter={templateFilter}
+                  setTemplateFilter={setTemplateFilter}
+                />
+              ))}
+
+              <h2>Aspect Ratio</h2>
+              {aspectRatioFilters.map((filter) => (
+                <AspectRatioFilter
+                  filter={filter}
+                  templateFilter={templateFilter}
+                  setTemplateFilter={setTemplateFilter}
+                />
+              ))}
+
               <h2>Categories</h2>
               {collections.map((collection) => (
                 <CollectionNames
+                  collections={collections}
                   collection={collection}
+                  selectedCollection={selectedCollection}
                   setSelectedCollection={setSelectedCollection}
                 />
               ))}
             </div>
             <div className="templates">
-              {selectedCollection ? (
-                <CollectionTemplates collection={selectedCollection}/>
-              ) : null}
+              <CollectionTemplates 
+                collection={selectedCollection}
+                templateFilter={templateFilter}
+              />
             </div>
           </div>
         </>

@@ -142,7 +142,7 @@ function CreateAccountForm() {
 
   return (
     <AccountInfoForm
-      onSubmit={onSubmit}
+      onFormSubmit={onSubmit}
       formTitle="Create Account"
       subtitle="All fields are optional"
       submitButtonText="Create Account"
