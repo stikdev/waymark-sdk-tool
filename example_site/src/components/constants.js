@@ -94,3 +94,29 @@ export const accountVideos = [
         thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1272_1600189314.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
     }, 
 ];
+
+export const durationFilters = [
+    {
+      displayName: '6 seconds',
+      value: 6,
+    },
+    {
+      displayName: '15 seconds',
+      value: 15,
+    },
+    {
+      displayName: '30 seconds',
+      value: 30,
+    }
+];
+
+export const aspectRatioFilters = [
+    {
+      displayName: "16:9 (TV-Ready)",
+      value: "16:9",
+    },
+    {
+      displayName: "4:5 (Digital Only)",
+      value: "4:5",
+    }
+];
