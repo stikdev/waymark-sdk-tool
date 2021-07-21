@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { JsonEditor } from "jsoneditor-react";
 import "jsoneditor-react/es/editor.min.css";
+import HoverVideoPlayer from 'react-hover-video-player';
 
 import { useAppContext } from "./AppProvider";
 import "./TemplateBrowser.css";
@@ -16,10 +17,20 @@ function Template({ template }) {
     <>
       <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
         <div className='image-container'>
-          <img
-            className="thumbnail"
-            src={template.thumbnailImageURL}
-            alt={`${template.name} thumbnail`}
+          <HoverVideoPlayer
+            className="hover-player-container"
+            videoSrc={template.previewVideoURL}
+            pausedOverlayWrapperClassName="hover-player-container"
+            pausedOverlay={
+              <img
+                className="thumbnail"
+                src={template.thumbnailImageURL}
+                alt={`${template.name} thumbnail`}
+              />
+            }
+            unloadVideoOnPaused={true}
+            crossOrigin="anonymous"
+            sizingMode="overlay"
           />
         </div>
         <ul>
