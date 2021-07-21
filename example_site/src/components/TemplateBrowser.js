@@ -1,11 +1,11 @@
 import _ from "lodash";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { JsonEditor } from "jsoneditor-react";
 import "jsoneditor-react/es/editor.min.css";
 
 import { useAppContext } from "./AppProvider";
-import "./Collections.css";
+import "./TemplateBrowser.css";
 import Header from "./Header.js";
 import { theBlue, durationFilters, aspectRatioFilters } from "./constants";
 
@@ -32,23 +32,26 @@ function Template({ template }) {
   );
 }
 
-function DurationFilter({
+function Filter({
   filter,
+  filterKey,
   templateFilter,
   setTemplateFilter,
 }) {
-  const [buttonStatus, setButtonStatus] = useState(true);
-  const buttonColor = templateFilter.duration === filter.value ? theBlue : 'black';
+  const [filterIsApplied, setFilterIsApplied] = useState(true);
+  const filterNameColor = templateFilter[filterKey]===filter.value ? theBlue : 'black';
 
-  const onSelectFilter = (newDuration) => {
-    if (buttonStatus) {
+  const onSelectFilter = (newFilter) => {
+    setFilterIsApplied(!filterIsApplied)
+    if (filterIsApplied) {
       setTemplateFilter((currentFilter) => (
-        {...currentFilter, duration: newDuration.value}
-      ))  
+         {...currentFilter, [filterKey]: newFilter.value}
+      )) 
+       
     } else {
       setTemplateFilter((currentFilter) => {
         const newFilters = {...currentFilter};
-        delete newFilters.duration;
+        delete newFilters[filterKey];
         return newFilters;
       })
     }
@@ -60,47 +63,8 @@ function DurationFilter({
         className="filter-name"
         onClick={() => {
           onSelectFilter(filter)
-          setButtonStatus(!buttonStatus)
-      }}>
-        <div style={{'color': buttonColor}}>
-          {filter.displayName} 
-        </div>
-      </button>
-    </div>
-  );
-}
-
-function AspectRatioFilter({
-  filter,
-  templateFilter,
-  setTemplateFilter,
-}) {
-  const [buttonStatus, setButtonStatus] = useState(true);
-  const buttonColor = templateFilter.aspectRatio === filter.value ? theBlue : 'black';
-
-  const onSelectFilter = (newAspectRatio) => {
-    if (buttonStatus) {
-      setTemplateFilter((currentFilter) => (
-        {...currentFilter, aspectRatio: newAspectRatio.value}
-      ))  
-    } else {
-      setTemplateFilter((currentFilter) => {
-        const newFilters = {...currentFilter};
-        delete newFilters.aspectRatio;
-        return newFilters;
-      })
-    }
-  }
-
-  return (
-    <div className="category-name">
-      <button
-        className="filter-name"
-        onClick={() => {
-          onSelectFilter(filter)
-          setButtonStatus(!buttonStatus)
         }}>
-        <div style={{'color': buttonColor}}>
+        <div style={{'color': filterNameColor}}>
           {filter.displayName} 
         </div>
       </button>
@@ -108,22 +72,16 @@ function AspectRatioFilter({
   );
 }
 
-function CollectionNames({
-  collections,
+function CollectionFilter({
   collection,
   selectedCollection,
   setSelectedCollection,
 }) {
-  const buttonColor = selectedCollection === collection ? theBlue : 'black';
+  const buttonColor = selectedCollection===collection ? theBlue : 'black';
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
   };
-
-  if (!selectedCollection) {
-    setSelectedCollection(collections.find((collection) => (
-      collection.id === "all_videos")));
-  } 
 
   return (
     <div className="category-name">
@@ -174,7 +132,7 @@ function CollectionTemplates({
   );
 }
 
-export default function Collections() {
+export default function TemplateBrowser() {
   const [selectedCollection, setSelectedCollection] = useState(null);
   const [templateFilter, setTemplateFilter] = useState(() => ({}));
   const { waymarkInstance } = useAppContext();
@@ -187,12 +145,16 @@ export default function Collections() {
     }
   );
 
-  // sort collection names by alphabetical order
+  // set all_videos collection as default, sort collection names alphabetically
   useEffect(() => {
     if (isSuccess) {
+      if (!selectedCollection) {
+        setSelectedCollection(collections.find((collection) => (
+          collection.id === "all_videos")));
+      } 
       collections.sort((a, b) => {return a.name.localeCompare(b.name)});
     }
-  }, [collections]);
+  }, [collections, isSuccess, selectedCollection]);
 
   return (
     <div className="collections-page panel">
@@ -216,8 +178,9 @@ export default function Collections() {
             <div className="filters">
               <h2>Duration</h2>
               {durationFilters.map((filter) => (
-                <DurationFilter
+                <Filter
                   filter={filter}
+                  filterKey={"duration"}
                   templateFilter={templateFilter}
                   setTemplateFilter={setTemplateFilter}
                 />
@@ -225,8 +188,9 @@ export default function Collections() {
 
               <h2>Aspect Ratio</h2>
               {aspectRatioFilters.map((filter) => (
-                <AspectRatioFilter
+                <Filter
                   filter={filter}
+                  filterKey={"aspectRatio"}
                   templateFilter={templateFilter}
                   setTemplateFilter={setTemplateFilter}
                 />
@@ -234,7 +198,7 @@ export default function Collections() {
 
               <h2>Categories</h2>
               {collections.map((collection) => (
-                <CollectionNames
+                <CollectionFilter
                   collections={collections}
                   collection={collection}
                   selectedCollection={selectedCollection}
