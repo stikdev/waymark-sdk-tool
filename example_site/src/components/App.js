@@ -4,7 +4,7 @@ import { Link, Route } from "react-router-dom";
 
 import AccountAuthentication from "./AccountAuthentication";
 import AccountPage from "./AccountPage";
-import Collections from "./Collections";
+import TemplateBrowser from "./TemplateBrowser";
 import ConfigurationControls from "./ConfigurationControls";
 import PurchaseVideo from "./PurchaseVideo";
 import { useAppContext } from "./AppProvider";
@@ -57,7 +57,7 @@ function App() {
 
       <Route path="/editor">{ !isEditorOpen && "Editor is closed."}</Route>
       <Route path="/collections">
-        <Collections waymarkInstance={waymarkInstance} />
+        <TemplateBrowser waymarkInstance={waymarkInstance} />
       </Route>
 
       <Route exact path="/">
