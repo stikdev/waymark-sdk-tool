@@ -60,13 +60,18 @@ button.filter-name:hover {
   cursor: pointer;
   width: 200px;
   height: 200px;
-  padding-bottom: 10px;
 }
 
-img.thumbnail {
+.hover-player-container {
+  height: 200px;
+  width: 200px;
+}
+
+.thumbnail {
   height: 100%;
   width: 100%;
   object-fit: contain;
+  display: block;
 }
 
 ul {
