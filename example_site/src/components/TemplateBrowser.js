@@ -16,11 +16,9 @@ function Template({ template }) {
   return (
     <>
       <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
-        <div className='image-container'>
           <HoverVideoPlayer
-            className="hover-player-container"
+            className="template-container"
             videoSrc={template.previewVideoURL}
-            pausedOverlayWrapperClassName="hover-player-container"
             pausedOverlay={
               <img
                 className="thumbnail"
@@ -28,11 +26,11 @@ function Template({ template }) {
                 alt={`${template.name} thumbnail`}
               />
             }
+            sizingMode="container"
+            videoClassName="video-fit"
             unloadVideoOnPaused={true}
             crossOrigin="anonymous"
-            sizingMode="overlay"
           />
-        </div>
         <ul>
           <li>Name: {template.name}</li>
           <li>Aspect Ratio: {template.aspectRatio}</li>
