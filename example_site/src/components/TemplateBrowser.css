@@ -56,22 +56,23 @@ button.filter-name:hover {
   font-size: 15px;
 }
 
-.image-container {
+.template-container {
   cursor: pointer;
   width: 200px;
   height: 200px;
-}
-
-.hover-player-container {
-  height: 200px;
-  width: 200px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .thumbnail {
   height: 100%;
   width: 100%;
   object-fit: contain;
-  display: block;
+}
+
+.video-fit {
+  object-fit: scale-down !important;
 }
 
 ul {
