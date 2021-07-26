@@ -38,12 +38,12 @@ function Filter({
   templateFilter,
   setTemplateFilter,
 }) {
-  const [filterIsApplied, setFilterIsApplied] = useState(true);
+  const [isFilterApplied, setIsFilterApplied] = useState(true);
   const filterNameColor = templateFilter[filterKey]===filter.value ? theBlue : 'black';
 
   const onSelectFilter = (newFilter) => {
-    setFilterIsApplied(!filterIsApplied)
-    if (filterIsApplied) {
+    setIsFilterApplied(!IsFilterApplied)
+    if (isFilterApplied) {
       setTemplateFilter((currentFilter) => (
          {...currentFilter, [filterKey]: newFilter.value}
       )) 
@@ -77,7 +77,7 @@ function CollectionFilter({
   selectedCollection,
   setSelectedCollection,
 }) {
-  const buttonColor = selectedCollection===collection ? theBlue : 'black';
+  const buttonColor = selectedCollection === collection ? theBlue : 'black';
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
@@ -93,22 +93,6 @@ function CollectionFilter({
     </div>
   );
 }
-
-function CollectionTemplates({
-  collection,
-  templateFilter,
-}) {
-  const { waymarkInstance, addTemplates } = useAppContext();
-
-  const { isLoading, isError, isSuccess, data: templates, error } = useQuery(
-    ["templates", collection, templateFilter],
-    () =>
-      waymarkInstance.getTemplatesForCollection(
-        collection.id,
-        templateFilter
-      ),
-    { enabled: !!waymarkInstance }
-  );
 
   useEffect(() => {
     if (!_.isEmpty(templates)) {
