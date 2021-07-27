@@ -16,8 +16,15 @@ function Template({ template }) {
   return (
     <>
       <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
+        <div className='template-container'>
           <HoverVideoPlayer
-            className="template-container"
+            // className="video-container"
+            style={{
+              width: template.width > template.height ? '200px' :
+                (template.width/(template.height/200)),
+              height: template.height > template.width ? '200px' : 
+                (template.height/(template.width/200)),
+            }}
             videoSrc={template.previewVideoURL}
             pausedOverlay={
               <img
@@ -31,6 +38,7 @@ function Template({ template }) {
             unloadVideoOnPaused={true}
             crossOrigin="anonymous"
           />
+        </div>
         <ul>
           <li>Name: {template.name}</li>
           <li>Aspect Ratio: {template.aspectRatio}</li>

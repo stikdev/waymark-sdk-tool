@@ -31,14 +31,9 @@ input, select, textarea, button {
 }
 
 #waymark-embed-container {
-  border: 4px dashed coral;
   grid-row: 2;
   box-sizing: border-box;
   display: none;
-}
-
-#waymark-embed-container.embedded {
-  border-color: yellowgreen;
 }
 
 #waymark-embed-container.visible {
