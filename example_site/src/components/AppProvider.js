@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 
-import { theBlue } from "./constants";
+import { blueColor } from "./constants";
 
 const AppContext = React.createContext({
   account: false,
@@ -42,7 +42,7 @@ export const AppProvider = ({ children }) => {
 
   const [openSnackbar] = useSnackbar({
     style: {
-      backgroundColor: theBlue,
+      backgroundColor: blueColor,
       textColor: "white",
       fontWeight: "bold",
       fontSize: "16px",

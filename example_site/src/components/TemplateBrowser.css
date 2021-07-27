@@ -56,17 +56,23 @@ button.filter-name:hover {
   font-size: 15px;
 }
 
-.image-container {
+.template-container {
   cursor: pointer;
   width: 200px;
   height: 200px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
-img.thumbnail {
+.thumbnail {
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+
+.video-fit {
+  object-fit: scale-down !important;
 }
 
 ul {

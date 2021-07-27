@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { JsonEditor } from "jsoneditor-react";
 import "jsoneditor-react/es/editor.min.css";
+import HoverVideoPlayer from 'react-hover-video-player';
 
 import { useAppContext } from "./AppProvider";
 import "./TemplateBrowser.css";
 import Header from "./Header.js";
-import { theBlue, durationFilters, aspectRatioFilters } from "./constants";
+import { blueColor, blackColor, durationFilters, aspectRatioFilters } from "./constants";
 
 function Template({ template }) {
   const { openEditor } = useAppContext();
@@ -15,13 +16,21 @@ function Template({ template }) {
   return (
     <>
       <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
-        <div className='image-container'>
-          <img
-            className="thumbnail"
-            src={template.thumbnailImageURL}
-            alt={`${template.name} thumbnail`}
+          <HoverVideoPlayer
+            className="template-container"
+            videoSrc={template.previewVideoURL}
+            pausedOverlay={
+              <img
+                className="thumbnail"
+                src={template.thumbnailImageURL}
+                alt={`${template.name} thumbnail`}
+              />
+            }
+            sizingMode="container"
+            videoClassName="video-fit"
+            unloadVideoOnPaused={true}
+            crossOrigin="anonymous"
           />
-        </div>
         <ul>
           <li>Name: {template.name}</li>
           <li>Aspect Ratio: {template.aspectRatio}</li>
@@ -39,7 +48,7 @@ function Filter({
   setTemplateFilter,
 }) {
   const [isFilterApplied, setIsFilterApplied] = useState(true);
-  const filterNameColor = templateFilter[filterKey]===filter.value ? theBlue : 'black';
+  const filterNameColor = templateFilter[filterKey] === filter.value ? blueColor : blackColor;
 
   const onSelectFilter = (newFilter) => {
     setIsFilterApplied(!isFilterApplied)
@@ -77,7 +86,7 @@ function CollectionFilter({
   selectedCollection,
   setSelectedCollection,
 }) {
-  const buttonColor = selectedCollection === collection ? theBlue : 'black';
+  const buttonColor = selectedCollection === collection ? blueColor : blackColor;
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
