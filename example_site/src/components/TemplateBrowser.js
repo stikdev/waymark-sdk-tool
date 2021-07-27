@@ -8,7 +8,7 @@ import HoverVideoPlayer from 'react-hover-video-player';
 import { useAppContext } from "./AppProvider";
 import "./TemplateBrowser.css";
 import Header from "./Header.js";
-import { theBlue, durationFilters, aspectRatioFilters } from "./constants";
+import { blueColor, blackColor, durationFilters, aspectRatioFilters } from "./constants";
 
 function Template({ template }) {
   const { openEditor } = useAppContext();
@@ -48,7 +48,7 @@ function Filter({
   setTemplateFilter,
 }) {
   const [isFilterApplied, setIsFilterApplied] = useState(true);
-  const filterNameColor = templateFilter[filterKey]===filter.value ? theBlue : 'black';
+  const filterNameColor = templateFilter[filterKey] === filter.value ? blueColor : blackColor;
 
   const onSelectFilter = (newFilter) => {
     setIsFilterApplied(!isFilterApplied)
@@ -86,7 +86,7 @@ function CollectionFilter({
   selectedCollection,
   setSelectedCollection,
 }) {
-  const buttonColor = selectedCollection === collection ? theBlue : 'black';
+  const buttonColor = selectedCollection === collection ? blueColor : blackColor;
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
