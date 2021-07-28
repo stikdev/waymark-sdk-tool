@@ -52,8 +52,8 @@ input, select, textarea, button {
 
 .form-label {
   display: block;
-  font-weight: bold;
   margin: 12px 0 4px;
+  line-height: 1;
 }
 
 .submit-button {
@@ -63,9 +63,14 @@ input, select, textarea, button {
   border: none;
   background-color: #005AFF;
   color: white;
-  padding: 15px 16px;
+  padding: 14px;
   cursor: pointer;
   text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.125;
+  letter-spacing: 0.15px;
+  text-align: center;
 }
 
 .submit-button:disabled,
@@ -108,7 +113,7 @@ button[disabled] {
 
 .form-button {
   margin-top: 10px;
-  width: 20.7em;
+  width: 16.7em;
 }
 
 div.loading {

@@ -219,14 +219,16 @@ export default function ConfigurationControls({ isOpen }) {
             opacity: partner === 'custom' ? 1 : 0
           }}
         >
-          <div>
-            <h2>Configuration</h2>
+          <div className="configuration-controls-subsection"> 
+            <div className="setting-title">Configuration</div>
 
             <label title="Environment" className="form-label" htmlFor="environment">
               Environment Connection
             </label>
             <select
               name="environment"
+              className="select-input"
+              style = {{width: '45%'}}
               ref={register({ required: true })}
               defaultValue="demo"
             >
@@ -258,9 +260,9 @@ export default function ConfigurationControls({ isOpen }) {
             />
           </div>
 
-          <div>
-            <h2>Editor</h2>
-            <h4>Editor Orientation: </h4>
+          <div className="configuration-controls-subsection">
+          <div className="setting-title">Editor</div>
+            <div className="form-label">Editor Orientation:</div>
             <label className="switch">
               <input 
                 name="orientation"
@@ -314,7 +316,7 @@ export default function ConfigurationControls({ isOpen }) {
               ref={register}
             />
 
-            <h2>Labels</h2>
+            <div className="setting-title">Labels</div>
             <label
               className="form-label configuration-column-3"
               htmlFor="exitEditorLabel"
@@ -346,8 +348,8 @@ export default function ConfigurationControls({ isOpen }) {
           </div>
 
           <div className="configuration-controls-subsection">
-            <h2>Modals</h2>
-            <h3>Unsaved Changes Confirmation Modal</h3>
+            <div className="setting-title">Modals</div>
+            <h4>Unsaved Changes Confirmation Modal</h4>
 
             <label className="form-label" htmlFor="shouldShowUnsavedChangesModal">
               <input
@@ -430,7 +432,7 @@ export default function ConfigurationControls({ isOpen }) {
           </div>
           
           <div className="configuration-controls-subsection modal-align">
-            <h3>Complete Video Confirmation Modal</h3>
+            <h4>Complete Video Confirmation Modal</h4>
 
             <label
               className="form-label"
