@@ -57,6 +57,13 @@ function Filter({
 }) {
   const [isFilterApplied, setIsFilterApplied] = useState(true);
   const filterNameColor = templateFilter[filterKey] === filter.value ? blueColor : blackColor;
+  const filterFontWeight = templateFilter[filterKey] === filter.value ? '800' : '400';
+
+  // if (templateFilter[filterKey] === filter.value) {
+  //   console.log("value equal");
+  //   filterNameColor = blueColor;
+  //   filterFontWeight = 800;
+  // }
 
   const onSelectFilter = (newFilter) => {
     setIsFilterApplied(!isFilterApplied)
@@ -81,7 +88,7 @@ function Filter({
         onClick={() => {
           onSelectFilter(filter)
         }}>
-        <div style={{'color': filterNameColor}}>
+        <div style={{color: filterNameColor, 'font-weight': filterFontWeight}}>
           {filter.displayName} 
         </div>
       </button>
@@ -94,20 +101,21 @@ function CollectionFilter({
   selectedCollection,
   setSelectedCollection,
 }) {
-  const buttonColor = selectedCollection === collection ? blueColor : blackColor;
+  const filterNameColor = selectedCollection === collection ? blueColor : blackColor;
+  const filterFontWeight = selectedCollection === collection ? '800' : '400';
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
   };
 
   return (
-    <div className="category-name">
+    // <div className="category-name">
       <button className="filter-name" onClick={() => onClick(collection)}>
-        <div style={{'color': buttonColor}}>
+        <div style={{'color': filterNameColor, 'font-weight': filterFontWeight}}>
           {collection.name} 
         </div>
       </button>
-    </div>
+    // </div>
   );
 }
 
@@ -193,35 +201,41 @@ export default function TemplateBrowser() {
         <>
           <div className="browser-columns">
             <div className="filters">
-              <h2>Duration</h2>
-              {durationFilters.map((filter) => (
-                <Filter
-                  filter={filter}
-                  filterKey={"duration"}
-                  templateFilter={templateFilter}
-                  setTemplateFilter={setTemplateFilter}
-                />
-              ))}
+              <div className="filter-titles">Duration</div>
+              <div className="category">
+                {durationFilters.map((filter) => (
+                  <Filter
+                    filter={filter}
+                    filterKey={"duration"}
+                    templateFilter={templateFilter}
+                    setTemplateFilter={setTemplateFilter}
+                  />
+                ))}
+              </div>
 
-              <h2>Aspect Ratio</h2>
-              {aspectRatioFilters.map((filter) => (
-                <Filter
-                  filter={filter}
-                  filterKey={"aspectRatio"}
-                  templateFilter={templateFilter}
-                  setTemplateFilter={setTemplateFilter}
-                />
-              ))}
+              <div className="filter-titles">Aspect Ratio</div>
+              <div className="category">
+                {aspectRatioFilters.map((filter) => (
+                  <Filter
+                    filter={filter}
+                    filterKey={"aspectRatio"}
+                    templateFilter={templateFilter}
+                    setTemplateFilter={setTemplateFilter}
+                  />
+                ))}
+              </div>
 
-              <h2>Categories</h2>
-              {collections.map((collection) => (
-                <CollectionFilter
-                  collections={collections}
-                  collection={collection}
-                  selectedCollection={selectedCollection}
-                  setSelectedCollection={setSelectedCollection}
-                />
-              ))}
+              <div className="filter-titles">Categories</div>
+              <div className="category">
+                {collections.map((collection) => (
+                  <CollectionFilter
+                    collections={collections}
+                    collection={collection}
+                    selectedCollection={selectedCollection}
+                    setSelectedCollection={setSelectedCollection}
+                  />
+                ))}
+              </div>
             </div>
             <div className="templates">
               <CollectionTemplates 

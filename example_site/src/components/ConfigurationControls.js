@@ -197,6 +197,7 @@ export default function ConfigurationControls({ isOpen }) {
 
         <select
           name="partner"
+          className="select-input"
           ref={register({ required: true })}
           value={partner}
           onChange={(e) => setPartner(e.target.value)}
