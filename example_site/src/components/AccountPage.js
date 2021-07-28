@@ -67,7 +67,7 @@ export default function AccountPage() {
   }, [accountVideos]);
   
   return (
-    <div className="account-page">
+    <>
       <Header 
         title="You Did It"
         subtitle="You just created a custom video with the Waymark
@@ -113,6 +113,6 @@ export default function AccountPage() {
 
         </div>
       </div>
-    </div>
+    </>
   );
 }
