@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { JsonEditor } from "jsoneditor-react";
 import "jsoneditor-react/es/editor.min.css";
 import HoverVideoPlayer from 'react-hover-video-player';
 
@@ -18,7 +17,6 @@ function Template({ template }) {
       <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
         <div className='template-container'>
           <HoverVideoPlayer
-            // className="video-container"
             style={{
               width: template.width > template.height ? '200px' :
                 (template.width/(template.height/200)),
@@ -57,13 +55,7 @@ function Filter({
 }) {
   const [isFilterApplied, setIsFilterApplied] = useState(true);
   const filterNameColor = templateFilter[filterKey] === filter.value ? blueColor : blackColor;
-  const filterFontWeight = templateFilter[filterKey] === filter.value ? '800' : '400';
-
-  // if (templateFilter[filterKey] === filter.value) {
-  //   console.log("value equal");
-  //   filterNameColor = blueColor;
-  //   filterFontWeight = 800;
-  // }
+  const filterFontWeight = templateFilter[filterKey] === filter.value ? 'var(--fontWeightHeavy)' : 'var(--fontWeightRegular)';
 
   const onSelectFilter = (newFilter) => {
     setIsFilterApplied(!isFilterApplied)
@@ -82,17 +74,20 @@ function Filter({
   }
 
   return (
-    <div className="category-name">
-      <button 
-        className="filter-name"
-        onClick={() => {
-          onSelectFilter(filter)
-        }}>
-        <div style={{color: filterNameColor, 'font-weight': filterFontWeight}}>
-          {filter.displayName} 
-        </div>
-      </button>
-    </div>
+    <button 
+      className="filter-name"
+      onClick={() => {
+        onSelectFilter(filter)
+      }}>
+      <div 
+        style={{
+          color: filterNameColor, 
+          fontWeight: filterFontWeight
+        }}
+      >
+        {filter.displayName} 
+      </div>
+    </button>
   );
 }
 
@@ -102,20 +97,23 @@ function CollectionFilter({
   setSelectedCollection,
 }) {
   const filterNameColor = selectedCollection === collection ? blueColor : blackColor;
-  const filterFontWeight = selectedCollection === collection ? '800' : '400';
+  const filterFontWeight = selectedCollection === collection ? 'var(--fontWeightHeavy)' : 'var(--fontWeightRegular)';
 
   const onClick = (collection) => {
     setSelectedCollection(collection);
   };
 
   return (
-    // <div className="category-name">
-      <button className="filter-name" onClick={() => onClick(collection)}>
-        <div style={{'color': filterNameColor, 'font-weight': filterFontWeight}}>
-          {collection.name} 
-        </div>
-      </button>
-    // </div>
+    <button className="filter-name" onClick={() => onClick(collection)}>
+      <div 
+        style={{
+          color: filterNameColor, 
+          fontWeight: filterFontWeight
+        }}
+      >
+        {collection.name} 
+      </div>
+    </button>
   );
 }
 
@@ -124,12 +122,13 @@ function CollectionTemplates({
   templateFilter,
 }) {
   const { waymarkInstance, addTemplates } = useAppContext();
+  const collectionID = collection ? collection.id : "all_videos";
 
   const { isLoading, isError, isSuccess, data: templates, error } = useQuery(
     ["templates", collection, templateFilter],
     () =>
       waymarkInstance.getTemplatesForCollection(
-        collection.id,
+        collectionID,
         templateFilter
       ),
     { enabled: !!waymarkInstance }
@@ -201,10 +200,11 @@ export default function TemplateBrowser() {
         <>
           <div className="browser-columns">
             <div className="filters">
-              <div className="filter-titles">Duration</div>
+              <div className="filter-title">Duration</div>
               <div className="category">
                 {durationFilters.map((filter) => (
                   <Filter
+                    key={filter.value}
                     filter={filter}
                     filterKey={"duration"}
                     templateFilter={templateFilter}
@@ -213,10 +213,11 @@ export default function TemplateBrowser() {
                 ))}
               </div>
 
-              <div className="filter-titles">Aspect Ratio</div>
+              <div className="filter-title">Aspect Ratio</div>
               <div className="category">
                 {aspectRatioFilters.map((filter) => (
                   <Filter
+                    key={filter.value}
                     filter={filter}
                     filterKey={"aspectRatio"}
                     templateFilter={templateFilter}
@@ -225,10 +226,11 @@ export default function TemplateBrowser() {
                 ))}
               </div>
 
-              <div className="filter-titles">Categories</div>
+              <div className="filter-title">Categories</div>
               <div className="category">
                 {collections.map((collection) => (
                   <CollectionFilter
+                    key={collection.id}
                     collections={collections}
                     collection={collection}
                     selectedCollection={selectedCollection}

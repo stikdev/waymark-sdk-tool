@@ -6,7 +6,6 @@
   display: grid;
   grid-template-columns: 500px 500px 2fr;
   column-gap: 100px;
-  padding-top: 10px;
 }
 
 .filters {
@@ -15,22 +14,22 @@
   padding: 10px; 
 }
 
-.filter-titles {
+.filter-title {
   font-size: 16px;
-  font-weight: 500;
   line-height: 20px;
   padding-top: 28px;
 }
 
 .category {
   width: 215px;
-  border-bottom: 1px solid #B3BFCC;
+  border-bottom: 1px solid var(--mediumGrey);
+  padding-top: 5px;
 }
 
 button.filter-name {
-  padding: 0;
+  padding: 1px 0 0 0;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--white);
   border-style: none;
   width:100%;
   text-align: left;
@@ -39,12 +38,12 @@ button.filter-name {
 }
 
 button.filter-name:hover {
-  background-color: #E8EFF2;
+  background-color: var(--lightGrey);
   border-radius: 2px;
 }
 
 .bottom-border {
-  border-bottom: 1px solid #B3BFCC;
+  border-bottom: 1px solid var(--mediumGrey);
 }
 
 .templates {
@@ -55,7 +54,6 @@ button.filter-name:hover {
 .template-grids {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 10px;
   grid-column-gap: 60px;
 }
 
@@ -64,7 +62,7 @@ button.filter-name:hover {
 }
 
 .template-button {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--white);
   border: none;
   max-width: 212px;
   padding-bottom: 20px;
@@ -81,16 +79,10 @@ button.filter-name:hover {
   justify-content: center;
 }
 
-/* .video-container {
-  height: 100%;
-  width: 100%;
-  object-fit: scale-down;
-} */
-
 .thumbnail {
   height: 100%;
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 4px;
 }
 
