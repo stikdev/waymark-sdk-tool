@@ -8,7 +8,7 @@
     padding-top: 48px;
     width: 80%;
     font-size: 64px;
-    font-weight: 500;
+    font-weight: var(--fontWeightMedium);
     line-height: 1;
     letter-spacing: -1.5px;
     margin: 0 auto;
@@ -20,7 +20,7 @@
     padding-bottom: 24px;
     width: 60%;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: var(--fontWeightRegular);
     line-height: 19px;
     letter-spacing: normal;
 }

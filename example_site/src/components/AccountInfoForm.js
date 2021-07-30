@@ -59,8 +59,7 @@ export default function AccountInfoForm({
         Email
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text"  
         id="createAccountEmailAddress"
         name="emailAddress"
         defaultValue={account ? account.emailAddress : null}
@@ -71,8 +70,7 @@ export default function AccountInfoForm({
         External ID
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text"  
         id="createAccountExternalID"
         name="externalID"
         defaultValue={account ? account.externalID : null}
@@ -83,8 +81,7 @@ export default function AccountInfoForm({
         First Name
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text" 
         id="createAccountFirstName"
         name="firstName"
         defaultValue={account ? account.firstName : null}
@@ -95,8 +92,7 @@ export default function AccountInfoForm({
         Last Name
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text" 
         id="createAccountLastName"
         name="lastName"
         defaultValue={account ? account.lastName : null}
@@ -107,8 +103,7 @@ export default function AccountInfoForm({
         Company Name
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text" 
         id="createAccountCompanyName"
         name="companyName"
         defaultValue={account ? account.companyName : null}
@@ -119,8 +114,7 @@ export default function AccountInfoForm({
         Phone
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text" 
         id="createAccountPhone"
         name="phone"
         defaultValue={account ? account.phone : null}
@@ -131,8 +125,7 @@ export default function AccountInfoForm({
         City
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text" 
         id="createAccountCity"
         name="city"
         defaultValue={account ? account.city : null}
@@ -143,8 +136,7 @@ export default function AccountInfoForm({
         State
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text" 
         id="createAccountState"
         name="state"
         placeholder="State abbreviation, e.g. MI or FL"

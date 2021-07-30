@@ -15,3 +15,7 @@ li.video {
   list-style: "\00BB";
   font-size: 20px;
 }
+
+.push-right {
+  padding-left: 80px;
+}

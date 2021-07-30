@@ -1,12 +1,9 @@
 .image-container {
     width: 100px;
     height: 100px;
-}
-
-.fit-picture {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
+    padding-left: 100px;
+    display: flex;
+    justify-content: center;
 }
 
 .video-column {
@@ -14,4 +11,24 @@
     padding-top: 20px !important;
     font-size: 16px;
     line-height: 19px;
+}
+
+.info-container {
+    padding-top: 15px;
+}
+
+.video-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: var(--fontWeightMedium);
+    line-height: 20px;
+    letter-spacing: normal;
+}
+
+.video-info {
+    color: var(--darkGrey);
+    margin: 2px 0 0;
+    font-size: 11px;
+    line-height: 14px;
+    letter-spacing: .5px;
 }

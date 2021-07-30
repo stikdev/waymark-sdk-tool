@@ -197,12 +197,11 @@ export default function ConfigurationControls({ isOpen }) {
 
         <select
           name="partner"
-          className="select-input"
           ref={register({ required: true })}
-          value={partner}
           onChange={(e) => setPartner(e.target.value)}
+          defaultValue={partnerPresets.default}
         >
-          <option selected value={partnerPresets.default}>Default Partner</option>
+          <option value={partnerPresets.default}>Default Partner</option>
           <option value={partnerPresets.spectrum}>Spectrum Reach</option>
           <option value={partnerPresets.custom}>Custom</option>
         </select>
@@ -220,15 +219,13 @@ export default function ConfigurationControls({ isOpen }) {
           }}
         >
           <div className="configuration-controls-subsection"> 
-            <div className="setting-title">Configuration</div>
+            <div className="column-title">Configuration</div>
 
             <label title="Environment" className="form-label" htmlFor="environment">
               Environment Connection
             </label>
             <select
               name="environment"
-              className="select-input"
-              style = {{width: '45%'}}
               ref={register({ required: true })}
               defaultValue="demo"
             >
@@ -242,7 +239,6 @@ export default function ConfigurationControls({ isOpen }) {
             </label>
             <input
               type="text"
-              className="form-input"
               name="partnerID"
               defaultValue={defaultPartnerID}
               ref={register({ required: true })}
@@ -253,7 +249,6 @@ export default function ConfigurationControls({ isOpen }) {
             </label>
             <input
               type="text"
-              className="form-input"
               name="partnerSecret"
               defaultValue={defaultPartnerSecret}
               ref={register({ required: true })}
@@ -261,7 +256,7 @@ export default function ConfigurationControls({ isOpen }) {
           </div>
 
           <div className="configuration-controls-subsection">
-          <div className="setting-title">Editor</div>
+            <div className="column-title">Editor</div>
             <div className="form-label">Editor Orientation:</div>
             <label className="switch">
               <input 
@@ -270,8 +265,8 @@ export default function ConfigurationControls({ isOpen }) {
                 ref={register}
               /> 
               <div className="slider round">
-                <span className="switchOn"><h4>Right</h4></span>
-                <span className="switchOff"><h4>Left</h4></span>
+                <span className="switchOn">Right</span>
+                <span className="switchOff">Left</span>
               </div>
             </label> 
 
@@ -310,13 +305,12 @@ export default function ConfigurationControls({ isOpen }) {
             </label>
             <input
               type="text"
-              className="form-input"
               name="editorBackgroundColor"
               defaultValue=""
               ref={register}
             />
 
-            <div className="setting-title">Labels</div>
+            <div className="column-title">Labels</div>
             <label
               className="form-label configuration-column-3"
               htmlFor="exitEditorLabel"
@@ -325,7 +319,6 @@ export default function ConfigurationControls({ isOpen }) {
             </label>
             <input
               type="text"
-              className="form-input"
               name="exitEditorLabel"
               defaultValue="Exit"
               ref={register}
@@ -340,7 +333,6 @@ export default function ConfigurationControls({ isOpen }) {
 
             <input
               type="text"
-              className="form-input"
               name="completeVideoLabel"
               defaultValue="Buy"
               ref={register}
@@ -348,8 +340,8 @@ export default function ConfigurationControls({ isOpen }) {
           </div>
 
           <div className="configuration-controls-subsection">
-            <div className="setting-title">Modals</div>
-            <h4>Unsaved Changes Confirmation Modal</h4>
+            <div className="column-title">Modals</div>
+            Unsaved Changes Confirmation Modal
 
             <label className="form-label" htmlFor="shouldShowUnsavedChangesModal">
               <input
@@ -376,7 +368,6 @@ export default function ConfigurationControls({ isOpen }) {
 
               <input
                 type="text"
-                className="form-input"
                 name="unsavedChangesModalTitle"
                 defaultValue="Exit Editor"
                 ref={register}
@@ -391,7 +382,6 @@ export default function ConfigurationControls({ isOpen }) {
 
               <input
                 type="text"
-                className="form-input"
                 name="unsavedChangesModalBody"
                 defaultValue="Your video has unsaved edits. Are you 
                 sure you want to leave?"
@@ -407,7 +397,6 @@ export default function ConfigurationControls({ isOpen }) {
 
               <input
                 type="text"
-                className="form-input"
                 name="unsavedChangesModalConfirmButton"
                 defaultValue="Exit Editor"
                 ref={register}
@@ -422,7 +411,6 @@ export default function ConfigurationControls({ isOpen }) {
 
               <input
                 type="text"
-                className="form-input"
                 name="unsavedChangesModalCancelButton"
                 defaultValue="Cancel"
                 ref={register}
@@ -432,7 +420,7 @@ export default function ConfigurationControls({ isOpen }) {
           </div>
           
           <div className="configuration-controls-subsection modal-align">
-            <h4>Complete Video Confirmation Modal</h4>
+            Complete Video Confirmation Modal
 
             <label
               className="form-label"
@@ -461,7 +449,6 @@ export default function ConfigurationControls({ isOpen }) {
               </label>
               <input
                 type="text"
-                className="form-input"
                 name="confirmCompleteVideoModalTitle"
                 defaultValue="Finalize Video"
                 ref={register}
@@ -475,7 +462,6 @@ export default function ConfigurationControls({ isOpen }) {
               </label>
               <input
                 type="text"
-                className="form-input"
                 name="confirmCompleteVideoModalBody"
                 defaultValue="By finalizing this video, you confirm that you own the rights to all of its content."
                 ref={register}
@@ -489,7 +475,6 @@ export default function ConfigurationControls({ isOpen }) {
               </label>
               <input
                 type="text"
-                className="form-input"
                 name="confirmCompleteVideoModalConfirmButton"
                 defaultValue="Confirm"
                 ref={register}
@@ -503,7 +488,6 @@ export default function ConfigurationControls({ isOpen }) {
               </label>
               <input
                 type="text"
-                className="form-input"
                 name="confirmCompleteVideoModalCancelButton"
                 defaultValue="Cancel"
                 ref={register}
