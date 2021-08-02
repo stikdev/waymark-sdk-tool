@@ -7,7 +7,7 @@ import HoverVideoPlayer from 'react-hover-video-player';
 import { useAppContext } from "./AppProvider";
 import "./TemplateBrowser.css";
 import Header from "./Header.js";
-import { blueColor, blackColor, durationFilters, aspectRatioFilters } from "./constants";
+import { blueColor, blackColor, durationFilters, aspectRatioFilters } from "../constants/app";
 
 function Template({ template }) {
   const { openEditor } = useAppContext();
@@ -99,12 +99,8 @@ function CollectionFilter({
   const filterNameColor = selectedCollection === collection ? blueColor : blackColor;
   const filterFontWeight = selectedCollection === collection ? 'var(--fontWeightHeavy)' : 'var(--fontWeightRegular)';
 
-  const onClick = (collection) => {
-    setSelectedCollection(collection);
-  };
-
   return (
-    <button className="filter-name" onClick={() => onClick(collection)}>
+    <button className="filter-name" onClick={() => setSelectedCollection(collection)}>
       <div 
         style={{
           color: filterNameColor, 

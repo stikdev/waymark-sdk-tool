@@ -5,7 +5,7 @@ import AccountInfoForm from "./AccountInfoForm.js";
 import Header from "./Header.js";
 import VideoInfo from "./VideoInfo.js";
 import "./AccountPage.css";
-import { accountVideos } from "./constants";
+import { accountVideos } from "../constants/app";
 
 export default function AccountPage() {
   const {

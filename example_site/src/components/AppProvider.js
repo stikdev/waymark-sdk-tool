@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 
-import { blueColor } from "./constants";
+import { blueColor } from "../constants/app";
 
 const AppContext = React.createContext({
   account: false,

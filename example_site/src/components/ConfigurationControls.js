@@ -8,7 +8,7 @@ import { useAppContext } from "./AppProvider";
 import "./ConfigurationControls.css";
 import Header from "./Header.js";
 
-import { partnerPresets, partnerConfigurations } from "./constants";
+import { partnerPresets, partnerConfigurations } from "../constants/app";
 
 /**
  * Configuration for the entire application.

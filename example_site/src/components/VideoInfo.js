@@ -1,38 +1,31 @@
 import "./VideoInfo.css"
-import { months, days } from "./constants";
+import { getFormattedDate } from "../utils/date";
 
 /**
- * Renders a video component showing video thumbnail and information
- * 
- * @param {Object} video Video object
+ * @param {String} url
+ * @returns the numerical value of an image's width given url source
  */
-
 function getThumbnailWidth(url) {
     var img = new Image();
     img.src = url;
     return img.width;
 }
 
+/**
+ * @param {String} url
+ * @returns the numerical value of an image's height given url source
+ */
 function getThumbnailHeight(url) {
     var img = new Image();
     img.src = url;
     return img.height;
 }
 
-function getMonthName(videoDate){
-    const monthName = months[videoDate.getMonth()];
-    return monthName;
-}
-
-function getWeekdayName(videoDate){
-    const dayName = days[videoDate.getDay()];
-    return dayName;
-}
-
-function getFormattedDate(videoDate){
-    return `${getWeekdayName(videoDate)} ${getMonthName(videoDate)} ${videoDate.getDate()}, ${videoDate.getFullYear()}`;
-}
-
+/**
+ * Renders a video component showing video thumbnail and information
+ * 
+ * @param {Object} video Video object
+ */
 const VideoInfo = ({video}) => {
     const createdDate = getFormattedDate(video.createdAt);
     const updatedDate = getFormattedDate(video.updatedAt);
@@ -53,16 +46,18 @@ const VideoInfo = ({video}) => {
                         objectFit: 'contain',
                         borderRadius: '4px',
                       }}
-                    src={video.thumbnailURL}/>
+                    src={video.thumbnailURL}
+                />
             </div>
             <div className='info-container'>
-                <div className='video-name'>{video.videoName}</div>
+                <div className='video-name'> {video.videoName} </div>
                 <div className='video-info'> Created on {createdDate} </div>
                 <div className='video-info'> Updated on {updatedDate} </div>
                 <div className='video-info'>
-                {purchasedDate ? (
-                    `Purchased on ${purchasedDate}`
-                ) : null} </div>
+                    {purchasedDate ? (
+                        `Purchased on ${purchasedDate}`
+                    ) : null} 
+                </div>
             </div>
         </div>
     )
