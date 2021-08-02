@@ -192,25 +192,62 @@ export default function ConfigurationControls({ isOpen }) {
           this gets your gears turning about how the
           Waymark SDK could work for you."
         />
-
         <h4>To get started, choose an example partner</h4>
-
-        <select
-          name="partner"
-          ref={register({ required: true })}
-          onChange={(e) => setPartner(e.target.value)}
-          defaultValue={partnerPresets.default}
-        >
-          <option value={partnerPresets.default}>Default Partner</option>
-          <option value={partnerPresets.spectrum}>Spectrum Reach</option>
-          <option value={partnerPresets.custom}>Custom</option>
-        </select>
-        
-        <button 
-          className="submit-button configuration-submit-button">
-          See How It Works
-        </button>
       </div>
+
+      <div className='three-columns'>
+        <div className='configuration-controls-subsection'>
+          <button
+            className='partner-button'
+            onClick={() => setPartner(partnerPresets.default)}
+          >
+            <img 
+              style={{
+                  width: '200px',
+                  height: '200px',
+                  objectFit: 'contain',
+                }}
+              src="https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512"
+            />
+            Generic
+          </button>
+        </div>
+        <div className='configuration-controls-subsection'>
+          <button
+            className='partner-button'
+            onClick={() => setPartner(partnerPresets.spectrum)}
+          >
+            <img 
+              style={{
+                  width: '200px',
+                  height: '200px',
+                  objectFit: 'contain',
+                }}
+              src="https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512"
+            />
+            <br></br>
+            Ad Portal
+          </button>
+        </div>
+        <div className='configuration-controls-subsection'>
+          <button
+            className='partner-button'
+            onClick={() => setPartner(partnerPresets.custom)}
+          >
+            <img 
+              style={{
+                  width: '200px',
+                  height: '200px',
+                  objectFit: 'contain',
+                }}
+              src="https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512"
+            />
+            Custom
+          </button>
+        </div>
+        {console.log("partner: ", partner)}
+      </div>
+
       <div className='center-form'>
         <div 
           className={formClasses}
