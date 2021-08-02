@@ -2,12 +2,12 @@ export const blueColor = "#005AFF";
 export const blackColor = "#000000";
 
 export const partnerPresets = {
-    default: 'default',
-    spectrum: 'spectrum',
+    generic: 'generic',
+    adPortal: 'adPortal',
     custom: 'custom',
 };
 
-export const defaultConfiguration = {
+export const genericConfiguration = {
     "environment": 'demo',
     "orientation": 'left',
     "partnerID": 'fake-partner-id',
@@ -30,7 +30,7 @@ export const defaultConfiguration = {
     "editorBackgroundColor": '',
 };
 
-export const spectrumConfiguration = {
+export const adPortalConfiguration = {
     "environment": 'demo',
     "orientation": 'left',
     "partnerID": 'spectrum-reach-4dcQt4',
@@ -54,8 +54,8 @@ export const spectrumConfiguration = {
 };
 
 export const partnerConfigurations = {
-    [partnerPresets.default]: defaultConfiguration,
-    [partnerPresets.spectrum]: spectrumConfiguration,
+    [partnerPresets.generic]: genericConfiguration,
+    [partnerPresets.adPortal]: adPortalConfiguration,
 };
 
 export const accountVideos = [
