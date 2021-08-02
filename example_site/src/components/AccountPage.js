@@ -1,12 +1,11 @@
 import { useState, useMemo } from "react";
-import { useQuery } from "react-query";
 
 import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
 import Header from "./Header.js";
 import VideoInfo from "./VideoInfo.js";
 import "./AccountPage.css";
-import { accountVideos } from "./constants";
+import { accountVideos } from "../constants/app";
 
 export default function AccountPage() {
   const {
@@ -67,7 +66,7 @@ export default function AccountPage() {
   }, [accountVideos]);
   
   return (
-    <div className="account-page">
+    <>
       <Header 
         title="You Did It"
         subtitle="You just created a custom video with the Waymark
@@ -83,7 +82,7 @@ export default function AccountPage() {
       </button>
 
       <div className='two-columns' style={{ width: "80%" }}>
-        <div>
+        <div className='push-right'>
           <h2>
             {account.firstName ? (
                 account.firstName + "'s Account"
@@ -100,7 +99,10 @@ export default function AccountPage() {
         
         <div>
           {formattedVideos.map((video) => (
-            <VideoInfo video={video}/>
+            <VideoInfo 
+              key={video.videoName}
+              video={video}
+            />
           ))}
 
           {/* Commented out code because getVideos is not implemented yet
@@ -113,6 +115,6 @@ export default function AccountPage() {
 
         </div>
       </div>
-    </div>
+    </>
   );
 }

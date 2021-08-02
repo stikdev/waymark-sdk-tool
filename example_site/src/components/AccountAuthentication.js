@@ -6,7 +6,6 @@ import faker from "faker";
 
 import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
-import "./AccountAuthentication.css";
 
 import Header from "./Header.js";
 
@@ -85,8 +84,7 @@ function LoginAccountForm() {
         External ID
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text" 
         id="loginAccountExternalID"
         name="externalID"
         placeholder="<partner account ID>"
@@ -97,8 +95,7 @@ function LoginAccountForm() {
         Account ID
       </label>
       <input
-        type="text"
-        className="form-input"
+        type="text"  
         id="loginAccountAccountID"
         name="accountID"
         placeholder="eg. 1234-ABCD-1234-ABCD"

@@ -1,5 +1,17 @@
 @import "fonts/NeueHaasUnica.css";
 
+:root {
+  --blue: #005AFF;
+  --lightBlue: #e9f4fc;
+  --lightGrey: #E8EFF2;
+  --mediumGrey: #B3BFCC;
+  --darkGrey: #6f788c;
+  --white: white;
+  --fontWeightRegular: 400;
+  --fontWeightMedium: 500;
+  --fontWeightHeavy: 800;
+}
+
 main {
   width: 100vw;
   height: 100vh;
@@ -31,14 +43,9 @@ input, select, textarea, button {
 }
 
 #waymark-embed-container {
-  border: 4px dashed coral;
   grid-row: 2;
   box-sizing: border-box;
   display: none;
-}
-
-#waymark-embed-container.embedded {
-  border-color: yellowgreen;
 }
 
 #waymark-embed-container.visible {
@@ -57,63 +64,74 @@ input, select, textarea, button {
 
 .form-label {
   display: block;
-  font-weight: bold;
   margin: 12px 0 4px;
+  line-height: 1;
 }
 
 .submit-button {
   margin: 0 auto;
-  font-weight: 800;
   border-radius: 4px;
   border: none;
-  background-color: #005AFF;
-  color: white;
-  padding: 15px 16px;
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 14px;
   cursor: pointer;
   text-transform: uppercase;
-}
-
-.submit-button:disabled,
-button[disabled] {
-  background-color: #F5F7F8;
-  color: #B3BFCC;
-}
-
-.operation-button {
-  display: block;
-  margin-top: 24px;
-  font-weight: bold;
-  border-radius: 4px;
-  border: none;
-  background-color: skyblue;
-  color: white;
-  padding: 4px 8px;
-}
-
-.cancel-button {
-  margin-top: 5px;
-  font-weight: bold;
-  border-radius: 4px;
-  border: none;
-  background-color: black;
-  color: white;
-  padding: 4px 8px;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.125;
+  letter-spacing: 0.15px;
+  text-align: center;
 }
 
 .submit-button:disabled,
 .submit-button[disabled] {
-  border: #999999;
-  background-color: #cccccc;
-  color: #666666;
+  background-color: var(--mediumGrey);
+  color: var(--darkGrey);
 }
 
-.form-input {
+input[type="text"] {
   width: 20em;
+  line-height: 1.1875;
+  letter-spacing: normal;
+  background-color: var(--white);
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--mediumGrey);
+  transition: all 0.2s ease-in-out 0s;
+  box-sizing: border-box; 
+}
+
+input[type="text"]:active,
+input[type="text"]:focus {
+  border-color: var(--blue);
+  background-color: var(--lightBlue);
+  outline: none;
+}
+
+select {
+  background-color: var(--white);
+  padding: 10px 32px 10px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--mediumGrey);
+  -webkit-appearance: none;
+  /* Dropdown Arrow Image */
+  background-image: url(
+    "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 17 10'%3E%3Cpath fill='%251d2129' d='M8.405 10h-.007a1.21 1.21 0 01-.865-.375L.351 2.131A1.275 1.275 0 01.365.36a1.203 1.203 0 011.73.015l6.322 6.597 6.5-6.608a1.2 1.2 0 011.729.008 1.275 1.275 0 01-.008 1.771L9.266 9.637a1.207 1.207 0 01-.86.363'/%3E%3C/svg%3E");
+  background-position: calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+}
+
+select:active,
+select:focus {
+  border-color: var(--blue);
+  background-color: var(--lightBlue);
+  outline: none;
 }
 
 .form-button {
   margin-top: 10px;
-  width: 20.7em;
+  width: 16.7em;
 }
 
 div.loading {

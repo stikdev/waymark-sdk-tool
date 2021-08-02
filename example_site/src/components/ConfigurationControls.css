@@ -22,19 +22,17 @@
 
 button.configuration-submit-button {
   display: block;
-  margin-top: 40px;
+  margin-top: 20px;
   text-align: center;
 }
 
-.configuration-controls-subsection > label,
-.configuration-controls-subsection > input {
-  /* Indent contents of subsection to visually separate them */
-  margin-left: 16px;
+.configuration-controls-subsection {
+  padding: 10px;
 }
 
 /* Align video confirmation modal with unsaved changes modal */
 .modal-align {
-  margin-top: 49px;
+  margin-top: 38px;
 }
 
 /* Center form options */
@@ -42,7 +40,13 @@ button.configuration-submit-button {
   margin: auto;
   text-align: left;
   width: 90%;
-  padding: 10px;
+  padding-top: 10px;
+}
+
+.column-title {
+  font-size: 25px;
+  letter-spacing: -1px;
+  font-weight: var(--fontWeightMedium);
 }
 
 .fade-in-out{
@@ -74,7 +78,7 @@ button.configuration-submit-button {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--mediumGrey);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -86,14 +90,14 @@ button.configuration-submit-button {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--white);
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 /* Changes background color after click */
 input:checked + .slider {
-  background-color: #ff8c8c;
+  background-color: var(--blue);
 }
 
 /* Moves slider to right */
@@ -120,11 +124,12 @@ depending on switch toggle */
 
 .switchOn, 
 .switchOff {
-  color: rgb(0, 0, 0);
+  color: var(--black);
   position: absolute;
   transform: translate(40px, -35px);
   top: 50%;
   left: 50%;
+  padding-top: 20px;
 }
 
 input:checked+ .slider .switchOn {

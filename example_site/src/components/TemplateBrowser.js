@@ -1,14 +1,13 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { JsonEditor } from "jsoneditor-react";
 import "jsoneditor-react/es/editor.min.css";
 import HoverVideoPlayer from 'react-hover-video-player';
 
 import { useAppContext } from "./AppProvider";
 import "./TemplateBrowser.css";
 import Header from "./Header.js";
-import { blueColor, blackColor, durationFilters, aspectRatioFilters } from "./constants";
+import { blueColor, blackColor, durationFilters, aspectRatioFilters } from "../constants/app";
 
 function Template({ template }) {
   const { openEditor } = useAppContext();
@@ -16,8 +15,14 @@ function Template({ template }) {
   return (
     <>
       <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
+        <div className='template-container'>
           <HoverVideoPlayer
-            className="template-container"
+            style={{
+              width: template.width > template.height ? '200px' :
+                (template.width/(template.height/200)),
+              height: template.height > template.width ? '200px' : 
+                (template.height/(template.width/200)),
+            }}
             videoSrc={template.previewVideoURL}
             pausedOverlay={
               <img
@@ -31,6 +36,7 @@ function Template({ template }) {
             unloadVideoOnPaused={true}
             crossOrigin="anonymous"
           />
+        </div>
         <ul>
           <li>Name: {template.name}</li>
           <li>Aspect Ratio: {template.aspectRatio}</li>
@@ -49,6 +55,7 @@ function Filter({
 }) {
   const [isFilterApplied, setIsFilterApplied] = useState(true);
   const filterNameColor = templateFilter[filterKey] === filter.value ? blueColor : blackColor;
+  const filterFontWeight = templateFilter[filterKey] === filter.value ? 'var(--fontWeightHeavy)' : 'var(--fontWeightRegular)';
 
   const onSelectFilter = (newFilter) => {
     setIsFilterApplied(!isFilterApplied)
@@ -67,17 +74,20 @@ function Filter({
   }
 
   return (
-    <div className="category-name">
-      <button 
-        className="filter-name"
-        onClick={() => {
-          onSelectFilter(filter)
-        }}>
-        <div style={{'color': filterNameColor}}>
-          {filter.displayName} 
-        </div>
-      </button>
-    </div>
+    <button 
+      className="filter-name"
+      onClick={() => {
+        onSelectFilter(filter)
+      }}>
+      <div 
+        style={{
+          color: filterNameColor, 
+          fontWeight: filterFontWeight
+        }}
+      >
+        {filter.displayName} 
+      </div>
+    </button>
   );
 }
 
@@ -86,20 +96,20 @@ function CollectionFilter({
   selectedCollection,
   setSelectedCollection,
 }) {
-  const buttonColor = selectedCollection === collection ? blueColor : blackColor;
-
-  const onClick = (collection) => {
-    setSelectedCollection(collection);
-  };
+  const filterNameColor = selectedCollection === collection ? blueColor : blackColor;
+  const filterFontWeight = selectedCollection === collection ? 'var(--fontWeightHeavy)' : 'var(--fontWeightRegular)';
 
   return (
-    <div className="category-name">
-      <button className="filter-name" onClick={() => onClick(collection)}>
-        <div style={{'color': buttonColor}}>
-          {collection.name} 
-        </div>
-      </button>
-    </div>
+    <button className="filter-name" onClick={() => setSelectedCollection(collection)}>
+      <div 
+        style={{
+          color: filterNameColor, 
+          fontWeight: filterFontWeight
+        }}
+      >
+        {collection.name} 
+      </div>
+    </button>
   );
 }
 
@@ -108,12 +118,13 @@ function CollectionTemplates({
   templateFilter,
 }) {
   const { waymarkInstance, addTemplates } = useAppContext();
+  const collectionID = collection ? collection.id : "all_videos";
 
   const { isLoading, isError, isSuccess, data: templates, error } = useQuery(
     ["templates", collection, templateFilter],
     () =>
       waymarkInstance.getTemplatesForCollection(
-        collection.id,
+        collectionID,
         templateFilter
       ),
     { enabled: !!waymarkInstance }
@@ -185,35 +196,44 @@ export default function TemplateBrowser() {
         <>
           <div className="browser-columns">
             <div className="filters">
-              <h2>Duration</h2>
-              {durationFilters.map((filter) => (
-                <Filter
-                  filter={filter}
-                  filterKey={"duration"}
-                  templateFilter={templateFilter}
-                  setTemplateFilter={setTemplateFilter}
-                />
-              ))}
+              <div className="filter-title">Duration</div>
+              <div className="category">
+                {durationFilters.map((filter) => (
+                  <Filter
+                    key={filter.value}
+                    filter={filter}
+                    filterKey={"duration"}
+                    templateFilter={templateFilter}
+                    setTemplateFilter={setTemplateFilter}
+                  />
+                ))}
+              </div>
 
-              <h2>Aspect Ratio</h2>
-              {aspectRatioFilters.map((filter) => (
-                <Filter
-                  filter={filter}
-                  filterKey={"aspectRatio"}
-                  templateFilter={templateFilter}
-                  setTemplateFilter={setTemplateFilter}
-                />
-              ))}
+              <div className="filter-title">Aspect Ratio</div>
+              <div className="category">
+                {aspectRatioFilters.map((filter) => (
+                  <Filter
+                    key={filter.value}
+                    filter={filter}
+                    filterKey={"aspectRatio"}
+                    templateFilter={templateFilter}
+                    setTemplateFilter={setTemplateFilter}
+                  />
+                ))}
+              </div>
 
-              <h2>Categories</h2>
-              {collections.map((collection) => (
-                <CollectionFilter
-                  collections={collections}
-                  collection={collection}
-                  selectedCollection={selectedCollection}
-                  setSelectedCollection={setSelectedCollection}
-                />
-              ))}
+              <div className="filter-title">Categories</div>
+              <div className="category">
+                {collections.map((collection) => (
+                  <CollectionFilter
+                    key={collection.id}
+                    collections={collections}
+                    collection={collection}
+                    selectedCollection={selectedCollection}
+                    setSelectedCollection={setSelectedCollection}
+                  />
+                ))}
+              </div>
             </div>
             <div className="templates">
               <CollectionTemplates 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "jsoneditor-react/es/editor.min.css";
-import { Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import AccountAuthentication from "./AccountAuthentication";
 import AccountPage from "./AccountPage";

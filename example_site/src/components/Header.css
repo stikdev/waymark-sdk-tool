@@ -1,14 +1,26 @@
 .header-container {
-    margin: auto;
+    margin: 0 auto;
     text-align: center;
-    width: 80%;
+    padding: 24px 24px 6px;
 }
 
 .title {
-    font-size: 65px;
-    font-weight: 500;
+    padding-top: 48px;
+    width: 80%;
+    font-size: 64px;
+    font-weight: var(--fontWeightMedium);
+    line-height: 1;
+    letter-spacing: -1.5px;
+    margin: 0 auto;
 }
 
 .subtitle {
-    font-size: 25px;
+    margin: 0 auto;
+    margin-top: 32px;
+    padding-bottom: 24px;
+    width: 60%;
+    font-size: 16px;
+    font-weight: var(--fontWeightRegular);
+    line-height: 19px;
+    letter-spacing: normal;
 }
