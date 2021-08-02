@@ -15,7 +15,7 @@ import { partnerPresets, partnerConfigurations } from "../constants/app";
  */
 export default function ConfigurationControls({ isOpen }) {
   const { register, watch, handleSubmit } = useForm();
-  const [partner, setPartner] = useState('default');
+  const [partner, setPartner] = useState('generic');
   const {
     embedRef,
     setAccount,
@@ -199,7 +199,7 @@ export default function ConfigurationControls({ isOpen }) {
         <div className='configuration-controls-subsection'>
           <button
             className='partner-button'
-            onClick={() => setPartner(partnerPresets.default)}
+            onClick={() => setPartner(partnerPresets.generic)}
           >
             <img 
               style={{
@@ -215,7 +215,7 @@ export default function ConfigurationControls({ isOpen }) {
         <div className='configuration-controls-subsection'>
           <button
             className='partner-button'
-            onClick={() => setPartner(partnerPresets.spectrum)}
+            onClick={() => setPartner(partnerPresets.adPortal)}
           >
             <img 
               style={{
@@ -245,7 +245,6 @@ export default function ConfigurationControls({ isOpen }) {
             Custom
           </button>
         </div>
-        {console.log("partner: ", partner)}
       </div>
 
       <div className='center-form'>
