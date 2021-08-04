@@ -30,7 +30,7 @@ button.configuration-submit-button {
   padding: 10px;
 }
 
-.partner-button {
+.configuration-card {
   border-radius: 4px;
   box-shadow: 8px 8px 10px var(--mediumGrey);
   border: 1px solid var(--mediumGrey);
@@ -47,9 +47,15 @@ button.configuration-submit-button {
   transition: top ease 0.3s;
 }
 
-.partner-button:hover {
+.configuration-card:hover {
   top: -10px;
   background-color: var(--lightGrey);
+}
+
+.configuration-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
 }
 
 /* Align video confirmation modal with unsaved changes modal */
@@ -71,7 +77,7 @@ button.configuration-submit-button {
   font-weight: var(--fontWeightMedium);
 }
 
-.fade-in-out{
+.fade-in-out {
   transition: opacity 0.3s;
 }
 

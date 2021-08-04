@@ -17,10 +17,12 @@ const AppContext = React.createContext({
   openSnackbar: () => {},
   partnerID: "test-partner",
   setPartnerID: () => {},
-  partnerSecret: "test-secret",
+  partnerSecret: "zubbythewonderllamaeatsrhubarb",
   setPartnerSecret: () => {},
   editorNextURL: "/collections",
   setEditorNextURL: () => {},
+  showLandingPage: true,
+  setShowLandingPage: () => {},
   templates: {},
   useSnackbar: () => {},
   waymarkInstance: null,
@@ -35,8 +37,9 @@ export const AppProvider = ({ children }) => {
   const [templates, setTemplates] = useState({});
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [partnerID, setPartnerID] = useState("fake-partner-id");
-  const [partnerSecret, setPartnerSecret] = useState("test-secret");
+  const [partnerSecret, setPartnerSecret] = useState("zubbythewonderllamaeatsrhubarb");
   const [editorNextURL, setEditorNextURL] = useState("/collections");
+  const [showLandingPage, setShowLandingPage] = useState(true);
   const history = useHistory();
   const embedRef = React.useRef(null);
 
@@ -81,7 +84,7 @@ export const AppProvider = ({ children }) => {
       });
       setTemplates(allTemplates);
     },
-    [setTemplates]
+    [setTemplates, templates]
   );
 
   const getTemplateByID = (templateID) => {
@@ -112,6 +115,8 @@ export const AppProvider = ({ children }) => {
     setPartnerSecret,
     editorNextURL,
     setEditorNextURL,
+    showLandingPage,
+    setShowLandingPage,
     waymarkInstance,
     setWaymarkInstance,
   };

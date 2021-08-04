@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "jsoneditor-react/es/editor.min.css";
 import { Route } from "react-router-dom";
 
@@ -20,15 +20,10 @@ function App() {
     waymarkInstance,
   } = useAppContext();
 
-  const [isConfigurationOpen, setIsConfigurationOpen] = useState(true);
-
   useEffect(() => {
     if (!waymarkInstance) {
-      setIsConfigurationOpen(true);
       return;
     }
-
-    setIsConfigurationOpen(false);
 
     waymarkInstance.on("editorOpened", (event) => {
       console.log("editorOpened", event);
@@ -51,7 +46,7 @@ function App() {
  
   return (
     <main>
-      <ConfigurationControls isOpen={isConfigurationOpen} />
+      <ConfigurationControls />
 
       <Editor />
 
