@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 
 import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
@@ -15,6 +15,7 @@ export default function AccountPage() {
     setAccount,
     openSnackbar,
     setEditorNextURL,
+    setShowLandingPage,
   } = useAppContext();
 
   // Commented out code because getVideos is not implemented yet
@@ -26,8 +27,6 @@ export default function AccountPage() {
   //     enabled: !!waymarkInstance,
   //   }
   // );
-
-  const [isUpdatingAccount, setIsUpdatingAccount] = useState(false);
 
   const onSubmitUpdateAccountForm = async (formData) => {
     try {
@@ -41,8 +40,6 @@ export default function AccountPage() {
       console.error("updateAccountInfo error", error);
       openSnackbar(error.message);
     }
-
-    setIsUpdatingAccount(false);
   };
 
   async function onResetWaymarkInstance () {
@@ -50,6 +47,7 @@ export default function AccountPage() {
     setWaymarkInstance(null);
     setAccount(null);
     setEditorNextURL('/collections');
+    setShowLandingPage(true);
   }
 
   /**
@@ -63,7 +61,7 @@ export default function AccountPage() {
       })
       intermediateVideos.sort((a, b) => {return b.createdAt - a.createdAt});
       return intermediateVideos;
-  }, [accountVideos]);
+  }, []);
   
   return (
     <>
