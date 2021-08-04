@@ -7,6 +7,8 @@ import AccountPage from "./AccountPage";
 import TemplateBrowser from "./TemplateBrowser";
 import ConfigurationControls from "./ConfigurationControls";
 import PurchaseVideo from "./PurchaseVideo";
+import AdPortalLanding from "./AdPortalLanding";
+import AdPortalConfirmation from "./AdPortalConfirmation";
 import { useAppContext } from "./AppProvider";
 import "./App.css";
 import Editor from "./Editor.js";
