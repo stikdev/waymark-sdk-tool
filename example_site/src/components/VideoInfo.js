@@ -40,7 +40,7 @@ const VideoInfo = ({video}) => {
         <div className='two-columns video-column'>
             <div className='image-container'>
                 <img 
-                    style= {{
+                    style={{
                         width: imageDimensions.width > imageDimensions.height ? '100px' :
                             (imageDimensions.width/(imageDimensions.height/100)),
                         height: imageDimensions.height > imageDimensions.width ? '100px' : 

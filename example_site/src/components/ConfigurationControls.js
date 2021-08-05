@@ -69,16 +69,12 @@ export default function ConfigurationControls() {
     return orientation ? 'right' : 'left';
   }
 
-  function clickButton (config) {
-    if (config.id==='custom') {
+  function clickButton (selectSiteConfiguration) {
+    if (selectSiteConfiguration.id === 'custom') {
       setShowCustomForm(!showCustomForm);
       return;
     }
-    onSelectConfiguration(config.configuration);   
-  }
-
-  async function onSubmit (formData) {
-    onSelectConfiguration(formData);
+    onSelectConfiguration(selectSiteConfiguration.configuration);   
   }
 
   const onSelectConfiguration = async (configuration) => {
@@ -185,7 +181,7 @@ export default function ConfigurationControls() {
 
       <div className='three-columns'>
         {partnerConfigurations.map((config) => (
-          <div className='configuration-controls-subsection' key={config.displayName}>
+          <div className='configuration-controls-subsection' key={config.id}>
             <button
               className='configuration-card'
               onClick={() => clickButton(config)}
@@ -203,7 +199,7 @@ export default function ConfigurationControls() {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(async (formData) => onSelectConfiguration(formData))}>
         <div 
           className='center-form fade-in-out'
           style={{
@@ -416,7 +412,6 @@ export default function ConfigurationControls() {
                   ref={register}
                 />
               </div>
-                
             </div>
             
             <div className="configuration-controls-subsection modal-align">
