@@ -117,7 +117,7 @@ function CollectionTemplates({
   collection,
   templateFilter,
 }) {
-  const { waymarkInstance, addTemplates } = useAppContext();
+  const { waymarkInstance } = useAppContext();
   const collectionID = collection ? collection.id : "all_videos";
 
   const { isLoading, isError, isSuccess, data: templates, error } = useQuery(
@@ -129,12 +129,6 @@ function CollectionTemplates({
       ),
     { enabled: !!waymarkInstance }
   );
-
-  useEffect(() => {
-    if (!_.isEmpty(templates)) {
-      addTemplates(templates);
-    }
-  }, [templates, addTemplates]);
 
   return (
     <>
