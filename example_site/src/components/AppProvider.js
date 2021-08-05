@@ -27,6 +27,8 @@ const AppContext = React.createContext({
   useSnackbar: () => {},
   waymarkInstance: null,
   setWaymarkInstance: () => {},
+  showCustomForm: false,
+  setShowCustomForm: () => {},
 });
 
 export const useAppContext = () => useContext(AppContext);
@@ -40,6 +42,7 @@ export const AppProvider = ({ children }) => {
   const [partnerSecret, setPartnerSecret] = useState("zubbythewonderllamaeatsrhubarb");
   const [editorNextURL, setEditorNextURL] = useState("/collections");
   const [showLandingPage, setShowLandingPage] = useState(true);
+  const [showCustomForm, setShowCustomForm] = useState(false);
   const history = useHistory();
   const embedRef = React.useRef(null);
 
@@ -97,6 +100,15 @@ export const AppProvider = ({ children }) => {
     history.push("/");
   };
 
+  async function onResetWaymarkInstance() {
+    await waymarkInstance.cleanup();
+    setWaymarkInstance(null);
+    setAccount(null);
+    setEditorNextURL('/collections');
+    setShowLandingPage(true);
+    setShowCustomForm(false);
+}
+
   const value = {
     account,
     setAccount,
@@ -106,6 +118,7 @@ export const AppProvider = ({ children }) => {
     embedRef,
     getTemplateByID,
     goHome,
+    onResetWaymarkInstance,
     isEditorOpen,
     openEditor,
     openSnackbar,
@@ -117,6 +130,8 @@ export const AppProvider = ({ children }) => {
     setEditorNextURL,
     showLandingPage,
     setShowLandingPage,
+    showCustomForm,
+    setShowCustomForm,
     waymarkInstance,
     setWaymarkInstance,
   };

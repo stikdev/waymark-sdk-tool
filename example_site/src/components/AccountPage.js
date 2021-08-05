@@ -10,12 +10,10 @@ import { accountVideos } from "../constants/app";
 export default function AccountPage() {
   const {
     waymarkInstance,
-    setWaymarkInstance,
+    onResetWaymarkInstance,
     account,
     setAccount,
     openSnackbar,
-    setEditorNextURL,
-    setShowLandingPage,
   } = useAppContext();
 
   // Commented out code because getVideos is not implemented yet
@@ -41,14 +39,6 @@ export default function AccountPage() {
       openSnackbar(error.message);
     }
   };
-
-  async function onResetWaymarkInstance () {
-    await waymarkInstance.cleanup();
-    setWaymarkInstance(null);
-    setAccount(null);
-    setEditorNextURL('/collections');
-    setShowLandingPage(true);
-  }
 
   /**
    * Format video dates and sort by most recent date
