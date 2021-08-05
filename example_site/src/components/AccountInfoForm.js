@@ -24,7 +24,7 @@ export default function AccountInfoForm({
     else {
       setIsButtonDisabled(true);
     }
-  }, [watchFields.city, watchFields.companyName, watchFields.emailAddress,
+  }, [watchFields, watchFields.city, watchFields.companyName, watchFields.emailAddress,
     watchFields.externalID, watchFields.firstName, watchFields.lastName,
     watchFields.phone, watchFields.state])
  

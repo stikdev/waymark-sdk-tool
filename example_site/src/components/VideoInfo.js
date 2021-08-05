@@ -1,25 +1,6 @@
+import { useState, useEffect } from "react";
 import "./VideoInfo.css"
 import { getFormattedDate } from "../utils/date";
-
-/**
- * @param {String} url
- * @returns the numerical value of an image's width given url source
- */
-function getThumbnailWidth(url) {
-    var img = new Image();
-    img.src = url;
-    return img.width;
-}
-
-/**
- * @param {String} url
- * @returns the numerical value of an image's height given url source
- */
-function getThumbnailHeight(url) {
-    var img = new Image();
-    img.src = url;
-    return img.height;
-}
 
 /**
  * Renders a video component showing video thumbnail and information
@@ -27,25 +8,47 @@ function getThumbnailHeight(url) {
  * @param {Object} video Video object
  */
 const VideoInfo = ({video}) => {
+    const [imageDimensions, setImageDimensions] = useState({width: 1, height: 1});
     const createdDate = getFormattedDate(video.createdAt);
     const updatedDate = getFormattedDate(video.updatedAt);
     const purchasedDate = 
         (video.purchasedAt ? getFormattedDate(new Date(video.purchasedAt)) : null);
-    const width = getThumbnailWidth(video.thumbnailURL);
-    const height = getThumbnailHeight(video.thumbnailURL);
-    
+
+    useEffect(() => {
+        const getImageDimensions = async () => {
+            const loadingImage = new Promise((resolve, reject) => {
+                let image = new Image();
+                image.onload = () => {
+                    const dimensions = {
+                        width: image.width,
+                        height: image.height,
+                    };
+                    image.remove();
+                    image = null;
+                    resolve(dimensions);
+                    };
+                    image.onerror = (error) => reject(error);
+                    image.src = video.thumbnailURL;
+            });
+            const imageDimensions = await loadingImage;
+            setImageDimensions(imageDimensions);
+        }
+        getImageDimensions();
+    }, [video.thumbnailURL])
+
     return (
         <div className='two-columns video-column'>
             <div className='image-container'>
                 <img 
                     style={{
-                        width: width > height ? '100px' :
-                            `${(width/(height/100))}`,
-                        height: height > width ? '100px' : 
-                            `${(height/(width/100))}`,
+                        width: imageDimensions.width > imageDimensions.height ? '100px' :
+                            (imageDimensions.width/(imageDimensions.height/100)),
+                        height: imageDimensions.height > imageDimensions.width ? '100px' : 
+                            (imageDimensions.height/(imageDimensions.width/100)),
                         objectFit: 'contain',
                         borderRadius: '4px',
-                      }}
+                    }}
+                    alt={`${video.videoName} thumbnail`}
                     src={video.thumbnailURL}
                 />
             </div>

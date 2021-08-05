@@ -55,7 +55,7 @@ function Filter({
 }) {
   const [isFilterApplied, setIsFilterApplied] = useState(true);
   const filterNameColor = templateFilter[filterKey] === filter.value ? blueColor : blackColor;
-  const filterFontWeight = templateFilter[filterKey] === filter.value ? 'var(--fontWeightHeavy)' : 'var(--fontWeightRegular)';
+  const filterFontWeight = templateFilter[filterKey] === filter.value ? 'var(--fontWeightExtraBold)' : 'var(--fontWeightRegular)';
 
   const onSelectFilter = (newFilter) => {
     setIsFilterApplied(!isFilterApplied)
@@ -97,7 +97,7 @@ function CollectionFilter({
   setSelectedCollection,
 }) {
   const filterNameColor = selectedCollection === collection ? blueColor : blackColor;
-  const filterFontWeight = selectedCollection === collection ? 'var(--fontWeightHeavy)' : 'var(--fontWeightRegular)';
+  const filterFontWeight = selectedCollection === collection ? 'var(--fontWeightExtraBold)' : 'var(--fontWeightRegular)';
 
   return (
     <button className="filter-name" onClick={() => setSelectedCollection(collection)}>

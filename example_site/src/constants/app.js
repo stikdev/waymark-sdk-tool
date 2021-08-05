@@ -1,13 +1,7 @@
 export const blueColor = "#005AFF";
 export const blackColor = "#000000";
 
-export const partnerPresets = {
-    default: 'default',
-    spectrum: 'spectrum',
-    custom: 'custom',
-};
-
-export const defaultConfiguration = {
+export const genericConfiguration = {
     "environment": 'demo',
     "orientation": 'left',
     "partnerID": 'fake-partner-id',
@@ -30,7 +24,7 @@ export const defaultConfiguration = {
     "editorBackgroundColor": '',
 };
 
-export const spectrumConfiguration = {
+export const adPortalConfiguration = {
     "environment": 'demo',
     "orientation": 'left',
     "partnerID": 'spectrum-reach-4dcQt4',
@@ -53,10 +47,25 @@ export const spectrumConfiguration = {
     "editorBackgroundColor": '#FFFFFF',
 };
 
-export const partnerConfigurations = {
-    [partnerPresets.default]: defaultConfiguration,
-    [partnerPresets.spectrum]: spectrumConfiguration,
-};
+export const partnerConfigurations = [
+    {
+        displayName: 'Generic',
+        id: 'generic',
+        configuration: genericConfiguration,
+        thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+    },
+    {
+        displayName: 'Ad Portal',
+        id: 'adPortal',
+        configuration: adPortalConfiguration,
+        thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+    },
+    {
+        displayName: 'Custom',
+        id: 'custom',
+        thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+    }
+];
 
 export const accountVideos = [
     {
