@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import classnames from "classnames";
 
@@ -15,7 +14,6 @@ import { partnerConfigurations } from "../constants/app";
  */
 export default function ConfigurationControls() {
   const { register, watch, handleSubmit } = useForm();
-  const [showCustomForm, setShowCustomForm] = useState(false);
 
   const {
     embedRef,
@@ -26,6 +24,8 @@ export default function ConfigurationControls() {
     setPartnerSecret,
     showLandingPage,
     setShowLandingPage,
+    showCustomForm,
+    setShowCustomForm,
     waymarkInstance,
     setWaymarkInstance,
     openSnackbar,
