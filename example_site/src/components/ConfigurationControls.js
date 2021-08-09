@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import classnames from "classnames";
 
 import Waymark from "@waymark/waymark-sdk";
 
@@ -7,7 +6,7 @@ import { useAppContext } from "./AppProvider";
 import "./ConfigurationControls.css";
 import Header from "./Header.js";
 
-import { partnerConfigurations } from "../constants/app";
+import { siteConfigurations } from "../constants/app";
 
 /**
  * Configuration for the entire application.
@@ -22,13 +21,11 @@ export default function ConfigurationControls() {
     setPartnerID,
     partnerSecret: defaultPartnerSecret,
     setPartnerSecret,
-    showLandingPage,
-    setShowLandingPage,
     showCustomForm,
     setShowCustomForm,
+    setSiteConfiguration,
     waymarkInstance,
     setWaymarkInstance,
-    openSnackbar,
   } = useAppContext();
 
   const watchFields = watch(
@@ -70,15 +67,16 @@ export default function ConfigurationControls() {
   }
 
   function clickButton (selectSiteConfiguration) {
+    setSiteConfiguration(selectSiteConfiguration);
     if (selectSiteConfiguration.id === 'custom') {
       setShowCustomForm(!showCustomForm);
       return;
     }
-    onSelectConfiguration(selectSiteConfiguration.configuration);   
+    onSelectConfiguration(selectSiteConfiguration.sdkOptions);   
   }
 
   const onSelectConfiguration = async (configuration) => {
-    setShowLandingPage(false);
+
     const {
       environment,
       orientation,
@@ -154,19 +152,12 @@ export default function ConfigurationControls() {
       setWaymarkInstance(newWaymarkInstance);
       console.log(newWaymarkInstance);
     } catch (error) {
-      openSnackbar(`Problem initializing SDK: ${error}`);
+      console.error(error);
     }
   };
 
-  const titlePanel = classnames({
-    "title-description": true,
-     panel: true,
-     open: showLandingPage,
-     closed: !showLandingPage,
-  });
-
   return (
-    <div className={titlePanel}>
+    <div className="title-description">
       <div className='center'>
         <Header 
           title="Welcome to the Waymark SDK"
@@ -180,7 +171,7 @@ export default function ConfigurationControls() {
       </div>
 
       <div className='three-columns'>
-        {partnerConfigurations.map((config) => (
+        {siteConfigurations.map((config) => (
           <div className='configuration-controls-subsection' key={config.id}>
             <button
               className='configuration-card'

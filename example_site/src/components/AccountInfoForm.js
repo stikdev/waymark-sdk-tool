@@ -12,7 +12,6 @@ export default function AccountInfoForm({
   submitButtonText,
   requireInputChange,
 }) {
-  const { openSnackbar } = useAppContext();
   const { register, handleSubmit, watch } = useForm();
   const [isButtonDisabled, setIsButtonDisabled] = useState(requireInputChange);
   const watchFields = watch();
@@ -35,12 +34,6 @@ export default function AccountInfoForm({
 
   const onFormSubmitError = (errors) => {
     console.log("Error submitting form: ", errors);
-
-    openSnackbar(
-      `Please fix the following errors:\n${Object.values(errors)
-        .map((error) => error.message)
-        .join("\n")}`
-    );
   };
 
   return (
