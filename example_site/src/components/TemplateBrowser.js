@@ -14,7 +14,11 @@ function Template({ template }) {
 
   return (
     <>
-      <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
+      <button 
+        className="template-button" 
+        title={template.id} 
+        onClick={() => { openEditor({ template }) }}
+      >
         <div className='template-container'>
           <HoverVideoPlayer
             style={{
