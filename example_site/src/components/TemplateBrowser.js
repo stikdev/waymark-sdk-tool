@@ -149,9 +149,16 @@ function CollectionTemplates({
   );
 }
 
-export default function TemplateBrowser() {
+export default function TemplateBrowser ({isAdPortalFlow}) {
   const [selectedCollection, setSelectedCollection] = useState(null);
-  const [templateFilter, setTemplateFilter] = useState(() => ({}));
+  const [templateFilter, setTemplateFilter] = useState(() => {
+    if (isAdPortalFlow) {
+      return ({aspectRatio: "16:9", duration: [15, 30]});
+    }
+    return ({});
+  });
+  const newDurationFilters = isAdPortalFlow ? durationFilters.slice(1) : durationFilters;
+  
   const { waymarkInstance } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
@@ -175,12 +182,20 @@ export default function TemplateBrowser() {
 
   return (
     <div className="collections-page panel">
-      <Header 
-        title="Display Templates"
-        subtitle="Get a list of templates organized by category and
-        filtered by length and/or aspect ratio. Show any or all of
-        them any way that you like."
-      />
+      {isAdPortalFlow ? (
+        <Header 
+          title="Choose A Template For Your Commercial"
+          subtitle="All of these premium video templates are fully 
+          specced and ready to run on TV."
+        />
+      ) : (
+        <Header 
+          title="Display Templates"
+          subtitle="Get a list of templates organized by category and
+          filtered by length and/or aspect ratio. Show any or all of
+          them any way that you like."
+        />
+      )}
       
       {isLoading ? (
         <div className="loading">Loading...</div>
@@ -196,7 +211,7 @@ export default function TemplateBrowser() {
             <div className="filters">
               <div className="filter-title">Duration</div>
               <div className="category">
-                {durationFilters.map((filter) => (
+                {newDurationFilters.map((filter) => (
                   <Filter
                     key={filter.value}
                     filter={filter}
@@ -207,18 +222,22 @@ export default function TemplateBrowser() {
                 ))}
               </div>
 
-              <div className="filter-title">Aspect Ratio</div>
-              <div className="category">
-                {aspectRatioFilters.map((filter) => (
-                  <Filter
-                    key={filter.value}
-                    filter={filter}
-                    filterKey={"aspectRatio"}
-                    templateFilter={templateFilter}
-                    setTemplateFilter={setTemplateFilter}
-                  />
-                ))}
-              </div>
+              {isAdPortalFlow ? null : (
+                <>
+                  <div className="filter-title">Aspect Ratio</div>
+                  <div className="category">
+                    {aspectRatioFilters.map((filter) => (
+                      <Filter
+                        key={filter.value}
+                        filter={filter}
+                        filterKey={"aspectRatio"}
+                        templateFilter={templateFilter}
+                        setTemplateFilter={setTemplateFilter}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
 
               <div className="filter-title">Categories</div>
               <div className="category">
