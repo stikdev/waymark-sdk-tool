@@ -13,15 +13,16 @@ function SelectTemplateButton() {
 
     const history = useHistory();
 
-    function onSubmit() {
-        const signedJWT = getSignedJWT({}, partnerID, partnerSecret);
-    
-        waymarkInstance.createAccount(signedJWT);
-    
-        history.push("/templates");
-    
-        const account = waymarkInstance.getAccountInfo();
-        setAccount(account);
+    const onSubmit = async () => {
+        try {
+            const signedJWT = getSignedJWT({}, partnerID, partnerSecret);
+            await waymarkInstance.createAccount(signedJWT);
+            history.push("/templates");
+            const account = await waymarkInstance.getAccountInfo();
+            setAccount(account);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (

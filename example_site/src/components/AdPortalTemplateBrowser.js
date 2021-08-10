@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import "jsoneditor-react/es/editor.min.css";
@@ -66,7 +67,6 @@ function Filter({
       setTemplateFilter((currentFilter) => (
          {...currentFilter, [filterKey]: newFilter.value}
       )) 
-       
     } else {
       setTemplateFilter((currentFilter) => {
         const newFilters = {...currentFilter};
@@ -151,7 +151,7 @@ function CollectionTemplates({
 
 export default function TemplateBrowser() {
   const [selectedCollection, setSelectedCollection] = useState(null);
-  const [templateFilter, setTemplateFilter] = useState(() => ({}));
+  const [templateFilter, setTemplateFilter] = useState(() => ({aspectRatio: "16:9", duration: [15, 30]}));
   const { waymarkInstance } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
@@ -176,12 +176,10 @@ export default function TemplateBrowser() {
   return (
     <div className="collections-page panel">
       <Header 
-        title="Display Templates"
-        subtitle="Get a list of templates organized by category and
-        filtered by length and/or aspect ratio. Show any or all of
-        them any way that you like."
+        title="Choose A Template For Your Commercial"
+        subtitle="All of these premium video templates are fully 
+        specced and ready to run on TV"
       />
-      
       {isLoading ? (
         <div className="loading">Loading...</div>
       ) : null}
@@ -197,17 +195,19 @@ export default function TemplateBrowser() {
               <div className="filter-title">Duration</div>
               <div className="category">
                 {durationFilters.map((filter) => (
-                  <Filter
-                    key={filter.value}
-                    filter={filter}
-                    filterKey={"duration"}
-                    templateFilter={templateFilter}
-                    setTemplateFilter={setTemplateFilter}
-                  />
+                    filter.value != 6 ? (
+                        <Filter
+                            key={filter.value}
+                            filter={filter}
+                            filterKey={"duration"}
+                            templateFilter={templateFilter}
+                            setTemplateFilter={setTemplateFilter}
+                        />
+                    ) : null
                 ))}
               </div>
 
-              <div className="filter-title">Aspect Ratio</div>
+              {/* <div className="filter-title">Aspect Ratio</div>
               <div className="category">
                 {aspectRatioFilters.map((filter) => (
                   <Filter
@@ -218,7 +218,7 @@ export default function TemplateBrowser() {
                     setTemplateFilter={setTemplateFilter}
                   />
                 ))}
-              </div>
+              </div> */}
 
               <div className="filter-title">Categories</div>
               <div className="category">
