@@ -53,6 +53,14 @@ function App() {
     const PostEditorComponent = siteConfiguration.navigations.postEditor;
     return (<PostEditorComponent />);
   }
+
+  const getTemplateBrowser = () => {
+    if (waymarkInstance) {
+      const TemplateBrowserComponent = siteConfiguration.navigations.templateBrowser;
+      console.log("Template Browser:", siteConfiguration);
+      return (<TemplateBrowserComponent waymarkInstance={waymarkInstance} />);
+    }
+  }
  
   return (
     <main>
@@ -63,7 +71,8 @@ function App() {
       <Editor />
 
       <Route path="/templates">
-        <TemplateBrowser waymarkInstance={waymarkInstance} />
+        {getTemplateBrowser()}
+        {/* <TemplateBrowser waymarkInstance={waymarkInstance} /> */}
       </Route>
     </main>
   );

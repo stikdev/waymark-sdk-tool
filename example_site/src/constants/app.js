@@ -1,7 +1,9 @@
 import AccountAuthentication from "../components/AccountAuthentication";
+import TemplateBrowser from "../components/TemplateBrowser";
 import AccountPage from "../components/AccountPage";
 import AdPortalConfirmation from "../components/AdPortalConfirmation";
 import AdPortalLanding from "../components/AdPortalLanding";
+import AdPortalTemplateBrowser from "../components/AdPortalTemplateBrowser";
 
 export const blueColor = "#005AFF";
 export const blackColor = "#000000";
@@ -60,6 +62,7 @@ export const siteConfigurations = [
         thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
         navigations: {
             postConfiguration: AccountAuthentication,
+            templateBrowser: TemplateBrowser,
             postEditor: AccountPage,
         }
     },
@@ -70,6 +73,7 @@ export const siteConfigurations = [
         thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
         navigations: {
             postConfiguration: AdPortalLanding,
+            templateBrowser: AdPortalTemplateBrowser,
             postEditor: AdPortalConfirmation,
         }
     },
@@ -79,6 +83,7 @@ export const siteConfigurations = [
         thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
         navigations: {
             postConfiguration: AccountAuthentication,
+            templateBrowser: TemplateBrowser,
             postEditor: AccountPage,
         }
     }
