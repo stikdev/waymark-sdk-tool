@@ -152,7 +152,7 @@ export default function ConfigurationControls() {
       setWaymarkInstance(newWaymarkInstance);
       console.log(newWaymarkInstance);
     } catch (error) {
-      console.error(error);
+      console.error(`Problem initializing SDK: ${error}`);
     }
   };
 

@@ -62,7 +62,7 @@ export default function AccountPage() {
 
       <button 
         className="submit-button configuration-submit-button"
-        onClick={onResetWaymarkInstance}
+        onClick={async () => await onResetWaymarkInstance()}
       >
         Back To Start
       </button>

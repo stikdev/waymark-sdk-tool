@@ -12,7 +12,6 @@ function App() {
   const {
     account,
     closeEditor,
-    isEditorOpen,
     purchaseVideo,
     waymarkInstance,
     siteConfiguration,
@@ -43,7 +42,7 @@ function App() {
     waymarkInstance.on("videoRendered", (event) => {
       console.log("videoRendered", event);
     });
-  }, [waymarkInstance, closeEditor, purchaseVideo]);
+  }, [waymarkInstance, closeEditor, purchaseVideo, setEditorNextURL]);
 
   const getRootPathComponent = () => {
     if (!waymarkInstance) return (<ConfigurationControls />);
