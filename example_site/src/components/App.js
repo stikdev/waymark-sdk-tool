@@ -2,13 +2,8 @@ import React, { useEffect } from "react";
 import "jsoneditor-react/es/editor.min.css";
 import { Route } from "react-router-dom";
 
-import AccountAuthentication from "./AccountAuthentication";
-import AccountPage from "./AccountPage";
 import TemplateBrowser from "./TemplateBrowser";
 import ConfigurationControls from "./ConfigurationControls";
-import PurchaseVideo from "./PurchaseVideo";
-import AdPortalLanding from "./AdPortalLanding";
-import AdPortalConfirmation from "./AdPortalConfirmation";
 import { useAppContext } from "./AppProvider";
 import "./App.css";
 import Editor from "./Editor.js";
@@ -17,9 +12,10 @@ function App() {
   const {
     account,
     closeEditor,
-    isEditorOpen,
     purchaseVideo,
     waymarkInstance,
+    siteConfiguration,
+    setEditorNextURL,
   } = useAppContext();
 
   useEffect(() => {
@@ -34,6 +30,8 @@ function App() {
       console.log("editorOpenFailed", event);
     });
     waymarkInstance.on("editorExited", (event) => {
+      // Temporary solution to redirecting to correct page after editor
+      setEditorNextURL("/");
       console.log("editorExited", event);
       closeEditor();
     });
@@ -44,31 +42,28 @@ function App() {
     waymarkInstance.on("videoRendered", (event) => {
       console.log("videoRendered", event);
     });
-  }, [waymarkInstance, closeEditor, purchaseVideo]);
+  }, [waymarkInstance, closeEditor, purchaseVideo, setEditorNextURL]);
+
+  const getRootPathComponent = () => {
+    if (!waymarkInstance) return (<ConfigurationControls />);
+
+    const PostConfigurationComponent = siteConfiguration.navigations.postConfiguration;
+    if (!account) return (<PostConfigurationComponent />);
+
+    const PostEditorComponent = siteConfiguration.navigations.postEditor;
+    return (<PostEditorComponent />);
+  }
  
   return (
     <main>
-      <ConfigurationControls />
+      <Route exact path="/">
+        {getRootPathComponent()}
+      </Route>
 
       <Editor />
 
-      <Route path="/editor">{ !isEditorOpen && "Editor is closed."}</Route>
-      <Route path="/collections">
+      <Route path="/templates">
         <TemplateBrowser waymarkInstance={waymarkInstance} />
-      </Route>
-
-      <Route exact path="/">
-        <div>
-          {account ? (
-            <AccountPage />
-          ) : (
-            waymarkInstance && <AccountAuthentication />
-          )}
-        </div>
-      </Route>
-
-      <Route path="/purchase">
-        <PurchaseVideo />
       </Route>
     </main>
   );

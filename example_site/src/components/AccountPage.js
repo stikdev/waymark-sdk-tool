@@ -13,7 +13,6 @@ export default function AccountPage() {
     onResetWaymarkInstance,
     account,
     setAccount,
-    openSnackbar,
   } = useAppContext();
 
   // Commented out code because getVideos is not implemented yet
@@ -31,12 +30,10 @@ export default function AccountPage() {
       const account = await waymarkInstance.updateAccountInfo(formData);
 
       console.log("Account successfully updated ", account);
-      openSnackbar("Account successfully updated");
 
       setAccount(account);
     } catch (error) {
       console.error("updateAccountInfo error", error);
-      openSnackbar(error.message);
     }
   };
 
@@ -65,7 +62,8 @@ export default function AccountPage() {
 
       <button 
         className="submit-button configuration-submit-button"
-        onClick={onResetWaymarkInstance}>
+        onClick={async () => await onResetWaymarkInstance()}
+      >
         Back To Start
       </button>
 

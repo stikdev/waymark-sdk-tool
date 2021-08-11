@@ -1,56 +1,29 @@
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
-import KJUR from "jsrsasign";
-import faker from "faker";
-
 import { useAppContext } from "./AppProvider";
 import AccountInfoForm from "./AccountInfoForm.js";
 
 import Header from "./Header.js";
-
-const getSignedJWT = (accountData, partnerID, partnerSecret) => {
-  // Header
-  const header = { alg: "HS256", typ: "JWT" };
-  // Payload
-  const payload = {
-    jti: faker.random.uuid(),
-    iss: partnerID,
-    aud: "waymark.com",
-    iat: KJUR.jws.IntDate.get("now"),
-    exp: KJUR.jws.IntDate.get("now + 1hour"),
-    "https://waymark.com/sdk/account": accountData,
-  };
-
-  // Sign JWT with our secret
-  return KJUR.jws.JWS.sign(
-    "HS256",
-    JSON.stringify(header),
-    JSON.stringify(payload),
-    partnerSecret
-  );
-};
 
 function LoginAccountForm() {
   const { register, handleSubmit } = useForm();
   const {
     waymarkInstance,
     setAccount,
-    openSnackbar,
     partnerID,
     partnerSecret,
+    getSignedJWT,
   } = useAppContext();
 
   const history = useHistory();
   const onSubmit = async ({ accountID, externalID }) => {
     
     if (accountID && externalID) {
-      openSnackbar("Only one of either account ID or external ID may be used.");
       return;
     }
 
     if (!(accountID || externalID)) {
-      openSnackbar("One of either account ID or external ID must be used.");
       return;
     }
 
@@ -66,10 +39,9 @@ function LoginAccountForm() {
       await waymarkInstance.loginAccount(signedJWT);
       const account = await waymarkInstance.getAccountInfo();
       setAccount(account);
-      history.push("/collections");
+      history.push("/templates");
     } catch (error) {
       console.error(error);
-      openSnackbar(error.message);
     }
   };
 
@@ -113,9 +85,9 @@ function CreateAccountForm() {
   const {
     waymarkInstance,
     setAccount,
-    openSnackbar,
     partnerID,
     partnerSecret,
+    getSignedJWT,
   } = useAppContext();
 
   const history = useHistory();
@@ -123,17 +95,12 @@ function CreateAccountForm() {
   const onSubmit = async (formData) => {
     try {
       const signedJWT = getSignedJWT(formData, partnerID, partnerSecret);
-
-      const accountID = await waymarkInstance.createAccount(signedJWT);
-
-      history.push("/collections");
-      openSnackbar(`Created account ID: ${accountID}`);
-
+      await waymarkInstance.createAccount(signedJWT);
+      history.push("/templates");
       const account = await waymarkInstance.getAccountInfo();
       setAccount(account);
-      openSnackbar(`Created account: ${account.firstName} ${account.lastName}`);
     } catch (error) {
-      openSnackbar(error.message);
+      console.error(error);
     }
   };
 

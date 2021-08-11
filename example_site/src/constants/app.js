@@ -1,3 +1,8 @@
+import AccountAuthentication from "../components/AccountAuthentication";
+import AccountPage from "../components/AccountPage";
+import AdPortalConfirmation from "../components/AdPortalConfirmation";
+import AdPortalLanding from "../components/AdPortalLanding";
+
 export const blueColor = "#005AFF";
 export const blackColor = "#000000";
 
@@ -47,23 +52,35 @@ export const adPortalConfiguration = {
     "editorBackgroundColor": '#FFFFFF',
 };
 
-export const partnerConfigurations = [
+export const siteConfigurations = [
     {
         displayName: 'Generic',
         id: 'generic',
-        configuration: genericConfiguration,
+        sdkOptions: genericConfiguration,
         thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+        navigations: {
+            postConfiguration: AccountAuthentication,
+            postEditor: AccountPage,
+        }
     },
     {
         displayName: 'Ad Portal',
         id: 'adPortal',
-        configuration: adPortalConfiguration,
+        sdkOptions: adPortalConfiguration,
         thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+        navigations: {
+            postConfiguration: AdPortalLanding,
+            postEditor: AdPortalConfirmation,
+        }
     },
     {
         displayName: 'Custom',
         id: 'custom',
         thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+        navigations: {
+            postConfiguration: AccountAuthentication,
+            postEditor: AccountPage,
+        }
     }
 ];
 

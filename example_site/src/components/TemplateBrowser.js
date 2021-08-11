@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import "jsoneditor-react/es/editor.min.css";
@@ -14,7 +13,11 @@ function Template({ template }) {
 
   return (
     <>
-      <button className="template-button" title={template.id} onClick={() => openEditor({ template })}>
+      <button 
+        className="template-button" 
+        title={template.id} 
+        onClick={() => { openEditor({ template }) }}
+      >
         <div className='template-container'>
           <HoverVideoPlayer
             style={{

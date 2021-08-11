@@ -1,34 +1,29 @@
-import _ from "lodash";
 import React, { useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSnackbar } from "react-simple-snackbar";
 
-import { blueColor } from "../constants/app";
+import KJUR from "jsrsasign";
+import faker from "faker";
 
 const AppContext = React.createContext({
   account: false,
   setAccount: () => {},
-  addTemplates: () => {},
   closeEditor: () => {},
   purchaseVideo: () => {},
   embedRef: null,
   isEditorOpen: false,
   openEditor: () => {},
-  openSnackbar: () => {},
   partnerID: "test-partner",
   setPartnerID: () => {},
   partnerSecret: "zubbythewonderllamaeatsrhubarb",
   setPartnerSecret: () => {},
-  editorNextURL: "/collections",
+  editorNextURL: "/templates",
   setEditorNextURL: () => {},
-  showLandingPage: true,
-  setShowLandingPage: () => {},
-  templates: {},
-  useSnackbar: () => {},
   waymarkInstance: null,
   setWaymarkInstance: () => {},
   showCustomForm: false,
   setShowCustomForm: () => {},
+  siteConfiguration: {},
+  setSiteConfiguration: () => {},
 });
 
 export const useAppContext = () => useContext(AppContext);
@@ -36,25 +31,15 @@ export const useAppContext = () => useContext(AppContext);
 export const AppProvider = ({ children }) => {
   const [waymarkInstance, setWaymarkInstance] = useState(null);
   const [account, setAccount] = useState(null);
-  const [templates, setTemplates] = useState({});
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [partnerID, setPartnerID] = useState("fake-partner-id");
   const [partnerSecret, setPartnerSecret] = useState("zubbythewonderllamaeatsrhubarb");
-  const [editorNextURL, setEditorNextURL] = useState("/collections");
-  const [showLandingPage, setShowLandingPage] = useState(true);
+  const [editorNextURL, setEditorNextURL] = useState("/templates");
   const [showCustomForm, setShowCustomForm] = useState(false);
+  const [siteConfiguration, setSiteConfiguration] = useState({});
+
   const history = useHistory();
   const embedRef = React.useRef(null);
-
-  const [openSnackbar] = useSnackbar({
-    style: {
-      backgroundColor: blueColor,
-      textColor: "white",
-      fontWeight: "bold",
-      fontSize: "16px",
-      whiteSpace: "pre-wrap",
-    },
-  });
 
   const openEditor = useCallback(
     ({ template }) => {
@@ -77,61 +62,63 @@ export const AppProvider = ({ children }) => {
       setIsEditorOpen(false);
     }, [setIsEditorOpen, setEditorNextURL]);
 
-  const addTemplates = useCallback(
-    (newTemplates) => {
-      if (_.isEmpty(newTemplates)) return;
-
-      const allTemplates = { ...templates };
-      newTemplates.forEach((template) => {
-        allTemplates[template.id] = template;
-      });
-      setTemplates(allTemplates);
-    },
-    [setTemplates, templates]
-  );
-
-  const getTemplateByID = (templateID) => {
-    return templates[templateID];
-  };
-
   const goHome = () => {
     console.log("HOME");
     setIsEditorOpen(false);
     history.push("/");
   };
 
+  const getSignedJWT = (accountData, partnerID, partnerSecret) => {
+    // Header
+    const header = { alg: "HS256", typ: "JWT" };
+    // Payload
+    const payload = {
+      jti: faker.random.uuid(),
+      iss: partnerID,
+      aud: "waymark.com",
+      iat: KJUR.jws.IntDate.get("now"),
+      exp: KJUR.jws.IntDate.get("now + 1hour"),
+      "https://waymark.com/sdk/account": accountData,
+    };
+  
+    // Sign JWT with our secret
+    return KJUR.jws.JWS.sign(
+      "HS256",
+      JSON.stringify(header),
+      JSON.stringify(payload),
+      partnerSecret
+    );
+  };
+
   async function onResetWaymarkInstance() {
     await waymarkInstance.cleanup();
     setWaymarkInstance(null);
     setAccount(null);
-    setEditorNextURL('/collections');
-    setShowLandingPage(true);
+    setEditorNextURL('/templates');
     setShowCustomForm(false);
 }
 
   const value = {
     account,
     setAccount,
-    addTemplates,
     closeEditor,
     purchaseVideo, 
     embedRef,
-    getTemplateByID,
     goHome,
+    getSignedJWT,
     onResetWaymarkInstance,
     isEditorOpen,
     openEditor,
-    openSnackbar,
     partnerID,
     setPartnerID,
     partnerSecret,
     setPartnerSecret,
     editorNextURL,
     setEditorNextURL,
-    showLandingPage,
-    setShowLandingPage,
     showCustomForm,
     setShowCustomForm,
+    siteConfiguration,
+    setSiteConfiguration,
     waymarkInstance,
     setWaymarkInstance,
   };

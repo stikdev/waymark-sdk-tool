@@ -5,16 +5,11 @@ export default function PurchaseVideo() {
   const {
     purchasedVideo,
     goHome,
-    getTemplateByID,
-    openSnackbar,
   } = useAppContext();
 
-  const template = purchasedVideo
-    ? getTemplateByID(purchasedVideo.templateID)
-    : {};
+  const template = purchasedVideo;
 
   const completePurchase = () => {
-    openSnackbar("Purchased!");
     setTimeout(goHome, 5000);
   };
 
