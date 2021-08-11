@@ -5,7 +5,6 @@ import HoverVideoPlayer from 'react-hover-video-player';
 
 import { useAppContext } from "./AppProvider";
 import "./TemplateBrowser.css";
-import Header from "./Header.js";
 import { blueColor, blackColor, durationFilters, aspectRatioFilters } from "../constants/app";
 
 function Template({ template }) {
@@ -149,17 +148,17 @@ function CollectionTemplates({
   );
 }
 
-export default function TemplateBrowser ({isAdPortalFlow}) {
+export default function TemplateBrowser ({ isAdPortalFlow }) {
   const [selectedCollection, setSelectedCollection] = useState(null);
-  const [templateFilter, setTemplateFilter] = useState(() => {
-    if (isAdPortalFlow) {
-      return ({aspectRatio: "16:9", duration: [15, 30]});
-    }
-    return ({});
-  });
-  const newDurationFilters = isAdPortalFlow ? durationFilters.slice(1) : durationFilters;
+  const [templateFilter, setTemplateFilter] = useState(() =>
+    isAdPortalFlow ? {aspectRatio: "16:9", duration: [15, 30]} : {});
+  const durationFiltersForFlow = isAdPortalFlow ? 
+    durationFilters.filter(filter => filter.value === 15 || filter.value === 30) : durationFilters;
   
-  const { waymarkInstance } = useAppContext();
+  const { 
+    waymarkInstance,
+    siteConfiguration,
+  } = useAppContext();
 
   const { isLoading, isError, isSuccess, data: collections, error } = useQuery(
     ["collections"],
@@ -182,20 +181,7 @@ export default function TemplateBrowser ({isAdPortalFlow}) {
 
   return (
     <div className="collections-page panel">
-      {isAdPortalFlow ? (
-        <Header 
-          title="Choose A Template For Your Commercial"
-          subtitle="All of these premium video templates are fully 
-          specced and ready to run on TV."
-        />
-      ) : (
-        <Header 
-          title="Display Templates"
-          subtitle="Get a list of templates organized by category and
-          filtered by length and/or aspect ratio. Show any or all of
-          them any way that you like."
-        />
-      )}
+      {siteConfiguration.templateBrowserHeader}
       
       {isLoading ? (
         <div className="loading">Loading...</div>
@@ -211,7 +197,7 @@ export default function TemplateBrowser ({isAdPortalFlow}) {
             <div className="filters">
               <div className="filter-title">Duration</div>
               <div className="category">
-                {newDurationFilters.map((filter) => (
+                {durationFiltersForFlow.map((filter) => (
                   <Filter
                     key={filter.value}
                     filter={filter}
