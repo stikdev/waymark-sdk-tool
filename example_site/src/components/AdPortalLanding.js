@@ -1,6 +1,5 @@
 import Header from "./Header.js";
 import { useHistory } from "react-router-dom";
-import { adPortalConfiguration } from "../constants/app";
 import { useAppContext } from "./AppProvider";
 
 function SelectTemplateButton() {

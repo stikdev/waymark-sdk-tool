@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import "jsoneditor-react/es/editor.min.css";
