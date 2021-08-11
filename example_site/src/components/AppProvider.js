@@ -90,6 +90,18 @@ export const AppProvider = ({ children }) => {
     );
   };
 
+  const onSubmitCreateAccount = async (formData) => {
+    try {
+      const signedJWT = getSignedJWT(formData, partnerID, partnerSecret);
+      await waymarkInstance.createAccount(signedJWT);
+      history.push("/templates");
+      const account = await waymarkInstance.getAccountInfo();
+      setAccount(account);
+    } catch (error) {
+      console.error(`Error creating account: ${error}`);
+    }
+  };
+
   async function onResetWaymarkInstance() {
     await waymarkInstance.cleanup();
     setWaymarkInstance(null);
@@ -106,6 +118,7 @@ export const AppProvider = ({ children }) => {
     embedRef,
     goHome,
     getSignedJWT,
+    onSubmitCreateAccount,
     onResetWaymarkInstance,
     isEditorOpen,
     openEditor,

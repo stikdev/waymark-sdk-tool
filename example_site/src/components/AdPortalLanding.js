@@ -1,34 +1,13 @@
 import Header from "./Header.js";
-import { useHistory } from "react-router-dom";
 import { useAppContext } from "./AppProvider";
 
 function SelectTemplateButton() {
-    const {
-        waymarkInstance,
-        setAccount,
-        partnerID,
-        partnerSecret,
-        getSignedJWT,
-    } = useAppContext();
-
-    const history = useHistory();
-
-    const onSubmit = async () => {
-        try {
-            const signedJWT = getSignedJWT({}, partnerID, partnerSecret);
-            await waymarkInstance.createAccount(signedJWT);
-            history.push("/templates");
-            const account = await waymarkInstance.getAccountInfo();
-            setAccount(account);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    const { onSubmitCreateAccount } = useAppContext();
 
     return (
         <button 
             className="submit-button"
-            onClick={() => onSubmit()}
+            onClick={() => onSubmitCreateAccount({})}
         >
             Select Your Template
         </button>

@@ -82,31 +82,11 @@ function LoginAccountForm() {
 }
 
 function CreateAccountForm() {
-  const {
-    waymarkInstance,
-    setAccount,
-    partnerID,
-    partnerSecret,
-    getSignedJWT,
-  } = useAppContext();
-
-  const history = useHistory();
-
-  const onSubmit = async (formData) => {
-    try {
-      const signedJWT = getSignedJWT(formData, partnerID, partnerSecret);
-      await waymarkInstance.createAccount(signedJWT);
-      history.push("/templates");
-      const account = await waymarkInstance.getAccountInfo();
-      setAccount(account);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { onSubmitCreateAccount } = useAppContext();
 
   return (
     <AccountInfoForm
-      onFormSubmit={onSubmit}
+      onFormSubmit={onSubmitCreateAccount}
       formTitle="Create Account"
       subtitle="All fields are optional"
       submitButtonText="Create Account"

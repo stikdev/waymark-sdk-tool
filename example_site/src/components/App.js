@@ -7,6 +7,7 @@ import ConfigurationControls from "./ConfigurationControls";
 import { useAppContext } from "./AppProvider";
 import "./App.css";
 import Editor from "./Editor.js";
+import { configurationIDs } from "../constants/app";
 
 function App() {
   const {
@@ -65,7 +66,7 @@ function App() {
       <Route path="/templates">
         <TemplateBrowser 
           waymarkInstance={waymarkInstance} 
-          isAdPortalFlow={siteConfiguration.id==='adPortal'}
+          isAdPortalFlow={siteConfiguration.id === configurationIDs.adPortal}
         />
       </Route>
     </main>
