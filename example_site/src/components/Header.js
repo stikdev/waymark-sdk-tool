@@ -7,11 +7,19 @@ import "./Header.css"
  * @param {string} title Title of header
  * @param {string} subtitle Subtitle of header 
  */
-function Header({title, subtitle}) {
+function Header({title, subtitle, isAdPortalFlow}) {
     return (
-        <div className='header-container'>
+        <div 
+            className='header-container'
+            style={{textAlign: isAdPortalFlow ? 'left' : 'center'}}
+        >
             <div className='title'>{title}</div>
-            <div className='subtitle'>{subtitle}</div>
+            <div 
+                className='subtitle'
+                style={{width: isAdPortalFlow ? '80%' : '60%'}}
+            >
+                {subtitle}
+            </div>
         </div>
     )
 }

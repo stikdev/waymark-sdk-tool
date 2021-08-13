@@ -16,7 +16,7 @@ const AppContext = React.createContext({
   setPartnerID: () => {},
   partnerSecret: "zubbythewonderllamaeatsrhubarb",
   setPartnerSecret: () => {},
-  editorNextURL: "/templates",
+  editorNextURL: "/",
   setEditorNextURL: () => {},
   waymarkInstance: null,
   setWaymarkInstance: () => {},
@@ -34,7 +34,7 @@ export const AppProvider = ({ children }) => {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [partnerID, setPartnerID] = useState("fake-partner-id");
   const [partnerSecret, setPartnerSecret] = useState("zubbythewonderllamaeatsrhubarb");
-  const [editorNextURL, setEditorNextURL] = useState("/templates");
+  const [editorNextURL, setEditorNextURL] = useState("/");
   const [showCustomForm, setShowCustomForm] = useState(false);
   const [siteConfiguration, setSiteConfiguration] = useState({});
 
@@ -106,7 +106,7 @@ export const AppProvider = ({ children }) => {
     await waymarkInstance.cleanup();
     setWaymarkInstance(null);
     setAccount(null);
-    setEditorNextURL('/templates');
+    setEditorNextURL('/');
     setShowCustomForm(false);
 }
 

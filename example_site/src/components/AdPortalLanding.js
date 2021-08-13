@@ -1,4 +1,6 @@
 import Header from "./Header.js";
+import AdPortalHeader from "./AdPortalHeader.js";
+import "./AdPortalLanding.css"
 import { useAppContext } from "./AppProvider";
 
 function SelectTemplateButton() {
@@ -6,10 +8,10 @@ function SelectTemplateButton() {
 
     return (
         <button 
-            className="submit-button"
+            className="adportal-button"
             onClick={() => onSubmitCreateAccount({})}
         >
-            Select Your Template
+            Create Commercial In Minutes
         </button>
     );
 }
@@ -19,12 +21,17 @@ function SelectTemplateButton() {
  */
 export default function AdPortalLanding() {
     return (
-        <div className='center'>
-            <Header 
-                title="Welcome to the ABC Ad Portal"
-                subtitle="Now that your audience is set, it’s 
-                time to make a commercial for your campaign."
-            />
+        <div className='poppins'>
+            <AdPortalHeader isConfirmationPage={false} />
+            <div className='header'>
+                <Header 
+                    title="create your commercial"
+                    subtitle="Now that you’ve defined your audience, it’s 
+                    time to make your commercial. Our dead simple commercial 
+                    creation tools make it a breeze — at no cost to you."
+                    isAdPortalFlow={true}
+                />
+            </div>
             <SelectTemplateButton />
         </div>
     );

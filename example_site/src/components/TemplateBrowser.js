@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import "jsoneditor-react/es/editor.min.css";
 import HoverVideoPlayer from 'react-hover-video-player';
+import classnames from "classnames";
 
 import { useAppContext } from "./AppProvider";
 import "./TemplateBrowser.css";
@@ -179,8 +180,14 @@ export default function TemplateBrowser ({ isAdPortalFlow }) {
     }
   }, [collections, isSuccess, selectedCollection]);
 
+  const templateBrowserClasses = classnames({
+    collectionsPage: true,
+    panel: true,
+    poppins: isAdPortalFlow,
+  });
+
   return (
-    <div className="collections-page panel">
+    <div className={templateBrowserClasses}>
       {siteConfiguration.templateBrowserHeader}
       
       {isLoading ? (
@@ -194,7 +201,10 @@ export default function TemplateBrowser ({ isAdPortalFlow }) {
       {isSuccess ? (
         <>
           <div className="browser-columns">
-            <div className="filters">
+            <div 
+              className="filters"
+              style={{marginTop: isAdPortalFlow ? '-60px' : '0px'}}
+            >
               <div className="filter-title">Duration</div>
               <div className="category">
                 {durationFiltersForFlow.map((filter) => (

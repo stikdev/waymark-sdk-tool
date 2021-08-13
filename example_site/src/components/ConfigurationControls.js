@@ -158,16 +158,18 @@ export default function ConfigurationControls() {
 
   return (
     <div className="title-description">
+      <Header 
+        title="Welcome to the Waymark SDK"
+        subtitle="This demo site is intended to give you a sense of 
+        what you can do with Waymark's SDK.
+        The possibilities are limitless, but hopefully 
+        this gets your gears turning about how the
+        Waymark SDK could work for you."
+        isAdPortalFlow={false}
+      />
+      
       <div className='center'>
-        <Header 
-          title="Welcome to the Waymark SDK"
-          subtitle="This demo site is intended to give you a sense of 
-          what you can do with Waymark's SDK.
-          The possibilities are limitless, but hopefully 
-          this gets your gears turning about how the
-          Waymark SDK could work for you."
-        />
-        <h4>To get started, choose an example partner</h4>
+        <h4>To get started, choose an example flow</h4>
       </div>
 
       <div className='three-columns'>

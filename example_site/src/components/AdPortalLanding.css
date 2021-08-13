@@ -1,0 +1,35 @@
+.header {
+    position: relative;
+    right: 31.7%;
+    padding-bottom: 30px;
+}
+
+.adportal-button {
+    /* Button text styling */
+    background-color: var(--gem);
+    color: var(--white);
+    text-transform: lowercase;
+    font-weight: var(--fontWeightRegular);
+    font-size: 13px;
+
+    /* Button Styling */
+    margin: 0 auto;
+    position: relative;
+    right: 20%;
+    width: 241px;
+    height: 47px;
+    border-radius: 7px;
+    cursor: pointer;
+    border: none;
+}
+
+.adportal-button:hover {
+    background-color: var(--gemDark);
+}
+
+.adportal-button:focus {
+    background-color: var(--white);
+    border: 1px solid var(--gemLight);
+    color: var(--gemLight);
+    transition: ease 0.3s;
+}

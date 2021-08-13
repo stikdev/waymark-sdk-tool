@@ -58,6 +58,7 @@ export default function AccountPage() {
         SDK! Send users to a confirmation page or keep them moving
         through a larger flow. You can also get a list of all the 
         user's videos, as shown below."
+        isAdPortalFlow={false}
       />
 
       <button 

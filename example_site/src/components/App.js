@@ -26,13 +26,14 @@ function App() {
 
     waymarkInstance.on("editorOpened", (event) => {
       console.log("editorOpened", event);
+      // Temporary solution to redirecting to correct page after editor, 
+      // exiting editor has issues
+      // setEditorNextURL("/");
     });
     waymarkInstance.on("editorOpenFailed", (event) => {
       console.log("editorOpenFailed", event);
     });
     waymarkInstance.on("editorExited", (event) => {
-      // Temporary solution to redirecting to correct page after editor
-      setEditorNextURL("/");
       console.log("editorExited", event);
       closeEditor();
     });
@@ -61,7 +62,7 @@ function App() {
         {getRootPathComponent()}
       </Route>
 
-      <Editor />
+      <Editor isAdPortalFlow={siteConfiguration.id === configurationIDs.adPortal}/>
 
       <Route path="/templates">
         <TemplateBrowser 

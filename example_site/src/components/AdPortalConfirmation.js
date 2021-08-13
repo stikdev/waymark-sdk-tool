@@ -1,24 +1,40 @@
 import Header from "./Header.js";
+import AdPortalHeader from "./AdPortalHeader.js";
+import "./AdPortalLanding.css"
 import { useAppContext } from "./AppProvider";
+
+function RestartDemoButton() {
+    const { onResetWaymarkInstance } = useAppContext();
+
+    return (
+        <button 
+            className="adportal-button"
+            onClick={async () => await onResetWaymarkInstance()}
+        >
+            restart demo
+        </button>
+    );
+}
 
 /**
  * Confirmation Page in Ad Portal Workflow
  */
 export default function AdPortalConfirmation() {
-    const { onResetWaymarkInstance } = useAppContext();
-
     return (
-        <div className='center'>
-            <Header 
-                title="Great — Your Commercial Is All Set"
-                subtitle="Now it’s time to set your budget and get on the air."
+        <div className='poppins'>
+            <AdPortalHeader 
+                isConfirmationPage={true}
             />
-            <button 
-                className="submit-button"
-                onClick={onResetWaymarkInstance}
-            >
-                Restart Demo
-            </button>
+            <div className='header'>
+                <Header 
+                    title="review & publish"
+                    subtitle="Your commercial is ready to run! Review 
+                    your campaign details and set it live 
+                    in the next step."
+                    isAdPortalFlow={true}
+                />
+            </div>
+            <RestartDemoButton />
         </div>
     );
 }

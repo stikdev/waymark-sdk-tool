@@ -1,6 +1,4 @@
 .header-container {
-    margin: 0 auto;
-    text-align: center;
     padding: 24px 24px 6px;
 }
 
@@ -18,7 +16,6 @@
     margin: 0 auto;
     margin-top: 32px;
     padding-bottom: 24px;
-    width: 60%;
     font-size: 16px;
     font-weight: var(--fontWeightRegular);
     line-height: 19px;

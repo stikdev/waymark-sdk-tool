@@ -2,11 +2,16 @@
 
 :root {
   --blue: #005AFF;
+  --darkBlue: #014edd;
   --lightBlue: #e9f4fc;
   --lightGrey: #E8EFF2;
   --mediumGrey: #B3BFCC;
   --darkGrey: #6f788c;
   --white: white;
+  --gem: #684E73;
+  --gemLight: #9B7B91;
+  --gemDark: #52375D;
+  --gemDarker: #3A2344;
   --fontWeightRegular: 400;
   --fontWeightMedium: 500;
   --fontWeightExtraBold: 800;
@@ -30,6 +35,7 @@ input, select, textarea, button {
 }
 
 .center {
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -44,6 +50,7 @@ input, select, textarea, button {
 }
 
 #waymark-embed-container {
+  margin: 0px -70px;
   grid-row: 2;
   box-sizing: border-box;
   display: none;
@@ -69,6 +76,10 @@ input, select, textarea, button {
   line-height: 1;
 }
 
+.poppins {
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
+}
+
 .submit-button {
   margin: 0 auto;
   border-radius: 4px;
@@ -85,8 +96,13 @@ input, select, textarea, button {
   text-align: center;
 }
 
+.submit-button:hover {
+  background-color: var(--darkBlue);
+}
+
 .submit-button:disabled,
-.submit-button[disabled] {
+.submit-button[disabled],
+.submit-button:focus {
   background-color: var(--mediumGrey);
   color: var(--darkGrey);
 }
@@ -137,6 +153,7 @@ select:focus {
 
 div.loading {
   margin: 10px;
+  padding-top: 50px;
   font-size: 20px;
 }
 

@@ -103,6 +103,7 @@ export default function AccountAuthentication() {
         subtitle="To keep track of videos that users have created,
         you can create a Waymark account with any information you
         use to identify users on your end."
+        isAdPortalFlow={false}
       /> 
       <div className='two-columns'>
           <CreateAccountForm />
