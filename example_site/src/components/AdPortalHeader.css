@@ -1,94 +1,94 @@
 .adportal-header {
-    padding-bottom: 130px;
+  padding-bottom: 130px;
 }
 
 .header-text {
-    position: absolute;
-    height: 36px;
-    top: 20px;
-    left: 30px;
-    font-weight: var(--fontWeightMedium);
-    font-size: 36px;
-    line-height: 36px;
-    letter-spacing: -0.75px;
-    color: var(--gemDark);
+  position: absolute;
+  height: 36px;
+  top: 29px;
+  left: 30px;
+  font-weight: var(--fontWeightMedium);
+  font-size: 36px;
+  line-height: 36px;
+  letter-spacing: -0.75px;
+  color: var(--gemDark);
 }
 
 .rectangle-one {
-    position: absolute;
-    width: 496px;
-    height: 38px;
-    left: 0px;
-    top: 101px;
-    background: var(--gemDarker);
-    margin-bottom: -100px;
-    overflow: hidden;
+  position: absolute;
+  width: 496px;
+  height: 38px;
+  left: 0px;
+  top: 101px;
+  background: var(--gemDarker);
+  margin-bottom: -100px;
+  overflow: hidden;
 }
 
 .rectangle-two {
-    position: absolute;
-    width: 1156px;
-    height: 38px;
-    left: 15%;
-    right: 70%;
-    top: 101px;
-    background: var(--gem);
+  position: absolute;
+  width: 1156px;
+  height: 38px;
+  left: 15%;
+  right: 70%;
+  top: 101px;
+  background: var(--gem);
 }
 
 .rectangle-three {
-    position: absolute;
-    width: 480x;
-    height: 38px;
-    right: 0px;
-    top: 101px;
-    background: var(--gemLight);
+  position: absolute;
+  width: 480x;
+  height: 38px;
+  right: 0px;
+  top: 101px;
+  background: var(--gemLight);
 }
 
 .circle-one {
-    position: absolute;
-    width: 51px;
-    height: 51px;
-    left: 1%;
-    top: 95px;
-    border-radius: 50%;
-    background: var(--gemDarker);
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  left: 1%;
+  top: 95px;
+  border-radius: 50%;
+  background: var(--gemDarker);
 }
 
 .circle-two {
-    position: absolute;
-    width: 51px;
-    height: 51px;
-    left: 17%;
-    top: 95px;
-    border-radius: 50%;
-    background: var(--gem);
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  left: 17%;
+  top: 95px;
+  border-radius: 50%;
+  background: var(--gem);
 }
 
 .circle-three {
-    position: absolute;
-    width: 51px;
-    height: 51px;
-    left: 77%;
-    top: 95px;
-    border-radius: 50%;
-    background: var(--gemLight);
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  left: 77%;
+  top: 95px;
+  border-radius: 50%;
+  background: var(--gemLight);
 }
 
 .flow-step-number {
-    position: relative;
-    font-weight: var(--fontWeightMedium);
-    font-size: 20px;
-    top: 12px;
-    left: 20px;
-    width: 100px;
-    color: var(--white);
+  position: relative;
+  font-weight: var(--fontWeightMedium);
+  font-size: 20px;
+  top: 12px;
+  left: 20px;
+  width: 100px;
+  color: var(--white);
 }
 
 .flow-step-name {
-    position: relative;
-    font-weight: var(--fontWeightMedium);
-    top: -16px;
-    left: 60px;
-    width: 100px;
-    color: var(--white);
+  position: relative;
+  font-weight: var(--fontWeightMedium);
+  top: -16px;
+  left: 60px;
+  width: 100px;
+  color: var(--white);
 }
