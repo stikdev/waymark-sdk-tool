@@ -3,6 +3,7 @@ import AccountPage from "../components/AccountPage";
 import AdPortalConfirmation from "../components/AdPortalConfirmation";
 import AdPortalLanding from "../components/AdPortalLanding";
 import Header from "../components/Header";
+import AdPortalHeader from "../components/AdPortalHeader";
 
 export const blueColor = "#005AFF";
 export const blackColor = "#000000";
@@ -61,10 +62,32 @@ export const adPortalConfiguration = {
 
 export const siteConfigurations = [
     {
+        displayName: 'Ad Portal',
+        id: configurationIDs.adPortal,
+        sdkOptions: adPortalConfiguration,
+        thumbnailURL: "https://sp-prod-s3-images-web.s3.amazonaws.com/sdk_demo_site/adportal-thumbnail-transparent.png",
+        navigations: {
+            postConfiguration: AdPortalLanding,
+            postEditor: AdPortalConfirmation,
+        },
+        templateBrowserHeader: (
+            <>
+                <AdPortalHeader />
+                <div className='adportal-title'>choose your template</div>
+                <div className='adportal-subtitle'>
+                    <b>Unlimited essentials — </b>
+                    These templates work across 
+                    tons of industries, and subscribers can create 
+                    them without using credits.
+                </div>
+            </>
+        )
+    },
+    {
         displayName: 'Generic',
         id: configurationIDs.generic,
         sdkOptions: genericConfiguration,
-        thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+        thumbnailURL: "https://sp-prod-s3-images-web.s3.amazonaws.com/sdk_demo_site/generic-thumbnail-transparent.png",
         navigations: {
             postConfiguration: AccountAuthentication,
             postEditor: AccountPage,
@@ -75,30 +98,14 @@ export const siteConfigurations = [
                 subtitle="Get a list of templates organized by category and
                 filtered by length and/or aspect ratio. Show any or all of
                 them any way that you like."
-            />
-        )
-    },
-    {
-        displayName: 'Ad Portal',
-        id: configurationIDs.adPortal,
-        sdkOptions: adPortalConfiguration,
-        thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
-        navigations: {
-            postConfiguration: AdPortalLanding,
-            postEditor: AdPortalConfirmation,
-        },
-        templateBrowserHeader: (
-            <Header 
-                title="Choose A Template For Your Commercial"
-                subtitle="All of these premium video templates are fully 
-                specced and ready to run on TV."
+                isAdPortalFlow={false}
             />
         )
     },
     {
         displayName: 'Custom',
         id: configurationIDs.custom,
-        thumbnailURL: "https://socialproof-prod.imgix.net/video_creatives/videotemplatevariant/thumbnail/1209_1597265598.png?ixlib=react-8.6.4&auto=compress%2Cformat&fit=max&w=512",
+        thumbnailURL: "https://sp-prod-s3-images-web.s3.amazonaws.com/sdk_demo_site/custom-thumbnail-transparent.png",
         navigations: {
             postConfiguration: AccountAuthentication,
             postEditor: AccountPage,
@@ -109,6 +116,7 @@ export const siteConfigurations = [
                 subtitle="Get a list of templates organized by category and
                 filtered by length and/or aspect ratio. Show any or all of
                 them any way that you like."
+                isAdPortalFlow={false}
             />
         )
     }

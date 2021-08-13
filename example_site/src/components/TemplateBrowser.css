@@ -2,6 +2,27 @@
   margin: 20px;
 }
 
+.adportal-title {
+  text-align: left;
+  position: relative;
+  left: 13%;
+  padding-top: 48px;
+  font-size: 64px;
+  font-weight: var(--fontWeightMedium);
+  letter-spacing: -1.5px;
+  margin: 0 auto;
+}
+
+.adportal-subtitle {
+  z-index: 1;
+  width: 50%;
+  text-align: left;
+  position: relative;
+  left: 45%;
+  top: 30px;
+  font-size: 17px;
+}
+
 .browser-columns {
   display: grid;
   grid-template-columns: 500px 500px 2fr;
@@ -16,6 +37,7 @@
 
 .filter-title {
   font-size: 16px;
+  font-weight: var(--fontWeightExtraBold);
   line-height: 20px;
   padding-top: 35px;
 }
