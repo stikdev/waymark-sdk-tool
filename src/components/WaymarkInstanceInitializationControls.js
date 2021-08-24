@@ -58,7 +58,7 @@ export default function WaymarkInstanceInitializationControls({
             environment === ENVIRONMENTS.custom
               ? { host: formElement.overrideHost.value }
               : environment,
-        }; 
+        };
 
         const domElement = document.querySelector(waymarkOptions.domElement);
         
@@ -67,11 +67,13 @@ export default function WaymarkInstanceInitializationControls({
         if (environment === ENVIRONMENTS.harness) {
           waymarkObject = new TestModeWaymark(partnerID, {
             ...waymarkOptions,
+            isDebug: true,
             domElement,
           });
         } else {
           waymarkObject = new Waymark(partnerID, {
             ...waymarkOptions,
+            isDebug: true,
             domElement,
           });
         }
