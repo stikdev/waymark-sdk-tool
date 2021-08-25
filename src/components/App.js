@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "jsoneditor-react/es/editor.min.css";
 
+import EventMonitor from "./EventMonitor";
 import PerformanceStats from "./PerformanceStats";
 import PerformanceTestingForm from "./PerformanceTestingForm";
 import WaymarkInstanceInitializationControls from "./WaymarkInstanceInitializationControls";
@@ -28,9 +29,8 @@ function App() {
           waymarkInstance={waymarkInstance}
           setWaymarkInstance={setWaymarkInstance}
         />
-        <PerformanceTestingForm
-          shouldShowPerformanceStats={shouldShowPerformanceStats}
-          setShouldShowPerformanceStats={setShouldShowPerformanceStats}
+        <EventMonitor
+          waymarkInstance={waymarkInstance}
         />
       </div>
       <div className="embed-controls-grid">
@@ -40,6 +40,12 @@ function App() {
       </div>
       <div className="webhook-testing-container">
         <WebhookTestingForm />
+      </div>
+      <div className="performance-testing-container">
+        <PerformanceTestingForm
+          shouldShowPerformanceStats={shouldShowPerformanceStats}
+          setShouldShowPerformanceStats={setShouldShowPerformanceStats}
+        />
       </div>
     </main>
   );
