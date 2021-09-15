@@ -1,0 +1,19 @@
+.purchase-form {
+  margin: 20px;
+}
+
+.purchase-form label {
+  margin: 10px;
+}
+
+.purchase-form .description {
+  padding-top: 6px;
+}
+.purchase-form .description span {
+  font-weight: bold;
+}
+
+.purchase-form .licensing {
+  margin: 10px;
+  font-weight: bold;
+}

@@ -1,0 +1,21 @@
+ul.videos {
+  list-style: none;
+}
+
+ul.video {
+  margin-top: 10px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+li.video {
+  margin-top: 10px;
+  list-style: "\00BB";
+  font-size: 20px;
+}
+
+.push-right {
+  padding-left: 80px;
+}

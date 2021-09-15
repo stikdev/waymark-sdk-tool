@@ -1,0 +1,157 @@
+.configuration-controls-form {
+  display: grid;
+  place-items: start;
+  grid-auto-flow: column;
+}
+
+.configuration-controls-form.closed {
+  height: 0;
+  display: none;
+}
+
+button.configuration-submit-button {
+  display: block;
+  margin-top: 20px;
+}
+
+.configuration-controls-subsection {
+  padding: 10px;
+}
+
+.configuration-card {
+  border-radius: 4px;
+  box-shadow: 8px 8px 10px var(--mediumGrey);
+  border: 1px solid var(--mediumGrey);
+  background-color: var(--white);
+  color: var(--black);
+  padding: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: var(--fontWeightExtraBold);
+  text-align: center;
+  position: relative;
+  top: 0;
+  transition: top ease 0.3s;
+}
+
+.configuration-card:hover {
+  top: -10px;
+  background-color: var(--lightGrey);
+}
+
+.configuration-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+/* Align video confirmation modal with unsaved changes modal */
+.modal-align {
+  margin-top: 38px;
+}
+
+/* Center form options */
+.center-form {
+  margin: auto;
+  text-align: left;
+  width: 90%;
+  padding-top: 10px;
+}
+
+.column-title {
+  font-size: 25px;
+  letter-spacing: -1px;
+  font-weight: var(--fontWeightMedium);
+}
+
+.fade-in-out {
+  transition: opacity 0.3s;
+}
+
+/* Toggle Switch */
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+} 
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--mediumGrey);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--white);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* Changes background color after click */
+input:checked + .slider {
+  background-color: var(--blue);
+}
+
+/* Moves slider to right */
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+} 
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 80%;
+} 
+
+/* Alternate "Right" and "Left" text 
+depending on switch toggle */
+.switchOn {
+  display: none;
+}
+
+.switchOn, 
+.switchOff {
+  color: var(--black);
+  position: absolute;
+  transform: translate(40px, -35px);
+  top: 50%;
+  left: 50%;
+  padding-top: 20px;
+}
+
+input:checked+ .slider .switchOn {
+  display: block;
+}
+
+input:checked + .slider .switchOff {
+  display: none;
+}

@@ -1,24 +1,18 @@
+.navbar li {
+  display: inline;
+}
+
 #waymark-embed-container {
   width: 100px;
   min-height: 75px;
   border: 4px dashed coral;
   box-sizing: border-box;
-  position: relative;
 }
 
 #waymark-embed-container.embedded {
   width: 100%;
   min-height: 480px;
   border-color: yellowgreen;
-}
-
-#waymark-embed-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
 }
 
 .initialization-container {

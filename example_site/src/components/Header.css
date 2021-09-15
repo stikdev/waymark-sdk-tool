@@ -1,0 +1,23 @@
+.header-container {
+    padding: 24px 24px 6px;
+}
+
+.title {
+    padding-top: 48px;
+    width: 80%;
+    font-size: 64px;
+    font-weight: var(--fontWeightMedium);
+    line-height: 1;
+    letter-spacing: -1.5px;
+    margin: 0 auto;
+}
+
+.subtitle {
+    margin: 0 auto;
+    margin-top: 32px;
+    padding-bottom: 24px;
+    font-size: 16px;
+    font-weight: var(--fontWeightRegular);
+    line-height: 19px;
+    letter-spacing: normal;
+}
