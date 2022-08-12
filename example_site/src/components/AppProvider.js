@@ -33,7 +33,9 @@ export const AppProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [partnerID, setPartnerID] = useState("fake-partner-id");
-  const [partnerSecret, setPartnerSecret] = useState("zubbythewonderllamaeatsrhubarb");
+  const [partnerSecret, setPartnerSecret] = useState(
+    "zubbythewonderllamaeatsrhubarb"
+  );
   const [editorNextURL, setEditorNextURL] = useState("/");
   const [showCustomForm, setShowCustomForm] = useState(false);
   const [siteConfiguration, setSiteConfiguration] = useState({});
@@ -42,9 +44,9 @@ export const AppProvider = ({ children }) => {
   const embedRef = React.useRef(null);
 
   const openEditor = useCallback(
-    ({ template }) => {
+    ({ template, options }) => {
       if (template) {
-        waymarkInstance.openEditorForTemplate(template.id);
+        waymarkInstance.openEditorForTemplate(template.id, options);
         setIsEditorOpen(true);
         history.push("/editor");
       }
@@ -58,9 +60,9 @@ export const AppProvider = ({ children }) => {
   }, [setIsEditorOpen, history, editorNextURL]);
 
   const purchaseVideo = useCallback(() => {
-      setEditorNextURL("/");
-      setIsEditorOpen(false);
-    }, [setIsEditorOpen, setEditorNextURL]);
+    setEditorNextURL("/");
+    setIsEditorOpen(false);
+  }, [setIsEditorOpen, setEditorNextURL]);
 
   const goHome = () => {
     console.log("HOME");
@@ -80,7 +82,7 @@ export const AppProvider = ({ children }) => {
       exp: KJUR.jws.IntDate.get("now + 1hour"),
       "https://waymark.com/sdk/account": accountData,
     };
-  
+
     // Sign JWT with our secret
     return KJUR.jws.JWS.sign(
       "HS256",
@@ -106,15 +108,15 @@ export const AppProvider = ({ children }) => {
     await waymarkInstance.cleanup();
     setWaymarkInstance(null);
     setAccount(null);
-    setEditorNextURL('/');
+    setEditorNextURL("/");
     setShowCustomForm(false);
-}
+  }
 
   const value = {
     account,
     setAccount,
     closeEditor,
-    purchaseVideo, 
+    purchaseVideo,
     embedRef,
     goHome,
     getSignedJWT,
