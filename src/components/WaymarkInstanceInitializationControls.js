@@ -139,6 +139,23 @@ export default function WaymarkInstanceInitializationControls({
         value={options}
         onChange={(newOptions) => setOptions(newOptions)}
       />
+      {/* Hidden input which we can type raw JSON strings into if we need to customize the options for integration tests */}
+      <input
+        type="text"
+        style={{
+          position: "absolute",
+          opacity: 0,
+        }}
+        id="overrideOptions"
+        name="overrideOptions"
+        defaultValue={JSON.stringify(options)}
+        onChange={(event) => {
+          try {
+            const parsedOverrideOptions = JSON.parse(event.target.value);
+            setOptions(parsedOverrideOptions);
+          } catch (e) {}
+        }}
+      />
       <button className="submit-button" data-test="initialize-sdk-button">
         {!waymarkInstance ? "Create Waymark Embed" : "Destroy Waymark Embed"}
       </button>

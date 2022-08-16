@@ -41,18 +41,19 @@ export default function AccountPage() {
    * Format video dates and sort by most recent date
    */
   const formattedVideos = useMemo(() => {
-      const intermediateVideos = accountVideos.map((video) => {
-        video.createdAt = new Date(video.createdAt);
-        video.updatedAt = new Date(video.updatedAt);
-        return video;
-      })
-      intermediateVideos.sort((a, b) => {return b.createdAt - a.createdAt});
-      return intermediateVideos;
+    const intermediateVideos = accountVideos.map((video) => ({
+      ...video,
+      createdAt: new Date(video.createdAt),
+      updatedAt: new Date(video.updatedAt),
+    }));
+    return intermediateVideos.sort((a, b) => {
+      return b.createdAt - a.createdAt;
+    });
   }, []);
-  
+
   return (
-    <>
-      <Header 
+    <div data-testid="editorClosedPage">
+      <Header
         title="You Did It"
         subtitle="You just created a custom video with the Waymark
         SDK! Send users to a confirmation page or keep them moving
@@ -61,19 +62,19 @@ export default function AccountPage() {
         isAdPortalFlow={false}
       />
 
-      <button 
+      <button
         className="submit-button configuration-submit-button"
         onClick={async () => await onResetWaymarkInstance()}
       >
         Back To Start
       </button>
 
-      <div className='two-columns' style={{ width: "80%" }}>
-        <div className='push-right'>
+      <div className="two-columns" style={{ width: "80%" }}>
+        <div className="push-right">
           <h2>
-            {account.firstName ? (
-                account.firstName + "'s Account"
-            ) : 'Your Account'}
+            {account.firstName
+              ? account.firstName + "'s Account"
+              : "Your Account"}
           </h2>
 
           <AccountInfoForm
@@ -83,13 +84,10 @@ export default function AccountPage() {
             requireInputChange={true}
           />
         </div>
-        
+
         <div>
           {formattedVideos.map((video) => (
-            <VideoInfo 
-              key={video.videoName}
-              video={video}
-            />
+            <VideoInfo key={video.videoName} video={video} />
           ))}
 
           {/* Commented out code because getVideos is not implemented yet
@@ -99,9 +97,8 @@ export default function AccountPage() {
               {isSuccess &&
                 videos.map((video) => <Video key={video.id} video={video} />)}
               </ul> */}
-
         </div>
       </div>
-    </>
+    </div>
   );
 }

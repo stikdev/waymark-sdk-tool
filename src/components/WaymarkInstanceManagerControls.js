@@ -18,10 +18,20 @@ function OpenEditorForTemplateTestForm({ waymarkInstance }) {
 
         const formElement = event.target;
 
+        let options;
+
+        if (formElement.businessName.value) {
+          options = {
+            businessName: formElement.businessName.value,
+            businessCity: formElement.businessCity.value,
+          };
+        }
+
         try {
           // Open the editor with the provided variant slug
           await waymarkInstance.openEditorForTemplate(
-            formElement.variantSlug.value
+            formElement.variantSlug.value,
+            options
           );
 
           console.log("Successfully opened editor!");
@@ -44,6 +54,35 @@ function OpenEditorForTemplateTestForm({ waymarkInstance }) {
         name="variantSlug"
         defaultValue="test-template-id"
       />
+
+      <label
+        htmlFor="openEditorForTemplate-businessName"
+        className="form-label"
+      >
+        Business Name
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="openEditorForTemplate-businessName"
+        name="businessName"
+        defaultValue=""
+      />
+
+      <label
+        htmlFor="openEditorForTemplate-businessCity"
+        className="form-label"
+      >
+        Business Name
+      </label>
+      <input
+        type="text"
+        className="form-input"
+        id="openEditorForTemplate-businessCity"
+        name="businessCity"
+        defaultValue=""
+      />
+
       <button className="submit-button">
         Call waymark.openEditorForTemplate()
       </button>
