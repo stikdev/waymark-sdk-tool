@@ -14,7 +14,7 @@ import {
 } from "../constants/app";
 
 function Template({ template }) {
-  const { openEditor } = useAppContext();
+  const { openEditor, account } = useAppContext();
 
   return (
     <>
@@ -22,7 +22,19 @@ function Template({ template }) {
         className="template-button"
         title={template.id}
         onClick={() => {
-          openEditor({ template });
+          let options;
+
+          if (account) {
+            options = {
+              businessName: account.companyName,
+              businessCity: account.city,
+            };
+          }
+
+          openEditor({
+            template,
+            options,
+          });
         }}
       >
         <div className="template-container">
@@ -43,6 +55,7 @@ function Template({ template }) {
                 className="thumbnail"
                 src={template.thumbnailImageURL}
                 alt={`${template.name} thumbnail`}
+                loading="lazy"
               />
             }
             sizingMode="container"
