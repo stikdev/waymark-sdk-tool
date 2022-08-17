@@ -39,13 +39,13 @@
     ]
   },
   "dependencies": {
+    "@faker-js/faker": "^7.4.0",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
     "@waymark/waymark-sdk": "^2.6.0",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
-    "faker": "^5.4.0",
     "jsoneditor": "^9.1.7",
     "jsoneditor-react": "^3.1.0",
     "jsrsasign": "^10.1.5",

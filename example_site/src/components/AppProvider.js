@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import KJUR from "jsrsasign";
-import faker from "faker";
+import faker from "@faker-js/faker";
 
 const AppContext = React.createContext({
   account: false,

@@ -6,7 +6,7 @@ import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import classnames from "classnames";
 import KJUR from "jsrsasign";
-import faker from "faker";
+import faker from "@faker-js/faker";
 
 import CopyIcon from "./CopyIcon";
 import { theBlue } from "./constants";
@@ -136,7 +136,12 @@ export default function WebhookTestingForm({ waymarkInstance }) {
 
   const onSubmit = (formData) => {
     const eventID = faker.random.uuid();
-    const {eventType, shouldSignEvent, signaturePrivateKey, webhookEndpointURL} = formData;
+    const {
+      eventType,
+      shouldSignEvent,
+      signaturePrivateKey,
+      webhookEndpointURL,
+    } = formData;
 
     const event = {
       header: {
@@ -156,7 +161,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
 
     const postOptions = {
       timeout: 5000,
-    }
+    };
 
     let requestEvent, requestURL, displayEvent;
 
@@ -165,36 +170,35 @@ export default function WebhookTestingForm({ waymarkInstance }) {
       if (shouldSignEvent) {
         requestEvent = createJWTEvent(eventID, event, signaturePrivateKey);
         postOptions.headers = { "content-type": "application/jwt" };
-
       } else {
         requestEvent = event;
       }
       requestURL = webhookEndpointURL;
       displayEvent = requestEvent;
-
     } else {
       // Remote events have a different format because they're being sent to the
       // test harness webhook event endpoint in Demo.
       requestEvent = {
-        "endpoint_url": webhookEndpointURL,
-        "event": event,
-        "should_sign": shouldSignEvent,
-        "override_secret": signaturePrivateKey,
+        endpoint_url: webhookEndpointURL,
+        event: event,
+        should_sign: shouldSignEvent,
+        override_secret: signaturePrivateKey,
       };
-      requestURL = "https://demo.waymark.com/api/v3/test-harness/webhook-dispatch";
-      displayEvent = shouldSignEvent ? createJWTEvent(eventID, event, signaturePrivateKey) : event;
+      requestURL =
+        "https://demo.waymark.com/api/v3/test-harness/webhook-dispatch";
+      displayEvent = shouldSignEvent
+        ? createJWTEvent(eventID, event, signaturePrivateKey)
+        : event;
     }
 
-    setWebhookRequest(shouldSignEvent ? displayEvent : JSON.stringify(displayEvent));
+    setWebhookRequest(
+      shouldSignEvent ? displayEvent : JSON.stringify(displayEvent)
+    );
     setIsWebhookRequestCopied(false);
 
     setIsSending(true);
     axios
-      .post(
-        requestURL,
-        requestEvent,
-        postOptions,
-      )
+      .post(requestURL, requestEvent, postOptions)
       .then((response) => {
         console.log("RESPONSE", response);
         setResponseStatus(response.status);
@@ -233,35 +237,49 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         </p>
 
         <label className="form-label" labelfor="localDirect">
-      <input id="localDirect" name="eventSource" type="radio" value="local" ref={register({ required: true })} defaultChecked={true}/>
+          <input
+            id="localDirect"
+            name="eventSource"
+            type="radio"
+            value="local"
+            ref={register({ required: true })}
+            defaultChecked={true}
+          />
           Local - Routes directly from the browser to your webhook endpoint
         </label>
         <label className="form-label" labelfor="remoteDemo">
-          <input id="remoteDemo" name="eventSource" type="radio" value="remote" ref={register({ required: true })}/>
-          Remote - Routes through the Waymark demo servers to your webhook endpoint
+          <input
+            id="remoteDemo"
+            name="eventSource"
+            type="radio"
+            value="remote"
+            ref={register({ required: true })}
+          />
+          Remote - Routes through the Waymark demo servers to your webhook
+          endpoint
         </label>
 
-    {eventSource === "local" ?
-     <>
-        <p>
-          <b>Note:</b> Local webhook testing will not work unless the
-          webhook endpoint sets the following CORS headers. These are not
-          required for live testing in the demo environment.
-        </p>
-     <pre className="code-quote">{CORS_EXAMPLE}</pre>
-     </>
-     :
-     <>
-        <p>
-          <b>Note:</b> Remote webhook testing will not work unless the
-          webhook endpoint is available to the public internet. If you are
-     testing an internal, private endpoint, please use Local testing or
-     a remote proxy tool like <a href="https://ngrok.com/docs">ngrok</a> (which
-    is a very useful testing tool indeed).
-        </p>
-
-     </>
-    }
+        {eventSource === "local" ? (
+          <>
+            <p>
+              <b>Note:</b> Local webhook testing will not work unless the
+              webhook endpoint sets the following CORS headers. These are not
+              required for live testing in the demo environment.
+            </p>
+            <pre className="code-quote">{CORS_EXAMPLE}</pre>
+          </>
+        ) : (
+          <>
+            <p>
+              <b>Note:</b> Remote webhook testing will not work unless the
+              webhook endpoint is available to the public internet. If you are
+              testing an internal, private endpoint, please use Local testing or
+              a remote proxy tool like{" "}
+              <a href="https://ngrok.com/docs">ngrok</a> (which is a very useful
+              testing tool indeed).
+            </p>
+          </>
+        )}
 
         <label className="form-label" htmlFor="partnerID">
           Partner ID
@@ -384,7 +402,6 @@ export default function WebhookTestingForm({ waymarkInstance }) {
                 </dd>
               </dl>
             </div>
-
           </>
         )}
       </form>
@@ -396,7 +413,6 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         type="info"
         effect="solid"
       />
-
     </>
   );
 }
