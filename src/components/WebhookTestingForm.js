@@ -6,7 +6,7 @@ import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import classnames from "classnames";
 import KJUR from "jsrsasign";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 
 import CopyIcon from "./CopyIcon";
 import { theBlue } from "./constants";
