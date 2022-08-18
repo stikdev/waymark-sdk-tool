@@ -75,7 +75,7 @@ export const AppProvider = ({ children }) => {
     const header = { alg: "HS256", typ: "JWT" };
     // Payload
     const payload = {
-      jti: faker.random.uuid(),
+      jti: faker.datatype.uuid(),
       iss: partnerID,
       aud: "waymark.com",
       iat: KJUR.jws.IntDate.get("now"),

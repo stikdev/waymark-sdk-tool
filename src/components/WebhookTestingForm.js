@@ -69,7 +69,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         createdAt: faker.date.past().toJSON(),
         updatedAt: faker.date.recent().toJSON(),
         name: faker.commerce.productName(),
-        templateID: faker.random.uuid(),
+        templateID: faker.datatype.uuid(),
         renders: [
           {
             renderedAt: null,
@@ -93,7 +93,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         createdAt: faker.date.past().toJSON(),
         updatedAt: faker.date.recent().toJSON(),
         name: faker.commerce.productName(),
-        templateID: faker.random.uuid(),
+        templateID: faker.datatype.uuid(),
         renders: [],
       };
     }
@@ -106,8 +106,8 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         emailAddress: faker.internet.email(),
-        companyName: faker.company.companyName(),
-        phone: faker.phone.phoneNumberFormat(),
+        companyName: faker.company.name(),
+        phone: faker.phone.number(),
         city: faker.address.city(),
         state: faker.address.stateAbbr(),
       };
@@ -135,7 +135,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
   };
 
   const onSubmit = (formData) => {
-    const eventID = faker.random.uuid();
+    const eventID = faker.datatype.uuid();
     const {
       eventType,
       shouldSignEvent,
@@ -148,7 +148,7 @@ export default function WebhookTestingForm({ waymarkInstance }) {
         eventID: eventID,
         eventType: eventType,
         eventTimestamp: new Date().toJSON(),
-        accountID: faker.random.uuid(),
+        accountID: faker.datatype.uuid(),
         externalID: faker.finance.account(),
       },
     };
